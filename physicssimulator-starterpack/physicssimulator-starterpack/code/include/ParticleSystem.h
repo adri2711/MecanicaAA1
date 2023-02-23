@@ -12,7 +12,7 @@ protected:
 	std::vector<Particle> particles;
 
 	const glm::vec3 gravity = { 0, -9.81f, 0 };
-	glm::vec3 startVelocity;
+	glm::vec3 startVelocity = {0, 10.f, 0};
 
 	glm::vec3 EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt);
 public:

@@ -9,13 +9,16 @@ void ParticleSystem::Update(float dt)
 	//Logic
 	for (int i = 0; i < particles.size(); i++) {
 		particles[i].velocity = EulerSolver(particles[i].velocity, particles[i].acceleration, dt);
-		particles[i].velocity = EulerSolver(particles[i].position, particles[i].velocity, dt);
+		particles[i].position = EulerSolver(particles[i].position, particles[i].velocity, dt);
+		positions[i] = particles[i].position;
 	}
 
 	//Render
 	particlePrimitives->firstParticle = 0;
 	particlePrimitives->numParticles = particles.size();
 	particlePrimitives->Update(0, particles.size(), &(positions[0].x));
+
+	delete[] positions;
 }
 
 void ParticleSystem::Render() {
