@@ -18,6 +18,10 @@ void ParticleSystem::Update(float dt)
 	particlePrimitives->Update(0, particles.size(), &(positions[0].x));
 }
 
+void ParticleSystem::Render() {
+
+}
+
 glm::vec3 ParticleSystem::EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt)
 {
 	return x0 + v0 * dt;

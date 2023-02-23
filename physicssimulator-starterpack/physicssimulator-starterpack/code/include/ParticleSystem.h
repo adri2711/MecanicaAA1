@@ -16,10 +16,10 @@ protected:
 
 	glm::vec3 EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt);
 public:
-	ParticleSystem(glm::vec3 position, int num) : Object(position) { Setup(num); }
-	ParticleSystem() : Object(glm::vec3(0, 0, 0)) { Setup(0); }
+	ParticleSystem() : Object(glm::vec3(0, 0, 0)) {}
 	~ParticleSystem();
 	void Setup(int num);
 	void Update(float dt);
+	void Render();
 };
 

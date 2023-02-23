@@ -7,6 +7,9 @@ public:
 	~ParticleSim();
 
 	void Update(float dt) override;
+	void RenderUpdate() override;
+	void RenderGui() override;
+	
 
 private:
 	ParticleSystem particleSystem;

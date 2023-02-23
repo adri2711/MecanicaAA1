@@ -13,3 +13,12 @@ ParticleSim::~ParticleSim() {
 void ParticleSim::Update(float dt) {
 	particleSystem.Update(dt);
 }
+
+void ParticleSim::RenderUpdate() {
+	particleSystem.Render();
+}
+
+void ParticleSim::RenderGui() {
+
+}
+
