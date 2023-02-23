@@ -1,9 +1,9 @@
-#include <Parabola.h>
+#include <ParticleSim.h>
 #include <PrimitiveManager.h>
 
 extern graphics::PrimitiveManager manager;
 
-ParabolaSim::ParabolaSim() {
+ParticleSim::ParticleSim() {
 
 	x0[0] = glm::vec3(0.0f, 10.0f, 0.0f);
 
@@ -17,28 +17,28 @@ ParabolaSim::ParabolaSim() {
 	particlesPrim = manager.NewParticles(2);
 }
 
-ParabolaSim::~ParabolaSim() {
+ParticleSim::~ParticleSim() {
 	manager.DestroyPrimitive(particlesPrim);
 }
 
-void ParabolaSim::Update(float dt) {
+void ParticleSim::Update(float dt) {
 	for (int i = 0; i < 2; i++)
 	{
 		glm::vec3 particle = EulerSolver(dt, i);
 	}
 }
 
-void ParabolaSim::RenderUpdate() {
+void ParticleSim::RenderUpdate() {
 	particlesPrim->firstParticle = 0;
 	particlesPrim->numParticles = 2;
 	particlesPrim->Update(0, 2, &(x0[0].x));
 }
 
-void ParabolaSim::RenderGui() {
+void ParticleSim::RenderGui() {
 
 }
 
-glm::vec3 ParabolaSim::EulerSolver(float time, int iteration) {
+glm::vec3 ParticleSim::EulerSolver(float time, int iteration) {
 	glm::vec3 auxPosition = x0[iteration] + time * v0[iteration];
 	v0[iteration] += time * a;
 	/*if (x0.y < 0)

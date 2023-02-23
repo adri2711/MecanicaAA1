@@ -2,7 +2,7 @@
 #include <imgui\imgui_impl_sdl_gl3.h>
 #include <cstdio>
 
-#include "Parabola.h"
+#include "ParticleSim.h"
 
 
 #pragma region simulationSelection
@@ -22,7 +22,7 @@ void setSimulation(EnabledSimulation simulation) {
 	switch (simulation) {
 		case EnabledSimulation::PARABOLA:
 			printf("Start the random particles simulation\n");
-			currentSimulator = new ParabolaSim();
+			currentSimulator = new ParticleSim();
 			break;
 	}
 }
@@ -57,7 +57,7 @@ void GUI() {
 void PhysicsInit() {
 	// The default simulation
 	currentSimulation = EnabledSimulation::PARABOLA;
-	currentSimulator = new ParabolaSim();
+	currentSimulator = new ParticleSim();
 }
 
 void PhysicsUpdate(float dt) {

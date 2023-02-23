@@ -2,10 +2,10 @@
 #include <Simulator.h>
 #include <RenderPrims.h>
 
-class ParabolaSim : public Simulator {
+class ParticleSim : public Simulator {
 public:
-	ParabolaSim();
-	~ParabolaSim();
+	ParticleSim();
+	~ParticleSim();
 
 	void Update(float dt) override;
 	void RenderUpdate() override;
