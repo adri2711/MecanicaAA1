@@ -1,22 +1,25 @@
 #pragma once
 #include <Simulator.h>
 #include <RenderPrims.h>
-#include <ParticleSim.h>
 #include <PrimitiveManager.h>
 #include <vector>
 #include "Particle.h"
 
-class ParticleSystem : Object
+class ParticleSystem : public Object
 {
 protected:
 	graphics::ParticlesPrimitive* particlePrimitives;
 	std::vector<Particle> particles;
 
+	const glm::vec3 gravity = { 0, -9.81f, 0 };
 	glm::vec3 startVelocity;
 
-	void Update();
 	glm::vec3 EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt);
 public:
-	ParticleSystem(int num);
+	ParticleSystem(glm::vec3 position, int num) : Object(position) { Setup(num); }
+	ParticleSystem() : Object(glm::vec3(0, 0, 0)) { Setup(0); }
+	~ParticleSystem();
+	void Setup(int num);
+	void Update(float dt);
 };
 

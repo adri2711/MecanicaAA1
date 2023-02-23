@@ -1,50 +1,15 @@
 #include <ParticleSim.h>
 #include <PrimitiveManager.h>
 
-extern graphics::PrimitiveManager manager;
-
 ParticleSim::ParticleSim() {
-
-	x0[0] = glm::vec3(0.0f, 10.0f, 0.0f);
-
-	x0[1] = glm::vec3(10.0f, 5.0f, 0.0f);
-
-	v0[0] = glm::vec3(3.0f, 0.0f, 0.0f);
-	v0[1] = glm::vec3(3.0f, 7.0f, 0.0f);
-
-	a = glm::vec3(0.0f, -9.81f, 0.0f);
-
-	particlesPrim = manager.NewParticles(2);
+	particleSystem.position = glm::vec3(0, 4, 0);
+	particleSystem.Setup(10);
 }
 
 ParticleSim::~ParticleSim() {
-	manager.DestroyPrimitive(particlesPrim);
+	
 }
 
 void ParticleSim::Update(float dt) {
-	for (int i = 0; i < 2; i++)
-	{
-		glm::vec3 particle = EulerSolver(dt, i);
-	}
-}
-
-void ParticleSim::RenderUpdate() {
-	particlesPrim->firstParticle = 0;
-	particlesPrim->numParticles = 2;
-	particlesPrim->Update(0, 2, &(x0[0].x));
-}
-
-void ParticleSim::RenderGui() {
-
-}
-
-glm::vec3 ParticleSim::EulerSolver(float time, int iteration) {
-	glm::vec3 auxPosition = x0[iteration] + time * v0[iteration];
-	v0[iteration] += time * a;
-	/*if (x0.y < 0)
-	{
-		auxPosition = pos
-	}*/
-	x0[iteration] = auxPosition;
-	return x0[iteration];
+	particleSystem.Update(dt);
 }
