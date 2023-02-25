@@ -139,6 +139,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_sdl_gl3.cpp" />
     <ClCompile Include="src\Buffers.cpp" />
+    <ClCompile Include="src\FountainParticleSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Particle.cpp" />
@@ -152,6 +153,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Buffers.h" />
+    <ClInclude Include="include\FountainParticleSystem.h" />
     <ClInclude Include="include\Object.h" />
     <ClInclude Include="include\Particle.h" />
     <ClInclude Include="include\ParticleSim.h" />

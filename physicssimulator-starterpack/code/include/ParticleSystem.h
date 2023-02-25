@@ -10,16 +10,28 @@ class ParticleSystem : public Object
 protected:
 	graphics::ParticlesPrimitive* particlePrimitives;
 	std::vector<Particle> particles;
+	glm::vec3* positions;
+	float emitTime;
 
-	const glm::vec3 gravity = { 0, -9.81f, 0 };
-	glm::vec3 startVelocity = {0, 10.f, 0};
+	const glm::vec3 gravity = { 0.f, -9.81f, 0.f };
 
 	glm::vec3 EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt);
+	virtual void ParticleUpdate(int i, float dt);
+	virtual Particle CreateParticle();
+	virtual void DeleteParticle(int i);
+	void EmitParticles(); 
+	void UpdatePrimitive();
 public:
+	glm::vec3 startVelocity = { 0.f, 0.f, 0.f };
+	float emissionFrequency = 1.f;
+	int emissionRate = 100;
+	float particleMass = 1.f;
+	float particleLifeTime = 5.f;
+
 	ParticleSystem() : Object(glm::vec3(0, 0, 0)) {}
 	~ParticleSystem();
-	void Setup(int num);
-	void Update(float dt);
-	void Render();
+	virtual void Setup();
+	virtual void Update(float dt);
+	virtual void Render();
 };
 
