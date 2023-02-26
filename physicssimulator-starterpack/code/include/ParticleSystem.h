@@ -23,8 +23,8 @@ protected:
 	void UpdatePrimitive();
 public:
 	glm::vec3 startVelocity = { 0.f, 0.f, 0.f };
-	float emissionFrequency = 1.f;
-	int emissionRate = 100;
+	float emissionRate = 1.f;
+	int emissionCount = 100;
 	float particleMass = 1.f;
 	float particleLifeTime = 5.f;
 

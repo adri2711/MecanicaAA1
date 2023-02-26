@@ -5,9 +5,9 @@ extern graphics::PrimitiveManager manager;
 void ParticleSystem::Update(float dt)
 {
 	emitTime += dt;
-	if (emitTime >= emissionFrequency) {
+	if (emitTime >= 1.f/emissionRate) {
 		EmitParticles();
-		emitTime -= emissionFrequency;
+		emitTime -= 1.f/emissionRate;
 	}
 
 	positions = new glm::vec3[particles.size()];
@@ -54,7 +54,7 @@ void ParticleSystem::DeleteParticle(int i)
 
 void ParticleSystem::EmitParticles()
 {
-	for (int i = 0; i < emissionRate; i++) {
+	for (int i = 0; i < emissionCount; i++) {
 		particles.push_back(CreateParticle());
 	}
 	UpdatePrimitive();
@@ -68,7 +68,7 @@ void ParticleSystem::UpdatePrimitive()
 
 void ParticleSystem::Setup()
 {
-	emitTime = emissionFrequency;
+	emitTime = emissionRate;
 }
 
 ParticleSystem::~ParticleSystem()
