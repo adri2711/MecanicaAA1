@@ -1,4 +1,5 @@
 #include <ParticleSim.h>
+#include <imgui/imgui.h>
 #include "FountainParticleSystem.h"
 
 ParticleSim::ParticleSim() {
@@ -31,6 +32,6 @@ void ParticleSim::RenderUpdate() {
 }
 
 void ParticleSim::RenderGui() {
-
+	ImGui::SliderFloat("Emissin Rate (particles/s)", &particles->emissionRate, ParticleSystem::MIN)
 }
 

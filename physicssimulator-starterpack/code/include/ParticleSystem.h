@@ -5,8 +5,12 @@
 #include <vector>
 #include "Particle.h"
 
+
 class ParticleSystem : public Object
 {
+	#define MIN_EMISSION_RATE 100
+	#define MAX_EMISSION_RATE 1000
+
 protected:
 	graphics::ParticlesPrimitive* particlePrimitives;
 	std::vector<Particle> particles;

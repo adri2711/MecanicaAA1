@@ -2,6 +2,9 @@
 #include <RenderPrims.h>
 #include "Object.h"
 
+#define MIN_LIFE
+#define MAX_LIFE
+
 class Particle : public Object
 {
 public:
