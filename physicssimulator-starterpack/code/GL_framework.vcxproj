@@ -150,9 +150,11 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="src\render.cpp" />
     <ClCompile Include="src\RenderPrims.cpp" />
     <ClCompile Include="src\Program.cpp" />
+    <ClCompile Include="src\CascadeParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Buffers.h" />
+    <ClInclude Include="include\CascadeParticleSystem.h" />
     <ClInclude Include="include\FountainParticleSystem.h" />
     <ClInclude Include="include\Object.h" />
     <ClInclude Include="include\Particle.h" />

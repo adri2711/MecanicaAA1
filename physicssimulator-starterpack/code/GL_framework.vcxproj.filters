@@ -78,6 +78,9 @@
     <ClCompile Include="src\FountainParticleSystem.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\CascadeParticleSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\RenderPrims.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="include\FountainParticleSystem.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CascadeParticleSystem.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
