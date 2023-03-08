@@ -16,12 +16,14 @@ class CascadeParticleSystem : public ParticleSystem
 protected:
 	virtual void ParticleUpdate(int i, float dt) override;
 	virtual Particle CreateParticle() override;
-	glm::vec3 dirNormalised = glm::vec3(0.f, 0.f, 0.f);
+	glm::vec3 a = glm::vec3(0.f, 0.f, 0.f);
+	glm::vec3 b = glm::vec3(0.f, 0.f, 0.f);
+	glm::vec3 segment;
+	glm::vec4 dir;
 public:
-	glm::vec3 startPoint = glm::vec3(0.f, 0.f, 0.f);
-	glm::vec3 endPoint = glm::vec3(0.f, 0.f, 0.f);
 	float rotationAngle = 60.f; 
 	float velocityMagnitude = 1.f;
+	void SetPoints(glm::vec3 a, glm::vec3 b);
 	virtual void Setup() override;
 };
 

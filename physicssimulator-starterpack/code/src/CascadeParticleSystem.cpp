@@ -8,14 +8,19 @@ void CascadeParticleSystem::ParticleUpdate(int i, float dt)
 
 Particle CascadeParticleSystem::CreateParticle()
 {
-	//float randYaw = rand() % 360;
-	//float randPitch = rand() % (int)angle;
-	//glm::vec3 dirNorm = glm::normalize(coneDir);
-	//glm::mat4 yaw = glm::rotate(glm::mat4(), glm::radians(randYaw), dirNorm);
-	//glm::mat4 pitch = glm::rotate(glm::mat4(), glm::radians(randPitch), glm::normalize(glm::cross(dirNorm, glm::vec3(1.f,1.f,1.f))));
-	//glm::vec4 v0 = glm::vec4(coneDir, 0.f) * pitch * yaw * velocityMagnitude;
+	float random = (rand() % 1000) / 1000.f;
+	glm::vec3 x = a + segment * random;
+	glm::vec4 v0 = dir * velocityMagnitude;
 
-	return Particle(position, v0, gravity, particleLifeTime, particleMass);
+	return Particle(x, v0, gravity, particleLifeTime, particleMass);
+}
+
+void CascadeParticleSystem::SetPoints(glm::vec3 a, glm::vec3 b) {
+	this->a = a;
+	this->b = b;
+	segment = b - a;
+	glm::mat4 r = glm::rotate(glm::mat4(), glm::radians(rotationAngle), segment);
+	dir = glm::vec4(0.f, 1.f, 0.f, 0.f) * r;
 }
 
 void CascadeParticleSystem::Setup()
