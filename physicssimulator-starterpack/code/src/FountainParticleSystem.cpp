@@ -8,21 +8,18 @@ void FountainParticleSystem::ParticleUpdate(int i, float dt)
 
 Particle FountainParticleSystem::CreateParticle()
 {
-	float randAngle = rand() % 360;
-	glm::vec3 v0 = glm::vec3(
-		(cos(glm::radians(randAngle)) * dirNormalised.x) * velocityMagnitude,
-		(dirNormalised.y) * velocityMagnitude,
-		(sin(glm::radians(randAngle) * dirNormalised.x) * velocityMagnitude
-		));
+	float randYaw = rand() % 360;
+	float randPitch = rand() % (int)angle;
+	glm::vec3 dirNorm = glm::normalize(coneDir);
+	glm::mat4 yaw = glm::rotate(glm::mat4(), glm::radians(randYaw), dirNorm);
+	glm::mat4 pitch = glm::rotate(glm::mat4(), glm::radians(randPitch), glm::normalize(glm::cross(dirNorm, glm::vec3(1.f,1.f,1.f))));
+	glm::vec4 v0 = glm::vec4(coneDir, 0.f) * pitch * yaw * velocityMagnitude;
 
-	printf("%f\n", sqrt(pow(sin(randAngle) * dirNormalised.x, 2) + pow(cos(randAngle) * dirNormalised.x, 2) + dirNormalised.y));
 	return Particle(position, v0, gravity, particleLifeTime, particleMass);
 }
 
 void FountainParticleSystem::Setup()
 {
 	srand(time(NULL));
-	dirNormalised = glm::vec3(cos(glm::radians(90.f-angle)), sin(glm::radians(90.f-angle)), 0);
-
 	ParticleSystem::Setup();
 }

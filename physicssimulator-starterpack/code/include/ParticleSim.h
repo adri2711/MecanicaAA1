@@ -12,6 +12,5 @@ public:
 	
 
 private:
-	private particles
 	std::vector<ParticleSystem*> particleSystems;
 };

@@ -23,12 +23,11 @@ protected:
 	virtual void ParticleUpdate(int i, float dt);
 	virtual Particle CreateParticle();
 	virtual void DeleteParticle(int i);
-	void EmitParticles(); 
+	void EmitParticles(int emissionCount);
 	void UpdatePrimitive();
 public:
 	glm::vec3 startVelocity = { 0.f, 0.f, 0.f };
-	float emissionRate = 1.f;
-	int emissionCount = 100;
+	float emissionRate = 100.f;
 	float particleMass = 1.f;
 	float particleLifeTime = 5.f;
 

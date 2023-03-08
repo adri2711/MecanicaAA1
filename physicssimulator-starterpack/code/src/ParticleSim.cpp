@@ -5,11 +5,11 @@
 ParticleSim::ParticleSim() {
 	particleSystems.push_back(new FountainParticleSystem());
 	particleSystems[0]->position = glm::vec3(2, 4, 0);
-	particleSystems[0]->emissionRate = 2.f;
+	particleSystems[0]->emissionRate = 1000.f;
 	particleSystems[0]->particleLifeTime = 2.f;
-	static_cast<FountainParticleSystem*>(particleSystems[0])->angle = 40.f;
+	static_cast<FountainParticleSystem*>(particleSystems[0])->angle = 30.f;
 	static_cast<FountainParticleSystem*>(particleSystems[0])->velocityMagnitude = 7.f;
-	static_cast<FountainParticleSystem*>(particleSystems[0])->coneDir = glm::vec3(0.f, 1.0f, 0.f);
+	static_cast<FountainParticleSystem*>(particleSystems[0])->coneDir = glm::vec3(0.3f, 1.0f, 0.f);
 	particleSystems[0]->Setup();
 }
 
@@ -32,6 +32,6 @@ void ParticleSim::RenderUpdate() {
 }
 
 void ParticleSim::RenderGui() {
-	ImGui::SliderFloat("Emissin Rate (particles/s)", &particles->emissionRate, ParticleSystem::MIN)
+	//ImGui::SliderFloat("Emissin Rate (particles/s)", &particles->emissionRate, ParticleSystem::MIN)
 }
 

@@ -1,5 +1,16 @@
 #pragma once
 #include "ParticleSystem.h"
+#include <GL\glew.h>
+#include <glm\gtc\type_ptr.hpp>
+#include <glm\gtc\matrix_transform.hpp>
+#include <cstdio>
+#include <cassert>
+
+#include <imgui\imgui.h>
+#include <imgui\imgui_impl_sdl_gl3.h>
+
+#include "GL_framework.h"
+
 class FountainParticleSystem : public ParticleSystem
 {
 protected:
