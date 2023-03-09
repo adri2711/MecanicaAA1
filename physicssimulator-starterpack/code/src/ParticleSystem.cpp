@@ -34,7 +34,15 @@ glm::vec3 ParticleSystem::EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt)
 void ParticleSystem::ParticleUpdate(int i, float dt)
 {
 	particles[i].velocity = EulerSolver(particles[i].velocity, particles[i].acceleration, dt);
-	particles[i].position = EulerSolver(particles[i].position, particles[i].velocity, dt);
+	glm::vec3 auxPosition = EulerSolver(particles[i].position, particles[i].velocity, dt);
+
+	if (auxPosition.y <= 0 || auxPosition.y >= 10 || auxPosition.x <= -5 || auxPosition.x >= 5 || auxPosition.z <= -5 || auxPosition.z >= 5)
+	{
+		PositionAfterCollision(particles[i].position, auxPosition);
+		VelocityAfterCollision(particles[i].velocity);
+	}
+
+	particles[i].position = auxPosition;
 	positions[i] = particles[i].position;
 
 	particles[i].time += dt;
@@ -76,4 +84,70 @@ void ParticleSystem::Setup()
 ParticleSystem::~ParticleSystem()
 {
 	manager.DestroyPrimitive(particlePrimitives);
+}
+
+void PositionAfterCollision(glm::vec3 currentPosition, glm::vec3 newPosition, std::string axis, float point) {
+
+	glm::vec3 normal;
+	glm::vec3 pointOnPlane;
+	glm::vec3 vectorBetwenPoints;
+	float d;
+	glm::vec3 collisionPoint;
+
+	if (axis == "x")
+	{
+		if (point == -5)
+		{
+			normal.x = 1;
+			normal.y = 0;
+			normal.z = 0;
+
+			pointOnPlane.x = -5;
+			pointOnPlane.y = 5;
+			pointOnPlane.z = 0;
+
+			vectorBetwenPoints.x = newPosition.x - currentPosition.x;
+			vectorBetwenPoints.y = newPosition.y - currentPosition.y;
+			vectorBetwenPoints.z = newPosition.z - newPosition.z;
+
+			d = -(normal.x * pointOnPlane.x + normal.y * pointOnPlane.y + normal.z * pointOnPlane.z);
+
+			float alpha = (-d - (normal.x * currentPosition.x + normal.y * currentPosition.y + normal.z * currentPosition.z))
+				/ (normal.x * vectorBetwenPoints.x + normal.y * vectorBetwenPoints.y + normal.z * vectorBetwenPoints.z);
+
+			collisionPoint.x = alpha * vectorBetwenPoints.x;
+			collisionPoint.y = alpha * vectorBetwenPoints.y;
+			collisionPoint.z = alpha * vectorBetwenPoints.z;
+
+		}
+		else
+		{
+
+		}
+	}
+	else if (axis == "y") {
+
+		if (point == 0)
+		{
+
+		}
+		else 
+		{
+
+		}		
+	}
+	else if (axis == "z") {
+		
+		if (point == -5) {
+			
+		}
+		else 
+		{
+			
+		}
+	}
+}
+
+void VelocityAfterCollision(glm::vec3 currentVelocity) {
+	
 }
