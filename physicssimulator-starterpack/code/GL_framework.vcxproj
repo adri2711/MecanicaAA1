@@ -146,6 +146,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="src\ParticleSim.cpp" />
     <ClCompile Include="src\ParticleSystem.cpp" />
     <ClCompile Include="src\physics.cpp" />
+    <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\PrimitiveManager.cpp" />
     <ClCompile Include="src\render.cpp" />
     <ClCompile Include="src\RenderPrims.cpp" />
@@ -160,6 +161,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClInclude Include="include\Particle.h" />
     <ClInclude Include="include\ParticleSim.h" />
     <ClInclude Include="include\ParticleSystem.h" />
+    <ClInclude Include="include\Plane.h" />
     <ClInclude Include="include\PrimitiveManager.h" />
     <ClInclude Include="include\RenderPrims.h" />
     <ClInclude Include="include\Program.h" />

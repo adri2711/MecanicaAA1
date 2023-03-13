@@ -98,27 +98,18 @@ void PositionAfterCollision(glm::vec3 currentPosition, glm::vec3 newPosition, st
 	{
 		if (point == -5)
 		{
-			normal.x = 1;
-			normal.y = 0;
-			normal.z = 0;
+			normal = glm::vec3(1.f,0.f,0.f);
 
-			pointOnPlane.x = -5;
-			pointOnPlane.y = 5;
-			pointOnPlane.z = 0;
+			pointOnPlane = glm::vec3(-5.f, 5.f, .0f);
 
-			vectorBetwenPoints.x = newPosition.x - currentPosition.x;
-			vectorBetwenPoints.y = newPosition.y - currentPosition.y;
-			vectorBetwenPoints.z = newPosition.z - newPosition.z;
+			vectorBetwenPoints = newPosition - currentPosition;
 
 			d = -(normal.x * pointOnPlane.x + normal.y * pointOnPlane.y + normal.z * pointOnPlane.z);
 
 			float alpha = (-d - (normal.x * currentPosition.x + normal.y * currentPosition.y + normal.z * currentPosition.z))
 				/ (normal.x * vectorBetwenPoints.x + normal.y * vectorBetwenPoints.y + normal.z * vectorBetwenPoints.z);
 
-			collisionPoint.x = alpha * vectorBetwenPoints.x;
-			collisionPoint.y = alpha * vectorBetwenPoints.y;
-			collisionPoint.z = alpha * vectorBetwenPoints.z;
-
+			collisionPoint = alpha * vectorBetwenPoints;
 		}
 		else
 		{
