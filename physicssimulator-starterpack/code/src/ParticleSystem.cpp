@@ -33,6 +33,12 @@ glm::vec3 ParticleSystem::EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt)
 
 void ParticleSystem::ParticleUpdate(int i, float dt)
 {
+	particles[i].time += dt;
+	if (particles[i].time >= particles[i].lifeTime) {
+		DeleteParticle(i);
+		return;
+	}
+
 	particles[i].velocity = EulerSolver(particles[i].velocity, particles[i].acceleration, dt);
 	glm::vec3 auxPosition = EulerSolver(particles[i].position, particles[i].velocity, dt);
 
@@ -45,10 +51,6 @@ void ParticleSystem::ParticleUpdate(int i, float dt)
 	particles[i].position = auxPosition;
 	positions[i] = particles[i].position;
 
-	particles[i].time += dt;
-	if (particles[i].time >= particles[i].lifeTime) {
-		DeleteParticle(i);
-	}
 }
 
 Particle ParticleSystem::CreateParticle()
@@ -88,20 +90,16 @@ ParticleSystem::~ParticleSystem()
 
 void PositionAfterCollision(glm::vec3 currentPosition, glm::vec3 newPosition, std::string axis, float point) {
 
-	glm::vec3 normal;
-	glm::vec3 pointOnPlane;
+
 	glm::vec3 vectorBetwenPoints;
-	float d;
 	glm::vec3 collisionPoint;
+
+	float d;
 
 	if (axis == "x")
 	{
 		if (point == -5)
 		{
-			normal = glm::vec3(1.f,0.f,0.f);
-
-			pointOnPlane = glm::vec3(-5.f, 5.f, .0f);
-
 			vectorBetwenPoints = newPosition - currentPosition;
 
 			d = -(normal.x * pointOnPlane.x + normal.y * pointOnPlane.y + normal.z * pointOnPlane.z);

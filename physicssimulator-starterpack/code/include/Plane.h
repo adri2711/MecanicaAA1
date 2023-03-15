@@ -9,11 +9,11 @@ private:
 	glm::vec3 _sizes;
 	glm::vec3 _normal;
 
-	void CalculateNormal();
+	void CalculateNormalNormalized();
 
 public:
 
-	Plane(glm::vec3 coordinates, glm::vec3 sizes, char heightCoordinate, char widthCoordinate);
+	Plane(glm::vec3 coordinates, glm::vec3 sizes);
 
 	glm::vec3 GetNormal();
 	glm::vec3 GetCollisionPoint();

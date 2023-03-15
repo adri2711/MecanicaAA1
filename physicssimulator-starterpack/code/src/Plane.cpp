@@ -1,25 +1,65 @@
 #include "Plane.h"
 
-Plane::Plane(glm::vec3 coordinates, glm::vec3 sizes, char heightCoordinate, char widthCoordinate) : _coordinates{ coordinates }, _sizes{ sizes }
+Plane::Plane(glm::vec3 coordinates, glm::vec3 sizes) : _coordinates{ coordinates }, _sizes{ sizes }
 {
-	CalculateNormal();
+	CalculateNormalNormalized();
 }
 
-void Plane::CalculateNormal()
+void Plane::CalculateNormalNormalized()
 {
 	glm::vec3 auxVectors[2];
 
-	auxVectors[0].x = _coordinates.x - _sizes.x * 0;
-	auxVectors[0].y = _coordinates.y - _sizes.y * 1;
-	auxVectors[0].z = _coordinates.z - _sizes.z * 0;
-
-	auxVectors[1].x = _coordinates.x - _sizes.x * 1;
-	auxVectors[1].y = _coordinates.y - _sizes.y * 0;
-	auxVectors[1].z = _coordinates.z - _sizes.z * 0;
+	if (_sizes.x == 0)
+	{
+		#pragma region XPanels
+		if (_coordinates.x == -5) //LeftPanel
+		{
+			auxVectors[0] = _sizes * glm::vec3(0, 1, 0);
+			auxVectors[1] = _sizes * glm::vec3(0, 0, 1);
+		}
+		else //RightPanel
+		{
+			auxVectors[0] = _sizes * glm::vec3(0, 0, 1);
+			auxVectors[1] = _sizes * glm::vec3(0, 1, 0);
+		}
+		#pragma endregion
+	}
+	else if (_sizes.y == 0)
+	{
+		#pragma region YPanels
+		if (_coordinates.y == 0) //BottomPanel
+		{
+			auxVectors[0] = _sizes * glm::vec3(0, 0, 1);
+			auxVectors[1] = _sizes * glm::vec3(1, 0, 0);			
+		}
+		else //TopPanel
+		{
+			auxVectors[0] = _sizes * glm::vec3(1, 0, 0);
+			auxVectors[1] = _sizes * glm::vec3(0, 0, 1);
+		}
+		#pragma endregion
+	}
+	else if (_sizes.z == 0)
+	{
+		#pragma region ZPanels
+		if (_coordinates.z == -5) //FrontPanel
+		{
+			auxVectors[0] = _sizes * glm::vec3(1, 0, 0);
+			auxVectors[1] = _sizes * glm::vec3(0, 1, 0);
+		}
+		else //BackPanel
+		{			
+			auxVectors[0] = _sizes * glm::vec3(0, 1, 0);
+			auxVectors[1] = _sizes * glm::vec3(1, 0, 0);
+		}
+		#pragma endregion
+	}
 
 	_normal.x = auxVectors[0].y * auxVectors[1].z - auxVectors[0].z * auxVectors[1].y;
 	_normal.y = auxVectors[0].x * auxVectors[1].z - auxVectors[0].z * auxVectors[1].x;
 	_normal.z = auxVectors[0].x * auxVectors[1].y - auxVectors[0].y * auxVectors[1].x;
+
+	_normal /= sqrt(pow(_normal.x, 2) + pow(_normal.y, 2) + pow(_normal.z, 2));
 }
 
 glm::vec3 Plane::GetNormal()
