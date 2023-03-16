@@ -1,7 +1,8 @@
 #pragma once
 #include <RenderPrims.h>
+#include "Collider.h"
 
-class Plane
+class Plane : public Collider
 {
 private:
 
@@ -14,6 +15,7 @@ private:
 public:
 
 	Plane(glm::vec3 coordinates, glm::vec3 sizes);
+	~Plane();
 
 	glm::vec3 GetNormal();
 	glm::vec3 GetCollisionPoint();

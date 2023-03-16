@@ -2,6 +2,7 @@
 #include <imgui/imgui.h>
 #include "FountainParticleSystem.h"
 #include "CascadeParticleSystem.h"
+#include "Plane.h"
 
 ParticleSim::ParticleSim() {
 	particleSystems.push_back(new FountainParticleSystem());
@@ -21,6 +22,8 @@ ParticleSim::ParticleSim() {
 	static_cast<CascadeParticleSystem*>(particleSystems[1])->velocityMagnitude = 7.f;
 	static_cast<CascadeParticleSystem*>(particleSystems[1])->SetPoints(glm::vec3(-1.f, 3.f, 2.f), glm::vec3(-2.f, 4.f, -2.f));
 	particleSystems[1]->Setup();
+	
+	AddCollider(new Plane(glm::vec3(-5.f, 0.f, -5.f), glm::vec3(10.f, 0.f, 10.f)));
 }
 
 ParticleSim::~ParticleSim() {
@@ -31,7 +34,7 @@ ParticleSim::~ParticleSim() {
 
 void ParticleSim::Update(float dt) {
 	for (int i = 0; i < particleSystems.size(); i++) {
-		particleSystems[i]->Update(dt);
+		particleSystems[i]->Update(dt, _colliders);
 	}
 }
 

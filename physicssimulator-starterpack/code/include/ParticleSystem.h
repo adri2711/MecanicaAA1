@@ -4,6 +4,7 @@
 #include <PrimitiveManager.h>
 #include <vector>
 #include "Particle.h"
+#include "Plane.h"
 
 
 class ParticleSystem : public Object
@@ -20,11 +21,15 @@ protected:
 	const glm::vec3 gravity = { 0.f, -9.81f, 0.f };
 
 	glm::vec3 EulerSolver(glm::vec3 x0, glm::vec3 v0, float dt);
-	virtual void ParticleUpdate(int i, float dt);
+	virtual void ParticleUpdate(int i, float dt, std::vector<Collider*> colliders);
 	virtual Particle CreateParticle();
 	virtual void DeleteParticle(int i);
 	void EmitParticles(int emissionCount);
 	void UpdatePrimitive();
+	bool CheckCollision(int i, glm::vec3 nextPosition, std::vector<Collider*> colliders);
+	void PositionAfterCollision(glm::vec3 currentPosition, glm::vec3 newPosition);
+	void VelocityAfterCollision(glm::vec3 currentVelocity);
+
 public:
 	glm::vec3 startVelocity = { 0.f, 0.f, 0.f };
 	float emissionRate = 100.f;
@@ -34,7 +39,7 @@ public:
 	ParticleSystem() : Object(glm::vec3(0, 0, 0)) {}
 	~ParticleSystem();
 	virtual void Setup();
-	virtual void Update(float dt);
+	virtual void Update(float dt, std::vector<Collider*> colliders);
 	virtual void Render();
 };
 

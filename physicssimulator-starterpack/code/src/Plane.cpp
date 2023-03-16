@@ -2,17 +2,23 @@
 
 Plane::Plane(glm::vec3 coordinates, glm::vec3 sizes) : _coordinates{ coordinates }, _sizes{ sizes }
 {
+	_colliderType = PLANE;
 	CalculateNormalNormalized();
+}
+
+Plane::~Plane()
+{
+	delete this;
 }
 
 void Plane::CalculateNormalNormalized()
 {
 	glm::vec3 auxVectors[2];
 
-	if (_sizes.x == 0)
+	if (_sizes.x == 0.f)
 	{
 		#pragma region XPanels
-		if (_coordinates.x == -5) //LeftPanel
+		if (_coordinates.x == -5.f) //LeftPanel
 		{
 			auxVectors[0] = _sizes * glm::vec3(0, 1, 0);
 			auxVectors[1] = _sizes * glm::vec3(0, 0, 1);
@@ -24,10 +30,10 @@ void Plane::CalculateNormalNormalized()
 		}
 		#pragma endregion
 	}
-	else if (_sizes.y == 0)
+	else if (_sizes.y == 0.f)
 	{
 		#pragma region YPanels
-		if (_coordinates.y == 0) //BottomPanel
+		if (_coordinates.y == 0.f) //BottomPanel
 		{
 			auxVectors[0] = _sizes * glm::vec3(0, 0, 1);
 			auxVectors[1] = _sizes * glm::vec3(1, 0, 0);			
@@ -39,10 +45,10 @@ void Plane::CalculateNormalNormalized()
 		}
 		#pragma endregion
 	}
-	else if (_sizes.z == 0)
+	else if (_sizes.z == 0.f)
 	{
 		#pragma region ZPanels
-		if (_coordinates.z == -5) //FrontPanel
+		if (_coordinates.z == -5.f) //FrontPanel
 		{
 			auxVectors[0] = _sizes * glm::vec3(1, 0, 0);
 			auxVectors[1] = _sizes * glm::vec3(0, 1, 0);
