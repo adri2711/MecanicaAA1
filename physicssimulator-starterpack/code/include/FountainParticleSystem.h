@@ -14,7 +14,7 @@
 class FountainParticleSystem : public ParticleSystem
 {
 protected:
-	virtual void ParticleUpdate(int i, float dt) override;
+	virtual void ParticleUpdate(int i, float dt, std::vector<Collider*> colliders) override;
 	virtual Particle CreateParticle() override;
 	glm::vec3 coneDir = glm::vec3(0.f, 1.f, 0.f);
 	glm::vec3 dirNorm;

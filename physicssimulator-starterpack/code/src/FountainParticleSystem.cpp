@@ -1,9 +1,9 @@
 #include "FountainParticleSystem.h"
 #include <time.h>
 
-void FountainParticleSystem::ParticleUpdate(int i, float dt)
+void FountainParticleSystem::ParticleUpdate(int i, float dt, std::vector<Collider*> colliders)
 {
-	ParticleSystem::ParticleUpdate(i, dt);
+	ParticleSystem::ParticleUpdate(i, dt, colliders);
 }
 
 Particle FountainParticleSystem::CreateParticle()

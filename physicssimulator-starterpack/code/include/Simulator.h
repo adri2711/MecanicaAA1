@@ -11,8 +11,8 @@ public:
 	virtual void RenderUpdate() = 0;
 	virtual void RenderGui() = 0;
 
-	void AddCollider(Collider collider) {
-		_colliders.push_back(&collider);
+	void AddCollider(Collider* collider) {
+		_colliders.push_back(collider);
 	}
 
 	virtual ~Simulator() {};

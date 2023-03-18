@@ -3,10 +3,11 @@
 Collider::Collider()
 {
 	_active = true;
+	_colliderType = PLANE;
 }
 
-Collider::Collider(bool activate) : _active {activate}
-{
+Collider::Collider(bool activate, ColliderType colliderType) : _active { activate }, _colliderType { colliderType }
+{	
 }
 
 Collider::~Collider()

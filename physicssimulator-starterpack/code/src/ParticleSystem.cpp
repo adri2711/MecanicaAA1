@@ -1,5 +1,7 @@
 #include "ParticleSystem.h"
 
+#include <iostream>
+
 extern graphics::PrimitiveManager manager;
 
 void ParticleSystem::Update(float dt, std::vector<Collider*> colliders)
@@ -39,20 +41,14 @@ void ParticleSystem::ParticleUpdate(int i, float dt, std::vector<Collider*> coll
 		return;
 	}
 
-	particles[i].velocity = EulerSolver(particles[i].velocity, particles[i].acceleration, dt);
+	glm::vec3 nextVelocity = EulerSolver(particles[i].velocity, particles[i].acceleration, dt);
 	glm::vec3 nextPosition = EulerSolver(particles[i].position, particles[i].velocity, dt);
 
-	if (CheckCollision(i, nextPosition, colliders)) {
+	if (!CheckCollision(i, nextPosition, nextVelocity, colliders)) {
 		
-		PositionAfterCollision(particles[i].position, nextPosition);
-		VelocityAfterCollision(particles[i].velocity);
-	
-	}
-	else
-	{
 		particles[i].position = nextPosition;
 		positions[i] = particles[i].position;
-
+		particles[i].velocity = nextVelocity;	
 	}
 }
 
@@ -79,44 +75,61 @@ void ParticleSystem::UpdatePrimitive()
 {
 	manager.DestroyPrimitive(particlePrimitives);
 	particlePrimitives = manager.NewParticles(particles.size());
+	particlePrimitives->numParticles = particles.size();
 }
 
-bool ParticleSystem::CheckCollision(int i, glm::vec3 nextPosition, std::vector<Collider*> colliders)
+bool ParticleSystem::CheckCollision(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders)
 {	
-
 
 	for (int i = 0; i < colliders.size(); i++)
 	{
+
 		if (colliders[i]->GetColliderType() == PLANE)
 		{
-			Plane* plane = (Plane*)colliders[i];
+
+			Plane* plane;
+			plane = static_cast<Plane*>(colliders[i]);
 
 			glm::vec3 normal = plane->GetNormal();
+			glm::vec3 currentPosition = particles[i].position;
 
-			float d;
+			glm::vec3 vectorBetweenPoints = currentPosition - nextPosition;
 
-			glm::vec3 vectorBetwenPoints = nextPosition - particles[i].position;
+			float a = -(glm::dot(normal, currentPosition));
+			float b = glm::dot(normal, vectorBetweenPoints);
 
-			d = -(normal.x * pointOnPlane.x + normal.y * pointOnPlane.y + normal.z * pointOnPlane.z);
+			float alpha = a / b;
 
-			float alpha = (-d - (normal.x * particles[i].position.x + normal.y * particles[i].position.y + normal.z * particles[i].position.z))
-				/ (normal.x * vectorBetwenPoints.x + normal.y * vectorBetwenPoints.y + normal.z * vectorBetwenPoints.z);
+			glm::vec3 auxVectorBetweenPoints = vectorBetweenPoints;
 
+			auxVectorBetweenPoints *= alpha;
+
+			float d = -(glm::dot(normal, currentPosition) + glm::dot(normal,auxVectorBetweenPoints));
+
+			if (!(glm::dot(normal, currentPosition) + d) * (glm::dot(normal, nextPosition) + d) <= 0.f)
+			{
+				return false;
+			}
+
+			PositionAfterCollision(i, nextPosition, normal, d);
+			VelocityAfterCollision(i, nextVelocity, normal);
+
+
+			return true;
 		}
 	}
+
+	return false;
 }
 
-void ParticleSystem::PositionAfterCollision(glm::vec3 currentPosition, glm::vec3 nextPosition) {
-
-
-	glm::vec3 vectorBetwenPoints;
-	glm::vec3 collisionPoint;
-
-	collisionPoint = alpha * vectorBetwenPoints;
-}
-
-void ParticleSystem::VelocityAfterCollision(glm::vec3 currentVelocity) {
+void ParticleSystem::PositionAfterCollision(int i, glm::vec3 nextPosition, glm::vec3 normal, float d) {
 	
+	particles[i].position = nextPosition - 2.f * ((glm::dot(normal, nextPosition) + d) * normal);
+}
+
+void ParticleSystem::VelocityAfterCollision(int i, glm::vec3 nextVelocity, glm::vec3 normal) {
+	
+	particles[i].velocity = nextVelocity - 2.f * (glm::dot(normal, nextVelocity) * normal);
 }
 
 void ParticleSystem::Setup()

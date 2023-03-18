@@ -1,8 +1,7 @@
 #include "Plane.h"
 
-Plane::Plane(glm::vec3 coordinates, glm::vec3 sizes) : _coordinates{ coordinates }, _sizes{ sizes }
+Plane::Plane(glm::vec3 coordinates, glm::vec3 sizes) : Collider(true, PLANE), _coordinates{ coordinates }, _sizes{ sizes }
 {
-	_colliderType = PLANE;
 	CalculateNormalNormalized();
 }
 

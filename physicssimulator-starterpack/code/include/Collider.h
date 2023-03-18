@@ -13,7 +13,7 @@ protected:
 public:
 
 	Collider();
-	Collider(bool activate);
+	Collider(bool activate, ColliderType colldierType);
 
 	~Collider();
 

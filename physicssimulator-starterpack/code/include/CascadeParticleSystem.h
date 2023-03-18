@@ -14,7 +14,7 @@
 class CascadeParticleSystem : public ParticleSystem
 {
 protected:
-	virtual void ParticleUpdate(int i, float dt) override;
+	virtual void ParticleUpdate(int i, float dt, std::vector<Collider*> colliders) override;
 	virtual Particle CreateParticle() override;
 	glm::vec3 a = glm::vec3(0.f, 0.f, 0.f);
 	glm::vec3 b = glm::vec3(0.f, 0.f, 0.f);
