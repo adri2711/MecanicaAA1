@@ -25,7 +25,12 @@ ParticleSim::ParticleSim() {
 	static_cast<CascadeParticleSystem*>(particleSystems[1])->SetPoints(glm::vec3(-1.f, 3.f, 2.f), glm::vec3(-2.f, 4.f, -2.f));
 	particleSystems[1]->Setup();
 
-	AddCollider(new Plane(glm::vec3(-5.f, 0.f, -5.f), glm::vec3(10.f, 0.f, 10.f)));
+	AddCollider(new Plane(glm::vec3(-5.f, 0.f, 5.f), glm::vec3(10.f, 0.f, 10.f))); 
+	AddCollider(new Plane(glm::vec3(5.f, 0.f, -5.f), glm::vec3(0.f, 10.f, 10.f))); 
+	AddCollider(new Plane(glm::vec3(5.f, 10.f, -5.f), glm::vec3(10.f, 0.f, 10.f))); 
+	AddCollider(new Plane(glm::vec3(-5.f, 0.f, -5.f), glm::vec3(0.f, 10.f, 10.f)));
+	AddCollider(new Plane(glm::vec3(-5.f, 10.f, -5.f), glm::vec3(10.f, 10.f, 0.f)));
+	AddCollider(new Plane(glm::vec3(5.f, 10.f, 5.f), glm::vec3(10.f, 10.f, 0.f)));
 }
 
 ParticleSim::~ParticleSim() {
