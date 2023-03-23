@@ -11,14 +11,12 @@ private:
 	glm::vec3 _normal;
 	float _d;
 
-	void CalculateNormalNormalized();
+	glm::vec3 CalculateNormalNormalized();
+	float CalculateD();
 
 public:
 
 	Plane(glm::vec3 coordinates, glm::vec3 sizes);
 	~Plane();
-
-	glm::vec3 GetNormal();
-	float GetD();
 
 };

@@ -10,7 +10,7 @@ ParticleSim::ParticleSim() {
 	particleSystems.push_back(new FountainParticleSystem());
 	particleSystems[0]->position = glm::vec3(2, 4, 0);
 	particleSystems[0]->emissionRate = 1000.f;
-	particleSystems[0]->particleLifeTime = 2.f;
+	particleSystems[0]->particleLifeTime = 5.f;
 	static_cast<FountainParticleSystem*>(particleSystems[0])->angle = 30.f;
 	static_cast<FountainParticleSystem*>(particleSystems[0])->velocityMagnitude = 7.f;
 	static_cast<FountainParticleSystem*>(particleSystems[0])->SetDirection(glm::vec3(0.3f, 1.0f, 0.f));

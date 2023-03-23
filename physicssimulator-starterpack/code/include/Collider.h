@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+#include <glm/detail/type_vec3.hpp>
 
 enum ColliderType { PLANE, SPHERE, CAPSULE };
 
@@ -9,18 +9,24 @@ protected:
 	
 	ColliderType _colliderType;
 	bool _active;
+	glm::vec3 _normal;
+	float _d;
 
 public:
 
 	Collider();
-	Collider(bool activate, ColliderType colldierType);
+	Collider(bool activate, ColliderType colliderType);
 
 	~Collider();
 
 	void SetActive(bool active);
 	bool GetActive();
 
-	ColliderType GetColliderType();
+	void SetNormal(glm::vec3 normal);
+	glm::vec3 GetNormal();
 
-	void ShowCollider();
+	void SetD(float d);
+	float GetD();
+
+	ColliderType GetColliderType();
 };

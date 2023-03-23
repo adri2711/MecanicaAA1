@@ -25,8 +25,9 @@ protected:
 	virtual Particle CreateParticle();
 	virtual void DeleteParticle(int i);
 	void EmitParticles(int emissionCount);
-	void UpdatePrimitive();	
-	bool CheckCollision(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders);
+	void UpdatePrimitive();
+	void CheckCollisions(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders);
+	Collider* CheckColliders(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders) const;
 	void PositionAfterCollision(int i, glm::vec3 newPosition, glm::vec3 normal, float d);
 	void VelocityAfterCollision(int i, glm::vec3 nextVelocity, glm::vec3 normal);
 

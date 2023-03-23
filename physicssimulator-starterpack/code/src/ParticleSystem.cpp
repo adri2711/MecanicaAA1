@@ -1,5 +1,7 @@
 #include "ParticleSystem.h"
 
+#include <iostream>
+
 extern graphics::PrimitiveManager manager;
 
 void ParticleSystem::Update(float dt, std::vector<Collider*> colliders)
@@ -42,17 +44,44 @@ void ParticleSystem::ParticleUpdate(int i, float dt, std::vector<Collider*> coll
 	glm::vec3 nextVelocity = EulerSolver(particles[i].velocity, particles[i].acceleration, dt);
 	glm::vec3 nextPosition = EulerSolver(particles[i].position, particles[i].velocity, dt);
 
-	if (!CheckCollision(i, nextPosition, nextVelocity, colliders)) {
-		
-		particles[i].position = nextPosition;
-		particles[i].velocity = nextVelocity;	
-	}
-	positions[i] = particles[i].position;
+	CheckCollisions(i, nextPosition, nextVelocity, colliders);
 }
 
 Particle ParticleSystem::CreateParticle()
 {
 	return Particle(position, startVelocity, gravity, particleLifeTime, particleMass);
+}
+
+void ParticleSystem::CheckCollisions(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders)
+{	
+	Collider* collider = CheckColliders(i, nextPosition, nextVelocity, colliders);
+	
+	if (collider != nullptr) {
+
+		if (collider->GetColliderType() == PLANE)
+		{
+			PositionAfterCollision(i, nextPosition, collider->GetNormal(), collider->GetD());
+			VelocityAfterCollision(i, nextVelocity, collider->GetNormal());
+			//CheckCollisions(i, particles[i].position, particles[i].velocity, colliders);
+		}
+		else if (collider->GetColliderType() == SPHERE)
+		{
+
+			//Plane* auxCollider = reinterpret_cast<Plane*>(collider);
+		}
+		else if (collider->GetColliderType() == CAPSULE)
+		{
+
+			//Plane* auxCollider = reinterpret_cast<Plane*>(collider);
+		}		
+	}
+	else
+	{	
+		particles[i].position = nextPosition;
+		particles[i].velocity = nextVelocity;				
+	}
+	
+	positions[i] = particles[i].position;
 }
 
 void ParticleSystem::DeleteParticle(int i)
@@ -76,48 +105,48 @@ void ParticleSystem::UpdatePrimitive()
 	particlePrimitives->numParticles = particles.size();
 }
 
-bool ParticleSystem::CheckCollision(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders)
+Collider* ParticleSystem::CheckColliders(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders) const
 {
-
-	for (int i = 0; i < colliders.size(); i++)
+	for (int j = 0; j < colliders.size(); j++)
 	{
+		Collider* collider = colliders[j];
 
-		if (colliders[i]->GetColliderType() == PLANE)
+		if (colliders[j]->GetColliderType() == PLANE)
 		{
-
-			Plane* plane;
-			plane = static_cast<Plane*>(colliders[i]);
-
-			float d = plane->GetD();
-			glm::vec3 normal = plane->GetNormal();
+			float d = collider->GetD();
+			glm::vec3 normal = collider->GetNormal();
 			glm::vec3 currentPosition = particles[i].position;
 
 			if (!((glm::dot(normal, currentPosition) + d) * (glm::dot(normal, nextPosition) + d) <= 0.f))
 			{
-
-				if (i == colliders.size() - 1)
-				{
-					return false;
-				}
-
 				continue;
 			}
+			
+			return collider;
+		}
+		else if (colliders[j]->GetColliderType() == SPHERE)
+		{
 
-			PositionAfterCollision(i, nextPosition, normal, d);			
-			VelocityAfterCollision(i, nextVelocity, normal);
-			return true;
+			return collider;
+		}
+		else if (colliders[j]->GetColliderType() == CAPSULE)
+		{
+
+			return collider;
 		}
 	}
+
+	return nullptr;
 }
 
 void ParticleSystem::PositionAfterCollision(int i, glm::vec3 nextPosition, glm::vec3 normal, float d) {
 	
-	particles[i].position = nextPosition - 2.f * ((glm::dot(normal, nextPosition) + d) * normal);
+	particles[i].position = nextPosition - 2.f * ((glm::dot(normal, nextPosition) + d) * normal);	
 }
 
 void ParticleSystem::VelocityAfterCollision(int i, glm::vec3 nextVelocity, glm::vec3 normal) {
 		
-	particles[i].velocity = nextVelocity - 2.f * (glm::dot(normal, nextVelocity) * normal);	
+	particles[i].velocity = nextVelocity - 2.f * (glm::dot(normal, nextVelocity) * normal);
 }
 
 void ParticleSystem::Setup()
