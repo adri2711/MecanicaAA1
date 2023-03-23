@@ -1,22 +1,23 @@
 #pragma once
-#include <RenderPrims.h>
 #include "Collider.h"
 
-class Plane : public Collider
+class Sphere : public Collider
 {
 private:
 
 	glm::vec3 _coordinates;
-	glm::vec3 _sizes;
+	float _radius;
 	glm::vec3 _normal;
 	float _d;
+
 
 	glm::vec3 CalculateNormalNormalized() override;
 	float CalculateD() override;
 
 public:
 
-	Plane(glm::vec3 coordinates, glm::vec3 sizes);
-	~Plane();
+	Sphere(glm::vec3 coordinates, float radius);
+	~Sphere();
 
 };
+

@@ -12,6 +12,10 @@ protected:
 	glm::vec3 _normal;
 	float _d;
 
+
+	virtual glm::vec3 CalculateNormalNormalized() = 0;
+	virtual float CalculateD() = 0;
+
 public:
 
 	Collider();

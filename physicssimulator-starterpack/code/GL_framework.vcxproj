@@ -153,6 +153,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="src\RenderPrims.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\CascadeParticleSystem.cpp" />
+    <ClCompile Include="src\Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Buffers.h" />
@@ -168,6 +169,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClInclude Include="include\RenderPrims.h" />
     <ClInclude Include="include\Program.h" />
     <ClInclude Include="include\Simulator.h" />
+    <ClInclude Include="include\Sphere.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Axis.fs" />

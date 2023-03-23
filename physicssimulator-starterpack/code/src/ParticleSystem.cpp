@@ -66,7 +66,8 @@ void ParticleSystem::CheckCollisions(int i, glm::vec3 nextPosition, glm::vec3 ne
 		}
 		else if (collider->GetColliderType() == SPHERE)
 		{
-
+			/*float d;
+			collider->SetD(d);*/
 			//Plane* auxCollider = reinterpret_cast<Plane*>(collider);
 		}
 		else if (collider->GetColliderType() == CAPSULE)
