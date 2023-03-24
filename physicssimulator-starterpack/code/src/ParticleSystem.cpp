@@ -137,40 +137,8 @@ Plane* ParticleSystem::CheckColliders(int i, glm::vec3 nextPosition, std::vector
 			{
 				
 				glm::vec3 currentPosition = particles[i].position;
-				glm::vec3 currentPositionClosestPoint = CalculateClosestPointBetweenPointAndCapsule(currentPosition, capsule, pointA, pointB);
 				
 				glm::vec3 midPoint = currentPosition + (nextPosition - currentPosition) / 2.f;
-
-				float distanceToCapsule;
-				
-				glm::vec3 upperBound = midPoint - currentPosition;
-				glm::vec3 lowerBound = midPoint - nextPosition;
-
-				bool _pointFound;
-				
-				do
-				{
-
-					glm::vec3 midPointClosestPoint = CalculateClosestPointBetweenPointAndCapsule(midPoint, capsule, pointA, pointB);
-
-					distanceToCapsule = CalculateDistanceBetweenPointAndCapsule(midPoint, capsule, midPointClosestPoint);
-					
-					_pointFound = true;
-					
-					if (distanceToCapsule > 0.1f)
-					{
-						upperBound /= 2;
-						midPoint = upperBound;
-						_pointFound = false;
-					}
-					else if (distanceToCapsule < -0.1f)
-					{
-						lowerBound /= 2;
-						midPoint = lowerBound;
-						_pointFound = false;
-					}
-					
-				}while (!_pointFound);
 
 				Sphere* sphere = new Sphere(midPoint, capsule->_radius);
 

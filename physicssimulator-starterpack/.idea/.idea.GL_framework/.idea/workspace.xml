@@ -102,6 +102,7 @@
       <workItem from="1679570339705" duration="6718000" />
       <workItem from="1679603744889" duration="14144000" />
       <workItem from="1679643544795" duration="19113000" />
+      <workItem from="1679665560543" duration="915000" />
     </task>
     <servers />
   </component>
@@ -131,11 +132,6 @@
           <url>file://$PROJECT_DIR$/code/src/ParticleSystem.cpp</url>
           <line>172</line>
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/code/src/ParticleSystem.cpp</url>
-          <line>146</line>
-          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
