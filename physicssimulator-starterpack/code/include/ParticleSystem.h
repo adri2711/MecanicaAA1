@@ -1,5 +1,4 @@
 #pragma once
-#include <Simulator.h>
 #include <RenderPrims.h>
 #include <PrimitiveManager.h>
 #include <vector>
@@ -26,8 +25,7 @@ protected:
 	virtual void DeleteParticle(int i);
 	void EmitParticles(int emissionCount);
 	void UpdatePrimitive();
-	void CheckCollisions(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders);
-	Collider* CheckColliders(int i, glm::vec3 nextPosition, glm::vec3 nextVelocity, std::vector<Collider*> colliders) const;
+	Plane* CheckColliders(int i, glm::vec3 nextPosition, std::vector<Collider*> colliders) const;
 	void PositionAfterCollision(int i, glm::vec3 newPosition, glm::vec3 normal, float d);
 	void VelocityAfterCollision(int i, glm::vec3 nextVelocity, glm::vec3 normal);
 

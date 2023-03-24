@@ -1,11 +1,14 @@
 #include "Plane.h"
 
-#include <iostream>
-
 Plane::Plane(glm::vec3 coordinates, glm::vec3 sizes) : _coordinates{ coordinates }, _sizes{ sizes }, Collider(true, PLANE)
 {
-	SetNormal(CalculateNormalNormalized());
-	SetD(CalculateD());
+	CalculateNormalNormalized();
+	CalculateD();
+}
+
+Plane::Plane(glm::vec3 coordinates) : _coordinates(coordinates), Collider(true, PLANE)
+{
+	
 }
 
 Plane::~Plane()
@@ -13,7 +16,7 @@ Plane::~Plane()
 	delete this;
 }
 
-glm::vec3 Plane::CalculateNormalNormalized()
+void Plane::CalculateNormalNormalized()
 {
 	glm::vec3 auxVectors[2];
 
@@ -65,10 +68,26 @@ glm::vec3 Plane::CalculateNormalNormalized()
 
 	_normal = glm::cross(auxVectors[0], auxVectors[1]);
 
-	return _normal /= sqrt(pow(_normal.x, 2) + pow(_normal.y, 2) + pow(_normal.z, 2));
+	_normal /= sqrt(pow(_normal.x, 2) + pow(_normal.y, 2) + pow(_normal.z, 2));
 }
 
-float Plane::CalculateD()
+void Plane::CalculateD()
 {
-	return _d = -(glm::dot(_normal, _coordinates));
+	_d = -(glm::dot(_normal, _coordinates));
+}
+
+void Plane::SetNormal(glm::vec3 normal)
+{	
+	normal /= sqrt(pow(normal.x, 2) + pow(normal.y, 2) + pow(normal.z, 2));
+	_normal = normal;
+}
+
+glm::vec3 Plane::GetNormal()
+{
+	return _normal;
+}
+
+float Plane::GetD()
+{
+	return _d;
 }

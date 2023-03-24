@@ -3,14 +3,19 @@
 #include "FountainParticleSystem.h"
 #include "CascadeParticleSystem.h"
 #include "Plane.h"
+#include "Sphere.h"
+#include "Capsule.h"
 
 #include <iostream>
+
+
+extern graphics::PrimitiveManager manager;
 
 ParticleSim::ParticleSim() {
 	particleSystems.push_back(new FountainParticleSystem());
 	particleSystems[0]->position = glm::vec3(2, 4, 0);
 	particleSystems[0]->emissionRate = 1000.f;
-	particleSystems[0]->particleLifeTime = 5.f;
+	particleSystems[0]->particleLifeTime = 2.f;
 	static_cast<FountainParticleSystem*>(particleSystems[0])->angle = 30.f;
 	static_cast<FountainParticleSystem*>(particleSystems[0])->velocityMagnitude = 7.f;
 	static_cast<FountainParticleSystem*>(particleSystems[0])->SetDirection(glm::vec3(0.3f, 1.0f, 0.f));
@@ -25,12 +30,21 @@ ParticleSim::ParticleSim() {
 	static_cast<CascadeParticleSystem*>(particleSystems[1])->SetPoints(glm::vec3(-1.f, 3.f, 2.f), glm::vec3(-2.f, 4.f, -2.f));
 	particleSystems[1]->Setup();
 
+	Sphere* sphere = new Sphere(glm::vec3(0.f, 5.f, 0.f), 2.f);	
+	AddCollider(sphere);
+
+	Capsule* capsule = new Capsule(glm::vec3(0.f, 1.f, 0.f), glm::vec3(1.f, 2.f, 1.f), 1.f);                        
+	AddCollider(capsule);
+	
 	AddCollider(new Plane(glm::vec3(-5.f, 0.f, 5.f), glm::vec3(10.f, 0.f, 10.f))); 
 	AddCollider(new Plane(glm::vec3(5.f, 0.f, -5.f), glm::vec3(0.f, 10.f, 10.f))); 
 	AddCollider(new Plane(glm::vec3(5.f, 10.f, -5.f), glm::vec3(10.f, 0.f, 10.f))); 
 	AddCollider(new Plane(glm::vec3(-5.f, 0.f, -5.f), glm::vec3(0.f, 10.f, 10.f)));
 	AddCollider(new Plane(glm::vec3(-5.f, 10.f, -5.f), glm::vec3(10.f, 10.f, 0.f)));
 	AddCollider(new Plane(glm::vec3(5.f, 10.f, 5.f), glm::vec3(10.f, 10.f, 0.f)));
+	
+	_colliderSystem.SetSphere(sphere);
+	_colliderSystem.SetCapsule(capsule);	
 }
 
 ParticleSim::~ParticleSim() {

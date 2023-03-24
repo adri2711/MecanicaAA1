@@ -9,12 +9,6 @@ protected:
 	
 	ColliderType _colliderType;
 	bool _active;
-	glm::vec3 _normal;
-	float _d;
-
-
-	virtual glm::vec3 CalculateNormalNormalized() = 0;
-	virtual float CalculateD() = 0;
 
 public:
 
@@ -25,12 +19,6 @@ public:
 
 	void SetActive(bool active);
 	bool GetActive();
-
-	void SetNormal(glm::vec3 normal);
-	glm::vec3 GetNormal();
-
-	void SetD(float d);
-	float GetD();
 
 	ColliderType GetColliderType();
 };

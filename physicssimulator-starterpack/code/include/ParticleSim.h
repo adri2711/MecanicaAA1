@@ -1,4 +1,7 @@
 #pragma once
+#include <Simulator.h>
+
+#include "ColliderSystem.h"
 #include "ParticleSystem.h"
 
 class ParticleSim : public Simulator {
@@ -13,4 +16,5 @@ public:
 
 private:
 	std::vector<ParticleSystem*> particleSystems;
+	ColliderSystem _colliderSystem;
 };
