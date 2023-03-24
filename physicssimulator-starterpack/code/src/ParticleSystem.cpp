@@ -3,12 +3,6 @@
 #include <iostream>
 
 #include "Capsule.h"
-#include "Capsule.h"
-#include "Capsule.h"
-#include "Capsule.h"
-#include "Capsule.h"
-#include "Capsule.h"
-#include "Capsule.h"
 #include "Sphere.h"
 
 extern graphics::PrimitiveManager manager;
