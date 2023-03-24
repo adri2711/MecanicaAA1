@@ -8,7 +8,6 @@ Sphere::Sphere(glm::vec3 coordinates, float radius) : _coordinates(coordinates),
 
 Sphere::~Sphere()
 {
-    delete this;
 }
 
 float Sphere::CalculateA(glm::vec3 currentPosition)

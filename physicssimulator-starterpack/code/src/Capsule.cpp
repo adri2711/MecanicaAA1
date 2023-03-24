@@ -7,5 +7,4 @@ Capsule::Capsule(glm::vec3 pointACoordinates, glm::vec3 pointBCoordinates, float
 
 Capsule::~Capsule()
 {
-    delete this;
 }
