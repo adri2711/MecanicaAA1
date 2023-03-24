@@ -12,7 +12,8 @@ Collider::Collider(bool activate, ColliderType colliderType) : _active{activate}
 }
 
 Collider::~Collider()
-{	
+{
+	delete this;
 }
 
 void Collider::SetActive(bool active)

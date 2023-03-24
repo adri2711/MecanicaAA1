@@ -2,12 +2,15 @@
 #include <RenderPrims.h>
 #include <PrimitiveManager.h>
 #include <vector>
+
+#include "Capsule.h"
 #include "Particle.h"
 #include "Plane.h"
 
 
 class ParticleSystem : public Object
 {
+
 	#define MIN_EMISSION_RATE 100
 	#define MAX_EMISSION_RATE 1000
 
@@ -24,10 +27,13 @@ protected:
 	virtual Particle CreateParticle();
 	virtual void DeleteParticle(int i);
 	void EmitParticles(int emissionCount);
-	void UpdatePrimitive();
+	void UpdatePrimitive();	
 	Plane* CheckColliders(int i, glm::vec3 nextPosition, std::vector<Collider*> colliders) const;
 	void PositionAfterCollision(int i, glm::vec3 newPosition, glm::vec3 normal, float d);
 	void VelocityAfterCollision(int i, glm::vec3 nextVelocity, glm::vec3 normal);
+	Plane* CalculateSpherePlane(int i, glm::vec3 nextPosition, Collider* collider) const;
+	glm::vec3 CalculateClosestPointBetweenPointAndCapsule(glm::vec3 position, Capsule* capsule, glm::vec3 pointA, glm::vec3 pointB) const;	
+	float CalculateDistanceBetweenPointAndCapsule(glm::vec3 position, Capsule* capsule, glm::vec3 closestPoint) const;	
 
 public:
 	glm::vec3 startVelocity = { 0.f, 0.f, 0.f };

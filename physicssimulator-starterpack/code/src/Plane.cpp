@@ -68,7 +68,7 @@ void Plane::CalculateNormalNormalized()
 
 	_normal = glm::cross(auxVectors[0], auxVectors[1]);
 
-	_normal /= sqrt(pow(_normal.x, 2) + pow(_normal.y, 2) + pow(_normal.z, 2));
+	_normal /= sqrt(glm::dot(_normal, _normal));
 }
 
 void Plane::CalculateD()
@@ -78,7 +78,7 @@ void Plane::CalculateD()
 
 void Plane::SetNormal(glm::vec3 normal)
 {	
-	normal /= sqrt(pow(normal.x, 2) + pow(normal.y, 2) + pow(normal.z, 2));
+	normal /= sqrt(glm::dot(normal, normal));
 	_normal = normal;
 }
 

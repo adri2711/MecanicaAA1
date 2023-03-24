@@ -2,6 +2,13 @@
 
 #include <iostream>
 
+#include "Capsule.h"
+#include "Capsule.h"
+#include "Capsule.h"
+#include "Capsule.h"
+#include "Capsule.h"
+#include "Capsule.h"
+#include "Capsule.h"
 #include "Sphere.h"
 
 extern graphics::PrimitiveManager manager;
@@ -104,51 +111,120 @@ Plane* ParticleSystem::CheckColliders(int i, glm::vec3 nextPosition, std::vector
 			if ((glm::dot(normal, currentPosition) + d) * (glm::dot(normal, nextPosition) + d) <= 0.f)
 			{
 				return plane;				
-			}
-			
-			continue;
-			
+			}			
 		}
 		else if (collider->GetColliderType() == SPHERE)
 		{
+			Plane* plane = CalculateSpherePlane(i, nextPosition, collider);
 
-			Sphere* sphere = reinterpret_cast<Sphere*>(collider);
-			
-			glm::vec3 vectorToSphereCenter = sphere->GetCoordinates() - nextPosition;
-			
-			if (sqrt(glm::dot(vectorToSphereCenter, vectorToSphereCenter)) <= sphere->GetRadius())
+			if (plane != nullptr)
 			{
-				glm::vec3 currentPosition = particles[i].position;
-				glm::vec3 vectorBetweenPositions = nextPosition - currentPosition;
-				
-				float a = sphere->CalculateA(currentPosition);
-				float b = sphere->CalculateB(currentPosition, vectorBetweenPositions);
-				float c = sphere->CalculateC(vectorBetweenPositions);
-				float d = a + b + c;
-
-				float result1 = (-b + sqrt(pow(b,2) - 4 * a * (c - d))) / 2 * a;
-				float result2 = (-b - sqrt(pow(b,2) - 4 * a * (c - d))) / 2 * a;
-
-				float alpha = fminf(result1, result2);
-
-				glm::vec3 collisionPoint;
-
-				collisionPoint = currentPosition + vectorBetweenPositions * alpha;
-
-				Plane* plane = new Plane(collisionPoint);
-				plane->SetNormal(collisionPoint - sphere->GetCoordinates());
-				plane->CalculateD();
-				
-				return plane;				
+				return plane;
 			}
 			
-			continue;
 		}
 		else if (collider->GetColliderType() == CAPSULE)
 		{
 
-			//return collider;
+			Capsule* capsule = reinterpret_cast<Capsule*>(collider);
+
+			glm::vec3 pointA = capsule->_pointACoordinates;
+			glm::vec3 pointB = capsule->_pointBCoordinates;
+
+			glm::vec3 nextPositionClosestPoint = CalculateClosestPointBetweenPointAndCapsule(nextPosition, capsule, pointA, pointB);
+			
+			if (CalculateDistanceBetweenPointAndCapsule(nextPosition, capsule, nextPositionClosestPoint) <= 0.f)
+			{
+				
+				glm::vec3 currentPosition = particles[i].position;
+				glm::vec3 currentPositionClosestPoint = CalculateClosestPointBetweenPointAndCapsule(currentPosition, capsule, pointA, pointB);
+				
+				glm::vec3 midPoint = currentPosition + (nextPosition - currentPosition) / 2.f;
+
+				float distanceToCapsule;
+				
+				glm::vec3 upperBound = midPoint - currentPosition;
+				glm::vec3 lowerBound = midPoint - nextPosition;
+
+				bool _pointFound;
+				
+				do
+				{
+
+					glm::vec3 midPointClosestPoint = CalculateClosestPointBetweenPointAndCapsule(midPoint, capsule, pointA, pointB);
+
+					distanceToCapsule = CalculateDistanceBetweenPointAndCapsule(midPoint, capsule, midPointClosestPoint);
+					
+					_pointFound = true;
+					
+					if (distanceToCapsule > 0.1f)
+					{
+						upperBound /= 2;
+						midPoint = upperBound;
+						_pointFound = false;
+					}
+					else if (distanceToCapsule < -0.1f)
+					{
+						lowerBound /= 2;
+						midPoint = lowerBound;
+						_pointFound = false;
+					}
+					
+				}while (!_pointFound);
+
+				Sphere* sphere = new Sphere(midPoint, capsule->_radius);
+
+				return CalculateSpherePlane(i, nextPosition, sphere);				
+			}
 		}
+	}
+	return nullptr;
+}
+
+glm::vec3 ParticleSystem::CalculateClosestPointBetweenPointAndCapsule(glm::vec3 position, Capsule* capsule, glm::vec3 pointA, glm::vec3 pointB) const
+{
+	float a = glm::dot(position - pointA, pointB - pointA);
+	float b = pow(sqrt(glm::dot(pointB - pointA, pointB - pointA)), 2);
+	
+	float clamp = glm::clamp(a / b, 0.f, 1.f);
+	
+	return pointA + clamp * (pointB - pointA);	
+}
+
+float ParticleSystem::CalculateDistanceBetweenPointAndCapsule(glm::vec3 position, Capsule* capsule, glm::vec3 closestPoint) const
+{
+	return sqrt(glm::dot(position - closestPoint, position - closestPoint)) - capsule->_radius;
+}
+
+
+Plane* ParticleSystem::CalculateSpherePlane(int i, glm::vec3 nextPosition, Collider* collider) const
+{
+	Sphere* sphere = reinterpret_cast<Sphere*>(collider);
+			
+	glm::vec3 vectorToSphereCenter = sphere->_coordinates - nextPosition;
+			
+	if (sqrt(glm::dot(vectorToSphereCenter, vectorToSphereCenter)) <= sphere->_radius)
+	{
+		glm::vec3 currentPosition = particles[i].position;
+		glm::vec3 vectorBetweenPositions = nextPosition - currentPosition;
+				
+		float a = sphere->CalculateA(currentPosition);
+		float b = sphere->CalculateB(currentPosition, vectorBetweenPositions);
+		float c = sphere->CalculateC(vectorBetweenPositions);
+		float d = a + b + c;
+
+		float result1 = (-b + sqrt(pow(b,2) - 4 * a * (c - d))) / 2 * a;
+		float result2 = (-b - sqrt(pow(b,2) - 4 * a * (c - d))) / 2 * a;
+
+		float alpha = fminf(result1, result2);
+
+		glm::vec3 collisionPoint = currentPosition + vectorBetweenPositions * alpha;
+
+		Plane* plane = new Plane(collisionPoint);
+		plane->SetNormal(collisionPoint - sphere->_coordinates);
+		plane->CalculateD();
+
+		return plane;				
 	}
 
 	return nullptr;

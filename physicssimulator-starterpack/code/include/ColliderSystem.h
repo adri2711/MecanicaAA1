@@ -14,6 +14,8 @@ protected:
     graphics::SpherePrimitive* _spherePrimitive; 
     graphics::CapsulePrimitive* _capsulePrimitive;
     std::vector<Collider*> _colliders;
+    Sphere* _sphere;
+    Capsule* _capsule;
      
     void UpdatePrimitive();    
 
@@ -23,9 +25,11 @@ public:
     ~ColliderSystem();
 
     void SetSphere(Sphere* sphere);
-    void SetCapsule(Capsule* capsule);
+    Sphere* GetSphere();
     
-    virtual void Update(float dt, std::vector<Collider*> colliders);
+    void SetCapsule(Capsule* capsule);
+    Capsule* GetCapsule();
+    
     virtual void Render();
     
 };
