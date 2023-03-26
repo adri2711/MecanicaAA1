@@ -8,7 +8,6 @@ class Collider
 protected:
 	
 	ColliderType _colliderType;
-	bool _active;
 
 public:
 
@@ -16,9 +15,6 @@ public:
 	Collider(bool activate, ColliderType colliderType);
 
 	~Collider();
-
-	void SetActive(bool active);
-	bool GetActive();
 
 	ColliderType GetColliderType();
 };
