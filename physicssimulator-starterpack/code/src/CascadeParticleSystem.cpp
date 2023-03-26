@@ -1,9 +1,9 @@
 #include "CascadeParticleSystem.h"
 #include <time.h>
 
-void CascadeParticleSystem::ParticleUpdate(int i, float dt)
+void CascadeParticleSystem::ParticleUpdate(int i, float dt, std::vector<Collider*> colliders)
 {
-	ParticleSystem::ParticleUpdate(i, dt);
+	ParticleSystem::ParticleUpdate(i, dt, colliders);
 }
 
 Particle CascadeParticleSystem::CreateParticle()

@@ -12,6 +12,7 @@ enum class EnabledSimulation {
 
 Simulator* currentSimulator;
 EnabledSimulation currentSimulation;
+
 void setSimulation(EnabledSimulation simulation) {
 	if (currentSimulation == simulation) {
 		return;
@@ -30,6 +31,7 @@ void setSimulation(EnabledSimulation simulation) {
 
 #pragma region GUI
 bool show_test_window = false;
+
 void GUI() {
 	bool show = true;
 	
