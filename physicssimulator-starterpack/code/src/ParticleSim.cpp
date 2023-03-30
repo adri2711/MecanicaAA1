@@ -8,9 +8,6 @@
 
 #include <iostream>
 
-
-extern graphics::PrimitiveManager manager;
-
 ParticleSim::ParticleSim() {
 	particleSystems.push_back(new FountainParticleSystem());
 	particleSystems[0]->position = glm::vec3(2, 4, 0);

@@ -3,11 +3,12 @@
 #include <cstdio>
 
 #include "ParticleSim.h"
+#include "ClothSim.h"
 
 
 #pragma region simulationSelection
 enum class EnabledSimulation {
-	PARABOLA,
+	PARABOLA, CLOTH
 };
 
 Simulator* currentSimulator;
@@ -25,6 +26,11 @@ void setSimulation(EnabledSimulation simulation) {
 			printf("Start the random particles simulation\n");
 			currentSimulator = new ParticleSim();
 			break;
+
+		case EnabledSimulation::CLOTH:
+			printf("Start the clothes simulation\n");
+			currentSimulator = new ClothSim();
+			break;
 	}
 }
 #pragma endregion
@@ -38,6 +44,7 @@ void GUI() {
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("Simulation")) {
 			if (ImGui::MenuItem("Parabola")) { setSimulation(EnabledSimulation::PARABOLA); };
+			if (ImGui::MenuItem("Cloth")) { setSimulation(EnabledSimulation::CLOTH); };
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -58,8 +65,8 @@ void GUI() {
 
 void PhysicsInit() {
 	// The default simulation
-	currentSimulation = EnabledSimulation::PARABOLA;
-	currentSimulator = new ParticleSim();
+	currentSimulation = EnabledSimulation::CLOTH;
+	currentSimulator = new ClothSim();
 }
 
 void PhysicsUpdate(float dt) {

@@ -138,6 +138,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_sdl_gl3.cpp" />
+    <ClCompile Include="src\ClothSim.cpp" />
     <ClCompile Include="src\Buffers.cpp" />
     <ClCompile Include="src\Capsule.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -290,6 +291,8 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     </ClCompile>
     <ClCompile Include="src\FountainParticleSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\MeshSystem.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\ParticleSim.cpp" />
@@ -301,15 +304,20 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="src\RenderPrims.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\CascadeParticleSystem.cpp" />
+    <ClCompile Include="src\Solver.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
+    <ClCompile Include="src\VerletFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ClothSim.h" />
     <ClInclude Include="include\Buffers.h" />
     <ClInclude Include="include\Capsule.h" />
     <ClInclude Include="include\CascadeParticleSystem.h" />
     <ClInclude Include="include\Collider.h" />
     <ClInclude Include="include\ColliderSystem.h" />
     <ClInclude Include="include\FountainParticleSystem.h" />
+    <ClInclude Include="include\Mesh.h" />
+    <ClInclude Include="include\MeshSystem.h" />
     <ClInclude Include="include\Object.h" />
     <ClInclude Include="include\Particle.h" />
     <ClInclude Include="include\ParticleSim.h" />
@@ -319,7 +327,9 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClInclude Include="include\RenderPrims.h" />
     <ClInclude Include="include\Program.h" />
     <ClInclude Include="include\Simulator.h" />
+    <ClInclude Include="include\Solver.h" />
     <ClInclude Include="include\Sphere.h" />
+    <ClInclude Include="include\VerletFrame.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Axis.fs" />
