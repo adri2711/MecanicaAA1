@@ -1,39 +1,26 @@
 #include "VerletFrame.h"
 
-VerletFrame::VerletFrame(glm::vec3 _lastPosition, glm::vec3 _currentPosition) : _lastPosition(_lastPosition), _currentPosition(_currentPosition)
+VerletFrame::VerletFrame()
+{}
+
+VerletFrame::VerletFrame(glm::vec3 lastPosition, glm::vec3 currentPosition) : _lastPosition(lastPosition), _currentPosition(currentPosition)
 {
+	_nextPosition = currentPosition;
 }
 
 VerletFrame::~VerletFrame()
 {
 }
 
-void VerletFrame::SetLastPosition(glm::vec3 lastPosition)
+glm::vec3 VerletFrame::CalculateNextPosition(float dt)
 {
-	_lastPosition = lastPosition;
-}
-
-glm::vec3 VerletFrame::GetLastPosition()
-{
-	return _lastPosition;
-}
-
-void VerletFrame::SetCurrentPosition(glm::vec3 currentPosition)
-{
-	_currentPosition = currentPosition;
-}
-
-glm::vec3 VerletFrame::GetCurrentPosition()
-{
-	return _currentPosition;
-}
-
-void VerletFrame::SetNextPosition(glm::vec3 nextPosition)
-{
-	_nextPosition = nextPosition;
-}
-
-glm::vec3 VerletFrame::GetNextPosition()
-{
+	_lastPosition = _currentPosition;
+	_currentPosition = _nextPosition;
+	_nextPosition = Solver::VerletSolverPosition(_currentPosition, _lastPosition, dt);
 	return _nextPosition;
+}
+
+glm::vec3 VerletFrame::CalculateNextVelocity(float dt)
+{
+	return Solver::VerletSolverVelocity(_currentPosition, _nextPosition , dt);
 }

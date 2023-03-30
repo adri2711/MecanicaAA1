@@ -1,33 +1,47 @@
 #pragma once
-#include "Simulator.h"
-#include "PrimitiveManager.h"
-#include "Solver.h"
 
-#define MIN_WIDTH_LENGTH 14
-#define MAX_WIDTH_LENGTH 20
+#include <vector>
+#include "VerletFrame.h"
+#include "../MeshNode.h"
 
-#define MIN_HEIGHT_LENGTH 18
-#define MAX_HEIGHT_LENGTH 24
+#define WIDTH 14
+#define HEIGHT 18
 
 #define MIN_DISTANCE_BETWEEN_PARTICLES 0.4f
 #define MAX_DISTANCE_BETWEEN_PARTICLES 0.6f
+
+#define MIN_STRUCTURAL_CONSTANT 0.1f
+#define MAX_STRUCTURAL_CONSTANT 10.0f
+
+#define MIN_SHEAR_CONSTANT 0.1f
+#define MAX_SHEAR_CONSTANT 10.0f
+
+#define MIN_BEND_CONSTANT 0.1f
+#define MAX_BEND_CONSTANT 10.0f
 
 class Mesh
 {
 
 private:
 
+	std::vector<MeshNode> _meshNodes;
 	std::vector<glm::vec3> _positions;
 	glm::vec3 _startPosition;
-	float _distanceBetweenParticles;
 
 public: 
 
+	float _distanceBetweenParticles;
+	float _structuralElasticity;
+	float _shearElasticity;
+	float _bendElasticity;
+	float _damping;
 
-	Mesh(glm::vec3 startPosition, float distanceBetweenParticles);
-	~Mesh();	
+	Mesh(glm::vec3 startPosition, float distanceBetweenParticles, float structuralElasticity, float shearElasticity, float bendElasticity, float damping);
+	~Mesh();
+
+	void ConnectNodesWithSprings();
 
 	const float* GetFirstPosition();
-	void UpdatePosition(float dt);
+	void UpdateNodesPositions(float dt);
 };
 

@@ -1,9 +1,9 @@
 #pragma once
 #include "Simulator.h"
 #include "PrimitiveManager.h"
+#include <imgui/imgui.h>
 
 #include "ColliderSystem.h"
-#include "ParticleSystem.h"
 #include "MeshSystem.h"
 
 extern graphics::PrimitiveManager manager;
