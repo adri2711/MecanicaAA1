@@ -9,25 +9,20 @@ private:
     
     int _connectPointIndex;
     glm::vec3** _connectedMeshNodePosition;
+    glm::vec3** _connectedMeshNodeVelocity;
     SpringType _springType;
     float _elasticity;
     float _damping;
     float _originalLength;
-    float _force;
     
 public:
 
-    //Spring(SpringType springType, float elasticity, float damping, float originalLength);
-    Spring(SpringType springType, float elasticity, float damping, float originalLength, int connectPointIndex, glm::vec3** connectedMeshNodePosition);
+    Spring(SpringType springType, float elasticity, float damping, float originalLength, int connectPointIndex,
+        glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity);
     ~Spring();
 
-    void Visit();
-    
-    SpringType GetSpringType();
-    float GetElasticity();
-    float GetDamping();
-    float GetOriginalLength();
+    glm::vec3** GetConnectedMeshPosition();
     int GetConnectionPoint();
-    float CalculateForce(glm::vec3 meshNodePosition);
+    glm::vec3 CalculateForce(glm::vec3 initialMeshNodePosition, glm::vec3 initialMeshNodeVelocity);
     
 };

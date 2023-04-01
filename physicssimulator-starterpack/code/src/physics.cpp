@@ -5,7 +5,6 @@
 #include "ParticleSim.h"
 #include "ClothSim.h"
 
-
 #pragma region simulationSelection
 enum class EnabledSimulation {
 	PARABOLA, CLOTH

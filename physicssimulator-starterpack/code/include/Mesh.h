@@ -1,13 +1,15 @@
 #pragma once
 
 #include <vector>
+
+#include "ColliderSystem.h"
 #include "../MeshNode.h"
 
 #define WIDTH 14
 #define HEIGHT 18
 
 #define MIN_DISTANCE_BETWEEN_PARTICLES 0.4f
-#define MAX_DISTANCE_BETWEEN_PARTICLES 0.6f
+#define MAX_DISTANCE_BETWEEN_PARTICLES 0.5f
 
 #define MIN_STRUCTURAL_ELASTICITY 0.1f
 #define MAX_STRUCTURAL_ELASTICITY 10.0f
@@ -64,6 +66,16 @@ public:
 	void CreateBendSpring(int i, int meshNodeIndexToConnect);
 
 	const float* GetFirstPosition();
-	void UpdateNodesPositions(float dt);
+	void UpdateNodesPositions(std::vector<Collider*> colliders, float dt);
+
+	std::vector<glm::vec3> GetPositions();
+
+	float GetDistanceBetweenParticles();
+	float GetStructuralElasticity();
+	float GetStructuralDamping();
+	float GetShearElasticity();
+	float GetShearDamping();
+	float GetBendElasticity();
+	float GetBendDamping();
 };
 

@@ -2,19 +2,29 @@
 
 extern graphics::PrimitiveManager manager;
 
-MeshSystem::MeshSystem()
+MeshSystem::MeshSystem(float distanceBetweenParticles, float structuralElasticity, float structuralDamping,
+	float shearElasticity, float shearDamping, float bendElasticity, float bendDamping)
 {
-	_mesh = new Mesh(glm::vec3(-3.f, 9.f, 0.0f), MIN_DISTANCE_BETWEEN_PARTICLES,
-		MIN_STRUCTURAL_ELASTICITY, MIN_STRUCTURAL_DAMPING, MIN_SHEAR_ELASTICITY, MIN_SHEAR_DAMPING,
-		MIN_BEND_ELASTICITY, MIN_BEND_DAMPING);
+	_mesh = new Mesh(glm::vec3(-3.f, 9.f, 4.0f), distanceBetweenParticles,
+		structuralElasticity, structuralDamping, shearElasticity, shearDamping,
+		bendElasticity, bendDamping);
 
 	_meshPrimitive = manager.NewMesh(HEIGHT, WIDTH);
+
+	for (int i = 0; i < _mesh->GetPositions().size(); ++i)
+	{
+		_particles.push_back(Particle(_mesh->GetPositions()[i], glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f), 20.f, 1.f));
+	}
+	
+	_particlePrimitive = manager.NewParticles(_particles.size());
+	_particlePrimitive->numParticles = _particles.size();
 }
 
 MeshSystem::~MeshSystem()
 {
 	manager.DestroyPrimitive(_meshPrimitive);
-	manager.DestroyPrimitive(_particlePrimitives);
+	manager.DestroyPrimitive(_particlePrimitive);
+	//delete _mesh;
 }
 
 Mesh* MeshSystem::GetMesh()
@@ -22,19 +32,13 @@ Mesh* MeshSystem::GetMesh()
 	return _mesh;
 }
 
-void MeshSystem::UpdateMesh(float dt)
+void MeshSystem::UpdateMesh(std::vector<Collider*> colliders, float dt)
 {
-	_mesh->UpdateNodesPositions(dt);
-
-	currentTime += dt;
-
-	if (currentTime >= 3.0f)
-	{
-		currentTime = 0.f;
-	}
+	_mesh->UpdateNodesPositions(colliders, dt);
 }
 
 void MeshSystem::Draw()
 {	
 	_meshPrimitive->Update(_mesh->GetFirstPosition());
+	_particlePrimitive->Update(0, _particles.size(), &_mesh->GetPositions()[0].x);
 }

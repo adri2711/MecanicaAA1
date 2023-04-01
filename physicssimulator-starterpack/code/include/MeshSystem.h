@@ -1,5 +1,7 @@
 #pragma once
 #include <PrimitiveManager.h>
+
+#include "ColliderSystem.h"
 #include "Particle.h"
 #include "Mesh.h"
 
@@ -9,21 +11,20 @@ class MeshSystem
 {
 private:
 
-	float currentTime = 0.f;
-
 	graphics::MeshPrimitive* _meshPrimitive;
-	graphics::ParticlesPrimitive* _particlePrimitives;
-	std::vector<Particle> particles;
+	graphics::ParticlesPrimitive* _particlePrimitive;
+	std::vector<Particle> _particles;
 	Mesh* _mesh;
 
 public: 
 	
-	MeshSystem();
+	MeshSystem(float distanceBetweenParticles, float structuralElasticity, float structuralDamping,
+	float shearElasticity, float shearDamping, float bendElasticity, float bendDamping);
 	~MeshSystem();
 
 	Mesh* GetMesh();
 
-	void UpdateMesh(float dt);
+	void UpdateMesh(std::vector<Collider*> colliders, float dt);
 	void Draw();
 };
 

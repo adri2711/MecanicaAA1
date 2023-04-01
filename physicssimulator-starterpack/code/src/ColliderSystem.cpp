@@ -8,8 +8,8 @@ ColliderSystem::ColliderSystem()
 
 ColliderSystem::~ColliderSystem()
 {
-    delete _spherePrimitive;
-    delete _capsulePrimitive;
+    manager.DestroyPrimitive(_spherePrimitive);
+    manager.DestroyPrimitive(_capsulePrimitive);
     delete _sphere;
     delete _capsule;
 }

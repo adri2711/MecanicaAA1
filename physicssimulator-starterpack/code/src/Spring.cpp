@@ -1,41 +1,19 @@
 #include "Spring.h"
 
-#include <iostream>
-
-Spring::Spring(SpringType springType, float elasticity, float damping, float originalLength, int connectPointIndex, glm::vec3** connectedMeshNodePosition)
-    : _connectPointIndex(connectPointIndex), _connectedMeshNodePosition(connectedMeshNodePosition),
+Spring::Spring(SpringType springType, float elasticity, float damping, float originalLength, int connectPointIndex,
+    glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity)
+    : _connectPointIndex(connectPointIndex), _connectedMeshNodePosition(connectedMeshNodePosition), _connectedMeshNodeVelocity(connectedMeshNodeVelocity),
     _springType(springType), _elasticity(elasticity), _damping(damping), _originalLength(originalLength)
 { 
 }
 
 Spring::~Spring()
-{
-    
+{    
 }
 
-void Spring::Visit()
+glm::vec3** Spring::GetConnectedMeshPosition()
 {
-    auto aut = 1+1;
-}
-
-SpringType Spring::GetSpringType()
-{
-    return _springType;
-}
-
-float Spring::GetElasticity()
-{
-    return _elasticity;
-}
-
-float Spring::GetDamping()
-{
-    return _damping;
-}
-
-float Spring::GetOriginalLength()
-{
-    return _originalLength;
+    return _connectedMeshNodePosition;
 }
 
 int Spring::GetConnectionPoint()
@@ -43,8 +21,15 @@ int Spring::GetConnectionPoint()
     return _connectPointIndex;
 }
 
-float Spring::CalculateForce(glm::vec3 meshNodePosition)
-{
-    return _force;
+glm::vec3 Spring::CalculateForce(glm::vec3 initialMeshNodePosition, glm::vec3 initialMeshNodeVelocity)
+{    
+    float distanceStretched = glm::length(initialMeshNodePosition - **_connectedMeshNodePosition) - _originalLength;
+
+    glm::vec3 vectorNormalized = (initialMeshNodePosition - **_connectedMeshNodePosition) / glm::length(initialMeshNodePosition - **_connectedMeshNodePosition);
+    glm::vec3 vectorFromInitialPosition = glm::normalize(**_connectedMeshNodePosition - initialMeshNodePosition) * glm::dot(**_connectedMeshNodeVelocity, glm::normalize(**_connectedMeshNodePosition - initialMeshNodePosition));
+    glm::vec3 vectorFromConnectedPosition = glm::normalize(initialMeshNodePosition - **_connectedMeshNodePosition) * glm::dot(initialMeshNodeVelocity , glm::normalize(initialMeshNodePosition - **_connectedMeshNodePosition));
+    glm::vec3 dampingTerm = _damping * (vectorFromInitialPosition - vectorFromConnectedPosition) * vectorNormalized;
+
+    return -(_elasticity * distanceStretched + dampingTerm) * vectorNormalized;
 }
 
