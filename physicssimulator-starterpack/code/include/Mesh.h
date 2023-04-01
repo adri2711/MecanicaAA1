@@ -9,14 +9,23 @@
 #define MIN_DISTANCE_BETWEEN_PARTICLES 0.4f
 #define MAX_DISTANCE_BETWEEN_PARTICLES 0.6f
 
-#define MIN_STRUCTURAL_CONSTANT 0.1f
-#define MAX_STRUCTURAL_CONSTANT 10.0f
+#define MIN_STRUCTURAL_ELASTICITY 0.1f
+#define MAX_STRUCTURAL_ELASTICITY 10.0f
 
-#define MIN_SHEAR_CONSTANT 0.1f
-#define MAX_SHEAR_CONSTANT 10.0f
+#define MIN_STRUCTURAL_DAMPING 0.1f
+#define MAX_STRUCTURAL_DAMPING 10.0f
 
-#define MIN_BEND_CONSTANT 0.1f
-#define MAX_BEND_CONSTANT 10.0f
+#define MIN_SHEAR_ELASTICITY 0.1f
+#define MAX_SHEAR_ELASTICITY 10.0f
+
+#define MIN_SHEAR_DAMPING 0.1f
+#define MAX_SHEAR_DAMPING 10.0f
+
+#define MIN_BEND_ELASTICITY 0.1f
+#define MAX_BEND_ELASTICITY 10.0f
+
+#define MIN_BEND_DAMPING 0.1f
+#define MAX_BEND_DAMPING 10.0f
 
 class Mesh
 {
@@ -31,11 +40,14 @@ public:
 
 	float _distanceBetweenParticles;
 	float _structuralElasticity;
+	float _structuralDamping;
 	float _shearElasticity;
+	float _shearDamping;
 	float _bendElasticity;
-	float _damping;
+	float _bendDamping;
 
-	Mesh(glm::vec3 startPosition, float distanceBetweenParticles, float structuralElasticity, float shearElasticity, float bendElasticity, float damping);
+	Mesh(glm::vec3 startPosition, float distanceBetweenParticles, float structuralElasticity, float structuralDamping,
+		float shearElasticity, float bendElasticity, float shearDamping, float bendDamping);
 	~Mesh();
 
 	void ConnectNodesWithSprings();

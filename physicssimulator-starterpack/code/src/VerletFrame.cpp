@@ -3,7 +3,7 @@
 VerletFrame::VerletFrame()
 {}
 
-VerletFrame::VerletFrame(glm::vec3 lastPosition, glm::vec3 currentPosition) : _lastPosition(lastPosition), _currentPosition(currentPosition)
+VerletFrame::VerletFrame(glm::vec3 lastPosition, glm::vec3 currentPosition) : _lastPosition(glm::vec3(lastPosition)), _currentPosition(glm::vec3(currentPosition))
 {
 	_nextPosition = currentPosition;
 }
@@ -12,12 +12,12 @@ VerletFrame::~VerletFrame()
 {
 }
 
-glm::vec3 VerletFrame::CalculateNextPosition(float dt)
+glm::vec3* VerletFrame::CalculateNextPosition(float dt)
 {
 	_lastPosition = _currentPosition;
 	_currentPosition = _nextPosition;
 	_nextPosition = Solver::VerletSolverPosition(_currentPosition, _lastPosition, dt);
-	return _nextPosition;
+	return &_nextPosition;
 }
 
 glm::vec3 VerletFrame::CalculateNextVelocity(float dt)

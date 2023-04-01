@@ -1,8 +1,10 @@
 #include "MeshNode.h"
 
-MeshNode::MeshNode(glm::vec3 position) : _position(position)
+#include <iostream>
+
+MeshNode::MeshNode(glm::vec3 position) : _position(new glm::vec3(position))
 {
-    _verletFrame = VerletFrame(_position, _position);
+    _verletFrame = VerletFrame(position, position);
 }
 
 MeshNode::~MeshNode()
@@ -10,15 +12,15 @@ MeshNode::~MeshNode()
     
 }
 
-void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex)
+void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex, glm::vec3** connectedMeshNodePosition)
 {
-    _springs.push_back(Spring(springType, elasticity, damping, springLength, connectPointIndex));
+    _springs.push_back(Spring(springType, elasticity, damping, springLength, connectPointIndex, connectedMeshNodePosition));
 }
 
 
-glm::vec3 MeshNode::GetPosition()
+glm::vec3** MeshNode::GetPosition()
 {
-    return  _position;
+    return &_position;
 }
 
 std::vector<Spring> MeshNode::GetSprings()
@@ -26,7 +28,18 @@ std::vector<Spring> MeshNode::GetSprings()
     return _springs;
 }
 
-void MeshNode::UpdatePosition(float dt)
+void MeshNode::CalculateTotalForce()
+{
+       
+}
+
+float MeshNode::GetTotalForce()
+{
+    return _totalForce;
+}
+
+glm::vec3* MeshNode::UpdatePosition(float dt)
 {
     _position = _verletFrame.CalculateNextPosition(dt);
+    return _position;
 }

@@ -26,7 +26,7 @@ public:
 	void SetNextPosition(glm::vec3 nextPosition);
 	glm::vec3 GetNextPosition();*/
 
-	glm::vec3 CalculateNextPosition(float dt);
+	glm::vec3* CalculateNextPosition(float dt);
 	glm::vec3 CalculateNextVelocity(float dt);
 
 };

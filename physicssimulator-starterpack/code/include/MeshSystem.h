@@ -7,7 +7,9 @@ extern graphics::PrimitiveManager manager;
 
 class MeshSystem
 {
-private: 
+private:
+
+	float currentTime = 0.f;
 
 	graphics::MeshPrimitive* _meshPrimitive;
 	graphics::ParticlesPrimitive* _particlePrimitives;
