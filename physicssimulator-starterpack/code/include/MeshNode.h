@@ -17,9 +17,11 @@ public:
     MeshNode(glm::vec3 position);
     ~MeshNode();
 
-    void AddSpring(SpringType springType, float elasticity, float damping, float springLength);
+    void AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex);
     
     glm::vec3 GetPosition();
+
+    std::vector<Spring> GetSprings();
 
     void UpdatePosition(float dt);
     

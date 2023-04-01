@@ -105,6 +105,7 @@
       <workItem from="1679665560543" duration="915000" />
       <workItem from="1679695647917" duration="2702000" />
       <workItem from="1679700887218" duration="19000" />
+      <workItem from="1680301783120" duration="10967000" />
     </task>
     <servers />
   </component>
@@ -126,5 +127,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/code/src/Mesh.cpp</url>
+          <line>35</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

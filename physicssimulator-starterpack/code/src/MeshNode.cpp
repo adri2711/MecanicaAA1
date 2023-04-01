@@ -10,15 +10,20 @@ MeshNode::~MeshNode()
     
 }
 
-void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength)
+void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex)
 {
-    _springs.push_back(Spring(springType, elasticity, damping, springLength));
+    _springs.push_back(Spring(springType, elasticity, damping, springLength, connectPointIndex));
 }
 
 
 glm::vec3 MeshNode::GetPosition()
 {
     return  _position;
+}
+
+std::vector<Spring> MeshNode::GetSprings()
+{
+    return _springs;
 }
 
 void MeshNode::UpdatePosition(float dt)

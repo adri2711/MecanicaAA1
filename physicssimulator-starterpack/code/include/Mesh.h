@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "VerletFrame.h"
 #include "../MeshNode.h"
 
 #define WIDTH 14
@@ -40,6 +39,17 @@ public:
 	~Mesh();
 
 	void ConnectNodesWithSprings();
+
+	void CreateSprings(int i);
+	void CheckStructuralSprings(int i);
+	void CheckShearSprings(int i);
+	void CheckBendSprings(int i);
+
+	bool CheckNodeMeshConnections(int i, int meshNodeIndexToConnect);
+
+	void CreateStructuralSpring(int i, int meshNodeIndexToConnect);
+	void CreateShearSpring(int i, int meshNodeIndexToConnect);
+	void CreateBendSpring(int i, int meshNodeIndexToConnect);
 
 	const float* GetFirstPosition();
 	void UpdateNodesPositions(float dt);
