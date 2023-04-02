@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-MeshNode::MeshNode(glm::vec3 position) : _position(new glm::vec3(position)), _velocity(new glm::vec3())
+MeshNode::MeshNode(glm::vec3 position) : _position(new glm::vec3(position)), _velocity(new glm::vec3()), _acceleration(new glm::vec3())
 {
     _verletFrame = VerletFrame(*_position, *_position);
 }
@@ -15,9 +15,11 @@ MeshNode::~MeshNode()
     }
 }
 
-void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex, glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity)
+void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex,
+	glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity, glm::vec3** connectedMeshNodeAcceleration)
 {
-    _springs.push_back(Spring(springType, elasticity, damping, springLength, connectPointIndex, connectedMeshNodePosition, connectedMeshNodeVelocity));
+    _springs.push_back(Spring(springType, elasticity, damping, springLength, connectPointIndex,
+    	connectedMeshNodePosition, connectedMeshNodeVelocity, connectedMeshNodeAcceleration));
 }
 
 
@@ -29,6 +31,11 @@ glm::vec3** MeshNode::GetPosition()
 glm::vec3** MeshNode::GetVelocity()
 {
 	return &_velocity;
+}
+
+glm::vec3** MeshNode::GetAcceleration()
+{
+	return &_acceleration;
 }
 
 std::vector<Spring> MeshNode::GetSprings()
@@ -45,13 +52,13 @@ void MeshNode::CalculateTotalForce()
         auxTotalForce += _springs[i].CalculateForce(*_position, *_velocity);
     }
     
-    _acceleration = auxTotalForce;
+    *_acceleration = auxTotalForce;
 }
 
 glm::vec3* MeshNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
 {	
     CalculateTotalForce();
-    glm::vec3 nextPosition = _verletFrame.CalculateNextPosition(*_position, _acceleration, dt);	
+    glm::vec3 nextPosition = _verletFrame.CalculateNextPosition(*_position, *_acceleration, dt);	
 	glm::vec3 nextVelocity = _verletFrame.CalculateNextVelocity(dt);
 	
 	Plane* plane = CheckColliders(nextPosition, colliders);

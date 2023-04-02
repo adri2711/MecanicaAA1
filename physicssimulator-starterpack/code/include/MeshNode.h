@@ -12,19 +12,21 @@ private:
     
     glm::vec3* _position;
     glm::vec3* _velocity;
+    glm::vec3* _acceleration;
     VerletFrame _verletFrame;
     std::vector<Spring> _springs;
-    glm::vec3 _acceleration;
     
 public:
 
     MeshNode(glm::vec3 position);
     ~MeshNode();
 
-    void AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex, glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity);
+    void AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex,
+        glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity, glm::vec3** connectedMeshNodeAcceleration);
     
     glm::vec3** GetPosition();
     glm::vec3** GetVelocity();
+    glm::vec3** GetAcceleration();
 
     std::vector<Spring> GetSprings();
 

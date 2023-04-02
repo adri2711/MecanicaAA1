@@ -179,21 +179,24 @@ void Mesh::CreateStructuralSpring(int i, int meshNodeIndexToConnect)
 {
 	_meshNodes[i].AddSpring(SpringType::STRUCTURAL, _structuralElasticity, _structuralDamping,
 		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
-		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity());
+		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
+		_meshNodes[meshNodeIndexToConnect].GetAcceleration());
 }
 
 void Mesh::CreateShearSpring(int i, int meshNodeIndexToConnect)
 {
 	_meshNodes[i].AddSpring(SpringType::SHEAR, _shearElasticity, _shearDamping,
 		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
-		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity());
+		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
+		_meshNodes[meshNodeIndexToConnect].GetAcceleration());
 }
 
 void Mesh::CreateBendSpring(int i, int meshNodeIndexToConnect)
 {
 	_meshNodes[i].AddSpring(SpringType::BEND, _bendElasticity, _bendDamping,
 		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
-		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity());
+		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
+		_meshNodes[meshNodeIndexToConnect].GetAcceleration());
 }
 
 const float* Mesh::GetFirstPosition() 
