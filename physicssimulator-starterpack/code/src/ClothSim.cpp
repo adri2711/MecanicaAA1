@@ -13,8 +13,6 @@ ClothSim::ClothSim()
 	float sphereXPosition = 8 * ((float)rand() / (float)RAND_MAX) + -4;
 	float sphereYPosition = rand()% 7;
 	float sphereZPosition = 7 * ((float)rand() / (float)RAND_MAX) + -3;
-
-	std::cout << sphereXPosition << std::endl;
 	
 	Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);	
 	AddCollider(sphere);	
@@ -37,37 +35,40 @@ ClothSim::~ClothSim()
 
 void ClothSim::Update(float dt)
 {
-	_meshSystem->UpdateMesh(_colliders, dt);	
-
-	_currentTime -= dt;
-
-	if (_currentTime <= 0.0f)
+	for (int i = 0; i < 4; i++)
 	{
-		_currentTime = _initialTime;
-		float distanceBetweenParticles = _meshSystem->GetMesh()->GetDistanceBetweenParticles();
-		
-		float structuralElasticity = _meshSystem->GetMesh()->GetStructuralElasticity();
-		float structuralDamping = _meshSystem->GetMesh()->GetStructuralDamping();
-		
-		float shearElasticity = _meshSystem->GetMesh()->GetShearElasticity();
-		float shearDamping = _meshSystem->GetMesh()->GetShearDamping();
-		
-		float bendElasticity = _meshSystem->GetMesh()->GetBendElasticity();
-		float bendDamping = _meshSystem->GetMesh()->GetBendDamping();		
+		_meshSystem->UpdateMesh(_colliders, dt / 4);
 
-		float sphereXPosition = 8 * ((float)rand() / (float)RAND_MAX) + -4;
-		float sphereYPosition = rand()% 7;
-		float sphereZPosition = 7 * ((float)rand() / (float)RAND_MAX) + -3;
+		_currentTime -= dt / 4;
 
-		_colliderSystem->~ColliderSystem();
-		
-		Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
-		AddCollider(sphere);
-		_colliderSystem->SetSphere(sphere);
-		delete _meshSystem;
-		_meshSystem = new MeshSystem(distanceBetweenParticles, structuralElasticity, structuralDamping, shearElasticity,
-			shearDamping, bendElasticity, bendDamping);
-	}
+		if (_currentTime <= 0.0f)
+		{
+			_currentTime = _initialTime;
+			float distanceBetweenParticles = _meshSystem->GetMesh()->GetDistanceBetweenParticles();
+
+			float structuralElasticity = _meshSystem->GetMesh()->GetStructuralElasticity();
+			float structuralDamping = _meshSystem->GetMesh()->GetStructuralDamping();
+
+			float shearElasticity = _meshSystem->GetMesh()->GetShearElasticity();
+			float shearDamping = _meshSystem->GetMesh()->GetShearDamping();
+
+			float bendElasticity = _meshSystem->GetMesh()->GetBendElasticity();
+			float bendDamping = _meshSystem->GetMesh()->GetBendDamping();
+
+			float sphereXPosition = 8 * ((float)rand() / (float)RAND_MAX) + -4;
+			float sphereYPosition = rand() % 7;
+			float sphereZPosition = 7 * ((float)rand() / (float)RAND_MAX) + -3;
+
+			_colliderSystem->~ColliderSystem();
+
+			Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
+			AddCollider(sphere);
+			_colliderSystem->SetSphere(sphere);
+			delete _meshSystem;
+			_meshSystem = new MeshSystem(distanceBetweenParticles, structuralElasticity, structuralDamping, shearElasticity,
+				shearDamping, bendElasticity, bendDamping);
+		}
+	}	
 }
 
 void ClothSim::RenderUpdate()

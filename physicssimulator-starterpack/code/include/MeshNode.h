@@ -12,7 +12,7 @@ private:
     
     glm::vec3* _position;
     glm::vec3* _velocity;
-    glm::vec3* _acceleration;
+    glm::vec3* _force;
     VerletFrame _verletFrame;
     std::vector<Spring> _springs;
     
@@ -26,7 +26,9 @@ public:
     
     glm::vec3** GetPosition();
     glm::vec3** GetVelocity();
-    glm::vec3** GetAcceleration();
+    glm::vec3** GetForce();
+
+    void ShowForce();
 
     std::vector<Spring> GetSprings();
 

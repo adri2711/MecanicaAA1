@@ -5,8 +5,8 @@
 #include "ColliderSystem.h"
 #include "../MeshNode.h"
 
-#define WIDTH 14
-#define HEIGHT 18
+#define WIDTH 3
+#define HEIGHT 1
 
 #define MIN_DISTANCE_BETWEEN_PARTICLES 0.4f
 #define MAX_DISTANCE_BETWEEN_PARTICLES 0.5f

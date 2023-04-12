@@ -1,5 +1,7 @@
 #include "Mesh.h"
 
+#include <iostream>
+
 Mesh::Mesh(glm::vec3 startPosition, float distanceBetweenParticles, float structuralElasticity, float structuralDamping,float shearElasticity,
 	float shearDamping, float bendElasticity, float bendDamping)
 	: _startPosition(startPosition), _distanceBetweenParticles(distanceBetweenParticles), _structuralElasticity(structuralElasticity),
@@ -40,8 +42,8 @@ void Mesh::ConnectNodesWithSprings()
 void Mesh::CreateSprings(int i)
 {
 	CheckStructuralSprings(i);
-	CheckShearSprings(i);
-	CheckBendSprings(i);
+	//CheckShearSprings(i);
+	//CheckBendSprings(i);
 }
 
 void Mesh::CheckStructuralSprings(int i)
@@ -56,7 +58,7 @@ void Mesh::CheckStructuralSprings(int i)
 	}
 
 	//Left
-	if ((i - 1 + WIDTH) % WIDTH != 13)
+	if ((i - 1 + WIDTH) % WIDTH != WIDTH - 1)
 	{
 		if (CheckNodeMeshConnections(i, i - 1))
 		{
@@ -86,7 +88,7 @@ void Mesh::CheckStructuralSprings(int i)
 void Mesh::CheckShearSprings(int i)
 {
 	//Top Left
-	if ((i - (WIDTH + 1)) % WIDTH != 13 && i - (WIDTH + 1) >= 0)
+	if ((i - (WIDTH + 1)) % WIDTH != WIDTH - 1 && i - (WIDTH + 1) >= 0)
 	{
 		if (CheckNodeMeshConnections(i, i - (WIDTH + 1)))
 		{
@@ -104,7 +106,7 @@ void Mesh::CheckShearSprings(int i)
 	}
 
 	//Bottom Left
-	if ((i + (WIDTH - 1)) % WIDTH != 13 && i + WIDTH + 1 < _meshNodes.size())
+	if ((i + (WIDTH - 1)) % WIDTH != WIDTH - 1 && i + WIDTH + 1 < _meshNodes.size())
 	{
 		if (CheckNodeMeshConnections(i, i + (WIDTH - 1)))
 		{
@@ -134,7 +136,7 @@ void Mesh::CheckBendSprings(int i)
 	}
 
 	//Left
-	if ((i - 2 + WIDTH) % WIDTH < 12)
+	if ((i - 2 + WIDTH) % WIDTH < WIDTH - 2)
 	{
 		if (CheckNodeMeshConnections(i, i - 2))
 		{
@@ -180,7 +182,7 @@ void Mesh::CreateStructuralSpring(int i, int meshNodeIndexToConnect)
 	_meshNodes[i].AddSpring(SpringType::STRUCTURAL, _structuralElasticity, _structuralDamping,
 		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
 		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
-		_meshNodes[meshNodeIndexToConnect].GetAcceleration());
+		_meshNodes[meshNodeIndexToConnect].GetForce());
 }
 
 void Mesh::CreateShearSpring(int i, int meshNodeIndexToConnect)
@@ -188,7 +190,7 @@ void Mesh::CreateShearSpring(int i, int meshNodeIndexToConnect)
 	_meshNodes[i].AddSpring(SpringType::SHEAR, _shearElasticity, _shearDamping,
 		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
 		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
-		_meshNodes[meshNodeIndexToConnect].GetAcceleration());
+		_meshNodes[meshNodeIndexToConnect].GetForce());
 }
 
 void Mesh::CreateBendSpring(int i, int meshNodeIndexToConnect)
@@ -196,7 +198,7 @@ void Mesh::CreateBendSpring(int i, int meshNodeIndexToConnect)
 	_meshNodes[i].AddSpring(SpringType::BEND, _bendElasticity, _bendDamping,
 		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
 		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
-		_meshNodes[meshNodeIndexToConnect].GetAcceleration());
+		_meshNodes[meshNodeIndexToConnect].GetForce());
 }
 
 const float* Mesh::GetFirstPosition() 
@@ -210,6 +212,7 @@ void Mesh::UpdateNodesPositions(std::vector<Collider*> colliders, float dt)
 	{
 		if (i == 0 || i == WIDTH - 1)
 		{
+			_meshNodes[i].CalculateTotalForce();
 			continue;
 		}
 		_positions[i] = *_meshNodes[i].UpdatePosition(colliders, dt);

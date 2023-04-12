@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-MeshNode::MeshNode(glm::vec3 position) : _position(new glm::vec3(position)), _velocity(new glm::vec3()), _acceleration(new glm::vec3())
+MeshNode::MeshNode(glm::vec3 position) : _position(new glm::vec3(position)), _velocity(new glm::vec3()), _force(new glm::vec3())
 {
     _verletFrame = VerletFrame(*_position, *_position);
 }
@@ -33,9 +33,14 @@ glm::vec3** MeshNode::GetVelocity()
 	return &_velocity;
 }
 
-glm::vec3** MeshNode::GetAcceleration()
+glm::vec3** MeshNode::GetForce()
 {
-	return &_acceleration;
+	return &_force;
+}
+
+void MeshNode::ShowForce()
+{
+	std::cout << _force->x << std::endl;
 }
 
 std::vector<Spring> MeshNode::GetSprings()
@@ -52,13 +57,13 @@ void MeshNode::CalculateTotalForce()
         auxTotalForce += _springs[i].CalculateForce(*_position, *_velocity);
     }
     
-    *_acceleration = auxTotalForce;
+    *_force = auxTotalForce;
 }
 
 glm::vec3* MeshNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
 {	
     CalculateTotalForce();
-    glm::vec3 nextPosition = _verletFrame.CalculateNextPosition(*_position, *_acceleration, dt);	
+    glm::vec3 nextPosition = _verletFrame.CalculateNextPosition(*_position, *_force, dt);	
 	glm::vec3 nextVelocity = _verletFrame.CalculateNextVelocity(dt);
 	
 	Plane* plane = CheckColliders(nextPosition, colliders);
