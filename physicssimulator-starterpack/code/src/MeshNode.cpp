@@ -41,7 +41,7 @@ glm::vec3* MeshNode::GetForce()
 
 void MeshNode::ResetForce()
 {
-	*_force = glm::vec3();
+	*_force = glm::vec3(0,0,0);
 }
 
 void MeshNode::ShowForce()

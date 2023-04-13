@@ -53,7 +53,7 @@ void Mesh::CheckStructuralSprings(int i)
 	{
 		if (CheckNodeMeshConnections(i, i - WIDTH))
 		{
-			CreateStructuralSpring(i,i - WIDTH);	
+			CreateStructuralSpring(i, i - WIDTH);	
 		}		
 	}
 
@@ -92,7 +92,7 @@ void Mesh::CheckShearSprings(int i)
 	{
 		if (CheckNodeMeshConnections(i, i - (WIDTH + 1)))
 		{
-			CreateShearSpring(i,i - (WIDTH + 1));	
+			CreateShearSpring(i, i - (WIDTH + 1));	
 		}		
 	}
 
@@ -131,7 +131,7 @@ void Mesh::CheckBendSprings(int i)
 	{
 		if (CheckNodeMeshConnections(i, i - WIDTH * 2))
 		{
-			CreateBendSpring(i,i - WIDTH * 2);			
+			CreateBendSpring(i, i - WIDTH * 2);			
 		}
 	}
 
@@ -207,24 +207,18 @@ const float* Mesh::GetFirstPosition()
 }
 
 void Mesh::UpdateNodesPositions(std::vector<Collider*> colliders, float dt)
-{
-	
+{	
 	for (int i = 0; i < _meshNodes.size(); i++)
 	{
 		if (i == 0 || i == WIDTH - 1)
 		{
 			_meshNodes[i].CalculateTotalForce();
-			/*std::cout << "Particle " << i << std::endl;
-			_meshNodes[i].ShowForce();
-			std::cout << std::endl;*/
 			continue;
 		}
 		_positions[i] = *_meshNodes[i].UpdatePosition(colliders, dt);		
-		/*std::cout << "Particle " << i << std::endl;
-		_meshNodes[i].ShowForce();
-		std::cout << std::endl;*/
 	}
-	for (int i = 0; i < _meshNodes.size(); ++i)
+
+	for (int i = 0; i < _meshNodes.size(); i++)
 	{
 		_meshNodes[i].ResetForce();
 	}

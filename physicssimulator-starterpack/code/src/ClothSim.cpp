@@ -4,8 +4,8 @@
 
 ClothSim::ClothSim()
 {
-	_meshSystem = new MeshSystem(MIN_DISTANCE_BETWEEN_PARTICLES, MIN_STRUCTURAL_ELASTICITY, MIN_STRUCTURAL_DAMPING,
-		MIN_SHEAR_ELASTICITY, MIN_SHEAR_DAMPING, MIN_BEND_ELASTICITY, MIN_BEND_DAMPING);
+	_meshSystem = new MeshSystem(MIN_DISTANCE_BETWEEN_PARTICLES, MAX_STRUCTURAL_RIGIDITY, MIN_STRUCTURAL_DAMPING,
+		MAX_SHEAR_RIGIDITY, MIN_SHEAR_DAMPING, MAX_BEND_RIGIDITY, MIN_BEND_DAMPING);
 	_colliderSystem = new ColliderSystem();
 
 	srand(time(NULL));		
@@ -24,7 +24,7 @@ ClothSim::ClothSim()
 	AddCollider(new Plane(glm::vec3(-5.f, 10.f, -5.f), glm::vec3(10.f, 10.f, 0.f)));
 	AddCollider(new Plane(glm::vec3(5.f, 10.f, 5.f), glm::vec3(10.f, 10.f, 0.f)));
 	
-	_colliderSystem->SetSphere(sphere);
+	//_colliderSystem->SetSphere(sphere);
 }
 
 ClothSim::~ClothSim()
@@ -81,12 +81,12 @@ void ClothSim::RenderGui()
 {	
 	ImGui::SliderFloat("Distance Between Particles", &_meshSystem->GetMesh()->_distanceBetweenParticles, MIN_DISTANCE_BETWEEN_PARTICLES, MAX_DISTANCE_BETWEEN_PARTICLES);
 	
-	ImGui::SliderFloat("Structural Elasticity", &_meshSystem->GetMesh()->_structuralElasticity, MIN_STRUCTURAL_ELASTICITY, MAX_STRUCTURAL_ELASTICITY);
+	ImGui::SliderFloat("Structural Rigidity", &_meshSystem->GetMesh()->_structuralElasticity, MIN_STRUCTURAL_RIGIDITY, MAX_STRUCTURAL_RIGIDITY);
 	ImGui::SliderFloat("Structural Damping", &_meshSystem->GetMesh()->_structuralDamping, MIN_STRUCTURAL_DAMPING, MAX_STRUCTURAL_DAMPING);
 	
-	ImGui::SliderFloat("Shear Elasticity", &_meshSystem->GetMesh()->_shearElasticity, MIN_SHEAR_ELASTICITY, MAX_SHEAR_ELASTICITY);
+	ImGui::SliderFloat("Shear Rigidity", &_meshSystem->GetMesh()->_shearElasticity, MIN_SHEAR_RIGIDITY, MAX_SHEAR_RIGIDITY);
 	ImGui::SliderFloat("Shear Damping", &_meshSystem->GetMesh()->_shearDamping, MIN_SHEAR_DAMPING, MAX_SHEAR_DAMPING);
 
-	ImGui::SliderFloat("Bend Elasticity", &_meshSystem->GetMesh()->_bendElasticity, MIN_BEND_ELASTICITY, MAX_BEND_ELASTICITY);
+	ImGui::SliderFloat("Bend Rigidity", &_meshSystem->GetMesh()->_bendElasticity, MIN_BEND_RIGIDITY, MAX_BEND_RIGIDITY);
 	ImGui::SliderFloat("Bend Damping", &_meshSystem->GetMesh()->_bendDamping, MIN_BEND_DAMPING, MAX_BEND_DAMPING);
 }
