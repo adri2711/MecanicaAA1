@@ -35,11 +35,11 @@ ClothSim::~ClothSim()
 
 void ClothSim::Update(float dt)
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < DT_DIVISOR; i++)
 	{
-		_meshSystem->UpdateMesh(_colliders, dt / 4);
+		_meshSystem->UpdateMesh(_colliders, dt / DT_DIVISOR);
 
-		_currentTime -= dt / 4;
+		_currentTime -= dt / DT_DIVISOR;
 
 		if (_currentTime <= 0.0f)
 		{

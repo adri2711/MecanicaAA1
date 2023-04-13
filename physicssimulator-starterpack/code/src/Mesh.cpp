@@ -16,7 +16,7 @@ Mesh::Mesh(glm::vec3 startPosition, float distanceBetweenParticles, float struct
 			float x = startPosition.x + _distanceBetweenParticles * j;
 			glm::vec3 meshNodePosition = glm::vec3(x, _startPosition.y, z);
 			_meshNodes.push_back(MeshNode(meshNodePosition));
-			_positions.push_back(**_meshNodes[i * WIDTH + j].GetPosition());
+			_positions.push_back(*_meshNodes[i * WIDTH + j].GetPosition());
 		}
 	}
 	
@@ -180,7 +180,7 @@ bool Mesh::CheckNodeMeshConnections(int i, int meshNodeIndexToConnect)
 void Mesh::CreateStructuralSpring(int i, int meshNodeIndexToConnect)
 {
 	_meshNodes[i].AddSpring(SpringType::STRUCTURAL, _structuralElasticity, _structuralDamping,
-		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
+		glm::length(*_meshNodes[i].GetPosition() - *_meshNodes[meshNodeIndexToConnect].GetPosition()),
 		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
 		_meshNodes[meshNodeIndexToConnect].GetForce());
 }
@@ -188,7 +188,7 @@ void Mesh::CreateStructuralSpring(int i, int meshNodeIndexToConnect)
 void Mesh::CreateShearSpring(int i, int meshNodeIndexToConnect)
 {
 	_meshNodes[i].AddSpring(SpringType::SHEAR, _shearElasticity, _shearDamping,
-		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
+		glm::length(*_meshNodes[i].GetPosition() - *_meshNodes[meshNodeIndexToConnect].GetPosition()),
 		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
 		_meshNodes[meshNodeIndexToConnect].GetForce());
 }
@@ -196,7 +196,7 @@ void Mesh::CreateShearSpring(int i, int meshNodeIndexToConnect)
 void Mesh::CreateBendSpring(int i, int meshNodeIndexToConnect)
 {
 	_meshNodes[i].AddSpring(SpringType::BEND, _bendElasticity, _bendDamping,
-		glm::length(**_meshNodes[i].GetPosition() - **_meshNodes[meshNodeIndexToConnect].GetPosition()),
+		glm::length(*_meshNodes[i].GetPosition() - *_meshNodes[meshNodeIndexToConnect].GetPosition()),
 		meshNodeIndexToConnect, _meshNodes[meshNodeIndexToConnect].GetPosition(), _meshNodes[meshNodeIndexToConnect].GetVelocity(),
 		_meshNodes[meshNodeIndexToConnect].GetForce());
 }
@@ -208,14 +208,25 @@ const float* Mesh::GetFirstPosition()
 
 void Mesh::UpdateNodesPositions(std::vector<Collider*> colliders, float dt)
 {
+	
 	for (int i = 0; i < _meshNodes.size(); i++)
 	{
 		if (i == 0 || i == WIDTH - 1)
 		{
 			_meshNodes[i].CalculateTotalForce();
+			/*std::cout << "Particle " << i << std::endl;
+			_meshNodes[i].ShowForce();
+			std::cout << std::endl;*/
 			continue;
 		}
-		_positions[i] = *_meshNodes[i].UpdatePosition(colliders, dt);
+		_positions[i] = *_meshNodes[i].UpdatePosition(colliders, dt);		
+		/*std::cout << "Particle " << i << std::endl;
+		_meshNodes[i].ShowForce();
+		std::cout << std::endl;*/
+	}
+	for (int i = 0; i < _meshNodes.size(); ++i)
+	{
+		_meshNodes[i].ResetForce();
 	}
 }
 

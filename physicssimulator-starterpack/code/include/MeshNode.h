@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "ColliderSystem.h"
+#include "EulerFrame.h"
 #include "Plane.h"
 #include "Spring.h"
 #include "VerletFrame.h"
@@ -14,6 +15,7 @@ private:
     glm::vec3* _velocity;
     glm::vec3* _force;
     VerletFrame _verletFrame;
+    //EulerFrame _eulerFrame;
     std::vector<Spring> _springs;
     
 public:
@@ -22,11 +24,12 @@ public:
     ~MeshNode();
 
     void AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex,
-        glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity, glm::vec3** connectedMeshNodeAcceleration);
+        glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeAcceleration);
     
-    glm::vec3** GetPosition();
-    glm::vec3** GetVelocity();
-    glm::vec3** GetForce();
+    glm::vec3* GetPosition();
+    glm::vec3* GetVelocity();
+    glm::vec3* GetForce();
+    void ResetForce();
 
     void ShowForce();
 

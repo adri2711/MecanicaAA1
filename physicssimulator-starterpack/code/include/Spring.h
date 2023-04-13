@@ -8,9 +8,9 @@ class Spring
 private:
     
     int _connectPointIndex;
-    glm::vec3** _connectedMeshNodePosition;
-    glm::vec3** _connectedMeshNodeVelocity;
-    glm::vec3** _connectedMeshNodeAcceleration;
+    glm::vec3* _connectedMeshNodePosition;
+    glm::vec3* _connectedMeshNodeVelocity;
+    glm::vec3* _connectedMeshNodeAcceleration;
     SpringType _springType;
     float _elasticity;
     float _damping;
@@ -19,10 +19,10 @@ private:
 public:
 
     Spring(SpringType springType, float elasticity, float damping, float originalLength, int connectPointIndex,
-        glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity, glm::vec3** connectedMeshNodeAcceleration);
+        glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeAcceleration);
     ~Spring();
 
-    glm::vec3** GetConnectedMeshPosition();
+    glm::vec3* GetConnectedMeshPosition();
     int GetConnectionPoint();
     glm::vec3 CalculateForce(glm::vec3 initialMeshNodePosition, glm::vec3 initialMeshNodeVelocity);
     

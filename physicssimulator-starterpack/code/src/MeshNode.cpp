@@ -4,6 +4,7 @@
 
 MeshNode::MeshNode(glm::vec3 position) : _position(new glm::vec3(position)), _velocity(new glm::vec3()), _force(new glm::vec3())
 {
+	//_eulerFrame = EulerFrame(*_position);
     _verletFrame = VerletFrame(*_position, *_position);
 }
 
@@ -16,31 +17,36 @@ MeshNode::~MeshNode()
 }
 
 void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex,
-	glm::vec3** connectedMeshNodePosition, glm::vec3** connectedMeshNodeVelocity, glm::vec3** connectedMeshNodeAcceleration)
+	glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeAcceleration)
 {
     _springs.push_back(Spring(springType, elasticity, damping, springLength, connectPointIndex,
     	connectedMeshNodePosition, connectedMeshNodeVelocity, connectedMeshNodeAcceleration));
 }
 
 
-glm::vec3** MeshNode::GetPosition()
+glm::vec3* MeshNode::GetPosition()
 {
-    return &_position;
+    return _position;
 }
 
-glm::vec3** MeshNode::GetVelocity()
+glm::vec3* MeshNode::GetVelocity()
 {
-	return &_velocity;
+	return _velocity;
 }
 
-glm::vec3** MeshNode::GetForce()
+glm::vec3* MeshNode::GetForce()
 {
-	return &_force;
+	return _force;
+}
+
+void MeshNode::ResetForce()
+{
+	*_force = glm::vec3();
 }
 
 void MeshNode::ShowForce()
 {
-	std::cout << _force->x << std::endl;
+	std::cout << _force->x << " " << _force->y << " " << _force->z << std::endl;
 }
 
 std::vector<Spring> MeshNode::GetSprings()
@@ -57,7 +63,7 @@ void MeshNode::CalculateTotalForce()
         auxTotalForce += _springs[i].CalculateForce(*_position, *_velocity);
     }
     
-    *_force = auxTotalForce;
+    *_force += auxTotalForce;
 }
 
 glm::vec3* MeshNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
@@ -65,6 +71,8 @@ glm::vec3* MeshNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
     CalculateTotalForce();
     glm::vec3 nextPosition = _verletFrame.CalculateNextPosition(*_position, *_force, dt);	
 	glm::vec3 nextVelocity = _verletFrame.CalculateNextVelocity(dt);
+	/*glm::vec3 nextPosition = _eulerFrame.CalculateNextPosition(dt);	
+	glm::vec3 nextVelocity = _eulerFrame.CalculateNextVelocity(*_force, dt);*/
 	
 	Plane* plane = CheckColliders(nextPosition, colliders);
     if (plane != nullptr)
