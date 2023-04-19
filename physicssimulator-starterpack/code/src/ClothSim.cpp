@@ -63,7 +63,7 @@ void ClothSim::Update(float dt)
 
 			Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
 			AddCollider(sphere);
-			_colliderSystem->SetSphere(sphere);
+			//_colliderSystem->SetSphere(sphere);
 			delete _meshSystem;
 			_meshSystem = new MeshSystem(distanceBetweenParticles, structuralElasticity, structuralDamping, shearElasticity,
 				shearDamping, bendElasticity, bendDamping);
