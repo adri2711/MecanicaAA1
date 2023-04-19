@@ -9,6 +9,7 @@ class AA4 : public Simulator
 private:
 
     graphics::CubePrimitive* _cube;
+    glm::mat3 _rotationMatrix;
 
 public:
 
