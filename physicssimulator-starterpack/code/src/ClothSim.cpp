@@ -14,7 +14,7 @@ ClothSim::ClothSim()
 	float sphereYPosition = rand()% 7;
 	float sphereZPosition = 7 * ((float)rand() / (float)RAND_MAX) + -3;
 	
-	Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);	
+	/*Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
 	AddCollider(sphere);	
 	
 	AddCollider(new Plane(glm::vec3(-5.f, 0.f, 5.f), glm::vec3(10.f, 0.f, 10.f))); 
@@ -24,7 +24,7 @@ ClothSim::ClothSim()
 	AddCollider(new Plane(glm::vec3(-5.f, 10.f, -5.f), glm::vec3(10.f, 10.f, 0.f)));
 	AddCollider(new Plane(glm::vec3(5.f, 10.f, 5.f), glm::vec3(10.f, 10.f, 0.f)));
 	
-	//_colliderSystem->SetSphere(sphere);
+	_colliderSystem->SetSphere(sphere);*/
 }
 
 ClothSim::~ClothSim()
@@ -59,11 +59,11 @@ void ClothSim::Update(float dt)
 			float sphereYPosition = rand() % 7;
 			float sphereZPosition = 7 * ((float)rand() / (float)RAND_MAX) + -3;
 
-			_colliderSystem->~ColliderSystem();
+			/*_colliderSystem->~ColliderSystem();
 
 			Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
 			AddCollider(sphere);
-			_colliderSystem->SetSphere(sphere);
+			_colliderSystem->SetSphere(sphere);*/
 			delete _meshSystem;
 			_meshSystem = new MeshSystem(distanceBetweenParticles, structuralElasticity, structuralDamping, shearElasticity,
 				shearDamping, bendElasticity, bendDamping);

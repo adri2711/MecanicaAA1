@@ -42,8 +42,8 @@ void Mesh::ConnectNodesWithSprings()
 void Mesh::CreateSprings(int i)
 {
 	CheckStructuralSprings(i);
-	//CheckShearSprings(i);
-	//CheckBendSprings(i);
+	CheckShearSprings(i);
+	CheckBendSprings(i);
 }
 
 void Mesh::CheckStructuralSprings(int i)

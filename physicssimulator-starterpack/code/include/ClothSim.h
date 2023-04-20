@@ -8,7 +8,7 @@
 #include <ctime>
 #include <conio.h>
 
-#define DT_DIVISOR 100
+#define DT_DIVISOR 10.f
 
 extern graphics::PrimitiveManager manager;
 
@@ -16,7 +16,7 @@ class ClothSim : public Simulator{
 
 private:
 
-	float _initialTime = 5.0f;
+	float _initialTime = 20.0f;
 	float _currentTime = _initialTime;
 	
 	MeshSystem* _meshSystem;

@@ -27,7 +27,7 @@ glm::vec3 Spring::CalculateForce(glm::vec3 initialMeshNodePosition, glm::vec3 in
     float distanceStretched = glm::length(initialMeshNodePosition - *_connectedMeshNodePosition) - _originalLength;
 
     glm::vec3 vectorNormalized = (initialMeshNodePosition - *_connectedMeshNodePosition) / glm::length(initialMeshNodePosition - *_connectedMeshNodePosition);
-    glm::vec3 dampingTerm = _damping * (initialMeshNodeVelocity - *_connectedMeshNodeVelocity) * vectorNormalized;
+    float dampingTerm = _damping * glm::dot((initialMeshNodeVelocity - *_connectedMeshNodeVelocity), vectorNormalized);
 
     glm::vec3 forceApplied = -(_elasticity * distanceStretched + dampingTerm) * vectorNormalized; 
     //glm::vec3 forceApplied = -_elasticity * distanceStretched * vectorNormalized; 

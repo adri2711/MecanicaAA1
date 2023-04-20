@@ -5,28 +5,28 @@
 #include "ColliderSystem.h"
 #include "../MeshNode.h"
 
-#define WIDTH 5
-#define HEIGHT 5
+#define WIDTH 14
+#define HEIGHT 18
 
 #define MIN_DISTANCE_BETWEEN_PARTICLES 0.4f
-#define MAX_DISTANCE_BETWEEN_PARTICLES 0.5f
+#define MAX_DISTANCE_BETWEEN_PARTICLES 1.f
 
-#define MIN_STRUCTURAL_RIGIDITY 10.0f
-#define MAX_STRUCTURAL_RIGIDITY 100.0f
+#define MIN_STRUCTURAL_RIGIDITY 1.0f
+#define MAX_STRUCTURAL_RIGIDITY 500.0f
 
-#define MIN_STRUCTURAL_DAMPING 0.000f
+#define MIN_STRUCTURAL_DAMPING 0.0f
 #define MAX_STRUCTURAL_DAMPING 10.0f
 
-#define MIN_SHEAR_RIGIDITY 5.0f
-#define MAX_SHEAR_RIGIDITY 50.0f
+#define MIN_SHEAR_RIGIDITY 1.0f
+#define MAX_SHEAR_RIGIDITY 350.0f
 
-#define MIN_SHEAR_DAMPING 0.000f
+#define MIN_SHEAR_DAMPING 0.0f
 #define MAX_SHEAR_DAMPING 10.0f
 
-#define MIN_BEND_RIGIDITY 2.0f
-#define MAX_BEND_RIGIDITY 20.0f
+#define MIN_BEND_RIGIDITY 1.0f
+#define MAX_BEND_RIGIDITY 250.0f
 
-#define MIN_BEND_DAMPING 0.000f
+#define MIN_BEND_DAMPING 0.0f
 #define MAX_BEND_DAMPING 10.0f
 
 class Mesh
@@ -38,7 +38,7 @@ private:
 	std::vector<glm::vec3> _positions;
 	glm::vec3 _startPosition;
 
-public: 
+public:
 
 	float _distanceBetweenParticles;
 	float _structuralElasticity;
