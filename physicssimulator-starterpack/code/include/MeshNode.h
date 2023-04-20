@@ -2,7 +2,6 @@
 #include <vector>
 
 #include "ColliderSystem.h"
-#include "EulerFrame.h"
 #include "Plane.h"
 #include "Spring.h"
 #include "VerletFrame.h"
@@ -24,7 +23,7 @@ public:
     ~MeshNode();
 
     void AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex,
-        glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeAcceleration);
+        glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeForce);
     
     glm::vec3* GetPosition();
     glm::vec3* GetVelocity();

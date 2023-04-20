@@ -1,9 +1,9 @@
 #include "Spring.h"
 
 Spring::Spring(SpringType springType, float elasticity, float damping, float originalLength, int connectPointIndex,
-    glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeAcceleration)
+    glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeForce)
     : _connectPointIndex(connectPointIndex), _connectedMeshNodePosition(connectedMeshNodePosition), _connectedMeshNodeVelocity(connectedMeshNodeVelocity),
-    _connectedMeshNodeAcceleration(connectedMeshNodeAcceleration), _springType(springType), _elasticity(elasticity),
+    _connectedMeshNodeForce(connectedMeshNodeForce), _springType(springType), _elasticity(elasticity),
     _damping(damping), _originalLength(originalLength)
 { 
 }
@@ -32,7 +32,7 @@ glm::vec3 Spring::CalculateForce(glm::vec3 initialMeshNodePosition, glm::vec3 in
     glm::vec3 forceApplied = -(_elasticity * distanceStretched + dampingTerm) * vectorNormalized; 
     //glm::vec3 forceApplied = -_elasticity * distanceStretched * vectorNormalized; 
 
-    *_connectedMeshNodeAcceleration += -forceApplied;
+    *_connectedMeshNodeForce += -forceApplied;
     
     return forceApplied; 
 }

@@ -10,11 +10,11 @@ ClothSim::ClothSim()
 
 	srand(time(NULL));		
 
-	float sphereXPosition = 8 * ((float)rand() / (float)RAND_MAX) + -4;
-	float sphereYPosition = rand()% 7;
-	float sphereZPosition = 7 * ((float)rand() / (float)RAND_MAX) + -3;
+	float sphereXPosition = 4 * ((float)rand() / (float)RAND_MAX) + -2;
+	float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
+	float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 	
-	/*Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
+	Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
 	AddCollider(sphere);	
 	
 	AddCollider(new Plane(glm::vec3(-5.f, 0.f, 5.f), glm::vec3(10.f, 0.f, 10.f))); 
@@ -24,7 +24,7 @@ ClothSim::ClothSim()
 	AddCollider(new Plane(glm::vec3(-5.f, 10.f, -5.f), glm::vec3(10.f, 10.f, 0.f)));
 	AddCollider(new Plane(glm::vec3(5.f, 10.f, 5.f), glm::vec3(10.f, 10.f, 0.f)));
 	
-	_colliderSystem->SetSphere(sphere);*/
+	_colliderSystem->SetSphere(sphere);
 }
 
 ClothSim::~ClothSim()
@@ -53,17 +53,20 @@ void ClothSim::Update(float dt)
 			float shearDamping = _meshSystem->GetMesh()->GetShearDamping();
 
 			float bendElasticity = _meshSystem->GetMesh()->GetBendElasticity();
-			float bendDamping = _meshSystem->GetMesh()->GetBendDamping();
+			float bendDamping = _meshSystem->GetMesh()->GetBendDamping();			
 
-			float sphereXPosition = 8 * ((float)rand() / (float)RAND_MAX) + -4;
-			float sphereYPosition = rand() % 7;
-			float sphereZPosition = 7 * ((float)rand() / (float)RAND_MAX) + -3;
+			delete _colliderSystem;
 
-			/*_colliderSystem->~ColliderSystem();
+			_colliderSystem = new ColliderSystem();			
+
+			float sphereXPosition = 4 * ((float)rand() / (float)RAND_MAX) + -2;
+			float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
+			float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 
 			Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
 			AddCollider(sphere);
-			_colliderSystem->SetSphere(sphere);*/
+			_colliderSystem->SetSphere(sphere);
+			
 			delete _meshSystem;
 			_meshSystem = new MeshSystem(distanceBetweenParticles, structuralElasticity, structuralDamping, shearElasticity,
 				shearDamping, bendElasticity, bendDamping);

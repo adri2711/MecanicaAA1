@@ -17,10 +17,10 @@ MeshNode::~MeshNode()
 }
 
 void MeshNode::AddSpring(SpringType springType, float elasticity, float damping, float springLength, int connectPointIndex,
-	glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeAcceleration)
+	glm::vec3* connectedMeshNodePosition, glm::vec3* connectedMeshNodeVelocity, glm::vec3* connectedMeshNodeForce)
 {
     _springs.push_back(Spring(springType, elasticity, damping, springLength, connectPointIndex,
-    	connectedMeshNodePosition, connectedMeshNodeVelocity, connectedMeshNodeAcceleration));
+    	connectedMeshNodePosition, connectedMeshNodeVelocity, connectedMeshNodeForce));
 }
 
 
@@ -70,16 +70,14 @@ glm::vec3* MeshNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
 {	
     CalculateTotalForce();
     glm::vec3 nextPosition = _verletFrame.CalculateNextPosition(*_position, *_force, dt);	
-	glm::vec3 nextVelocity = _verletFrame.CalculateNextVelocity(dt);
-	/*glm::vec3 nextPosition = _eulerFrame.CalculateNextPosition(dt);	
-	glm::vec3 nextVelocity = _eulerFrame.CalculateNextVelocity(*_force, dt);*/
+	*_velocity = _verletFrame.CalculateNextVelocity(dt);
 	
 	Plane* plane = CheckColliders(nextPosition, colliders);
     if (plane != nullptr)
     {
 	    PositionAfterCollision(nextPosition, plane->GetNormal(), plane->GetD());
     	_verletFrame.SetNextPosition(*_position);
-    	VelocityAfterCollision(nextVelocity, plane->GetNormal());
+    	VelocityAfterCollision(*_velocity, plane->GetNormal());
     }
     else
     {
