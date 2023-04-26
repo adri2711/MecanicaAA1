@@ -16,7 +16,7 @@ class ClothSim : public Simulator{
 
 private:
 
-	float _initialTime = 5.0f;
+	float _initialTime = 20.0f;
 	float _currentTime = _initialTime;
 	
 	MeshSystem* _meshSystem;
