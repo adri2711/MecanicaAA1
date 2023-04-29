@@ -4,7 +4,6 @@
 
 MeshNode::MeshNode(glm::vec3 position) : _position(new glm::vec3(position)), _velocity(new glm::vec3()), _force(new glm::vec3())
 {
-	//_eulerFrame = EulerFrame(*_position);
     _verletFrame = VerletFrame(*_position, *_position);
 }
 
@@ -42,11 +41,6 @@ glm::vec3* MeshNode::GetForce()
 void MeshNode::ResetForce()
 {
 	*_force = glm::vec3(0,0,0);
-}
-
-void MeshNode::ShowForce()
-{
-	std::cout << _force->x << " " << _force->y << " " << _force->z << std::endl;
 }
 
 std::vector<Spring> MeshNode::GetSprings()

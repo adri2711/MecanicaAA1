@@ -41,15 +41,15 @@ private:
 public:
 
 	float _distanceBetweenParticles;
-	float _structuralElasticity;
+	float _structuralRigidity;
 	float _structuralDamping;
-	float _shearElasticity;
+	float _shearRigidity;
 	float _shearDamping;
-	float _bendElasticity;
+	float _bendRigidity;
 	float _bendDamping;
 
-	Mesh(glm::vec3 startPosition, float distanceBetweenParticles, float structuralElasticity, float structuralDamping,
-		float shearElasticity, float bendElasticity, float shearDamping, float bendDamping);
+	Mesh(glm::vec3 startPosition, float distanceBetweenParticles, float structuralRigidity, float structuralDamping,
+		float shearRigidity, float bendElasticity, float shearDamping, float bendDamping);
 	~Mesh();
 
 	void ConnectNodesWithSprings();
@@ -71,11 +71,11 @@ public:
 	std::vector<glm::vec3> GetPositions();
 
 	float GetDistanceBetweenParticles();
-	float GetStructuralElasticity();
+	float GetStructuralRigidity();
 	float GetStructuralDamping();
-	float GetShearElasticity();
+	float GetShearRigidity();
 	float GetShearDamping();
-	float GetBendElasticity();
+	float GetBendRigidity();
 	float GetBendDamping();
 };
 

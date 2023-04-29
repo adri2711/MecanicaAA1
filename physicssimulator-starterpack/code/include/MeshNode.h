@@ -14,7 +14,6 @@ private:
     glm::vec3* _velocity;
     glm::vec3* _force;
     VerletFrame _verletFrame;
-    //EulerFrame _eulerFrame;
     std::vector<Spring> _springs;
     
 public:
@@ -29,8 +28,6 @@ public:
     glm::vec3* GetVelocity();
     glm::vec3* GetForce();
     void ResetForce();
-
-    void ShowForce();
 
     std::vector<Spring> GetSprings();
 
