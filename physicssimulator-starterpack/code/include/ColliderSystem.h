@@ -10,26 +10,28 @@
 class ColliderSystem
 {
 
-protected:    
-    graphics::SpherePrimitive* _spherePrimitive; 
+protected:
+    graphics::SpherePrimitive* _spherePrimitive;
     graphics::CapsulePrimitive* _capsulePrimitive;
     std::vector<Collider*> _colliders;
     Sphere* _sphere;
     Capsule* _capsule;
-     
-    void UpdatePrimitive();    
+
+    void UpdatePrimitive();
 
 public:
 
     ColliderSystem();
     ~ColliderSystem();
 
+    void ResetColliderSystem();
+
     void SetSphere(Sphere* sphere);
     Sphere* GetSphere();
-    
+
     void SetCapsule(Capsule* capsule);
     Capsule* GetCapsule();
-    
+
     virtual void Render();
-    
+
 };
