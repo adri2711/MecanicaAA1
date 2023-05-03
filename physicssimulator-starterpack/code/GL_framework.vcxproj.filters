@@ -30,9 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="include\imgui\imgui.cpp">
       <Filter>Source Files\Graphics\imgui</Filter>
     </ClCompile>
@@ -87,8 +84,32 @@
     <ClCompile Include="src\Collider.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Capsule.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ColliderSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
     <ClCompile Include="src\Sphere.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ClothSim.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mesh.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Solver.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VerletFrame.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,8 +152,29 @@
     <ClInclude Include="include\Collider.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="include\Capsule.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ColliderSystem.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
     <ClInclude Include="include\Sphere.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ClothSim.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mesh.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MeshSystem.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Solver.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VerletFrame.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
