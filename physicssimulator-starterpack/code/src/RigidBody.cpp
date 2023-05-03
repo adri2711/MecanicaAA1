@@ -1,9 +1,6 @@
-#include "AA4.h"
+#include "RigidBody.h"
 
-#include <iostream>
-#include<glm/gtx/string_cast.hpp>
-
-AA4::AA4()
+RigidBody::RigidBody()
 {
 	_cube = manager.NewCube(glm::mat4(1.f));
 
@@ -32,14 +29,13 @@ AA4::AA4()
 	_rotationMatrix = Rz * Ry * Rx;
 }
 
-AA4::~AA4()
+RigidBody::~RigidBody()
 {
-	manager.DestroyPrimitive(_cube);
 }
 
-void AA4::Update(float dt)
+void RigidBody::UpdatePosition()
 {
-	_angularVelocity = glm::vec3(0.f, 1.f, 0.f) * 1.f;
+	_angularVelocity = glm::vec3(0.f, 1.f, 0.f) * 5.f;
 
 	_angularVelocityMatrix = glm::mat3(
 
@@ -50,15 +46,4 @@ void AA4::Update(float dt)
 	);
 
 	_rotationMatrix += dt * (_angularVelocityMatrix * _rotationMatrix);
-
-	//std::cout << glm::to_string(_rotationMatrix) << std::endl;
-}
-
-void AA4::RenderUpdate()
-{
-	_cube->Update(_rotationMatrix);
-}
-
-void AA4::RenderGui()
-{
 }

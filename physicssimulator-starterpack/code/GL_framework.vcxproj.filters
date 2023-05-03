@@ -120,8 +120,14 @@
     <ClCompile Include="src\MeshNode.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\AA4.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\RigidBodySim.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidBodySystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidBody.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,8 +203,14 @@
     <ClInclude Include="include\Spring.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="include\AA4.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="include\RigidBodySim.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RigidBodySystem.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\RigidBody.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
