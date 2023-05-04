@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <PrimitiveManager.h>
+#include <ctime>
 
 extern graphics::PrimitiveManager manager;
 
@@ -31,7 +32,7 @@ public:
 	~RigidBody();
 
     void Update(float dt);
-    glm::mat4 CalculatePosition();
+    glm::mat4 CalculatePosition(glm::vec3 position);
     glm::quat RotationMatrixWithQuaternions(float rotation, glm::vec3 direction);
 
 };
