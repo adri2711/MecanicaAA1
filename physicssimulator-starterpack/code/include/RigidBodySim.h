@@ -1,6 +1,4 @@
 #pragma once
-#include <imgui/imgui.h>
-#include <PrimitiveManager.h>
 #include <ctime>
 #include <conio.h>
 #include "Simulator.h"
@@ -8,8 +6,6 @@
 #include "ColliderSystem.h"
 
 #define DT_DIVISOR 20.f
-
-extern graphics::PrimitiveManager manager;
 
 class RigidBodySim : public Simulator
 {
