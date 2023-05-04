@@ -2,12 +2,13 @@
 #include <imgui\imgui_impl_sdl_gl3.h>
 #include <cstdio>
 
+#include "RigidbodySim.h"
 #include "ParticleSim.h"
 #include "ClothSim.h"
 
 #pragma region simulationSelection
 enum class EnabledSimulation {
-	PARABOLA, CLOTH
+	PARABOLA, CLOTH, RIGIDBODY
 };
 
 Simulator* currentSimulator;
@@ -30,6 +31,11 @@ void setSimulation(EnabledSimulation simulation) {
 			printf("Start the clothes simulation\n");
 			currentSimulator = new ClothSim();
 			break;
+
+		case EnabledSimulation::RIGIDBODY:
+			printf("Start the clothes simulation\n");
+			currentSimulator = new RigidBodySim();
+			break;
 	}
 }
 #pragma endregion
@@ -44,6 +50,7 @@ void GUI() {
 		if (ImGui::BeginMenu("Simulation")) {
 			if (ImGui::MenuItem("Parabola")) { setSimulation(EnabledSimulation::PARABOLA); };
 			if (ImGui::MenuItem("Cloth")) { setSimulation(EnabledSimulation::CLOTH); };
+			if (ImGui::MenuItem("Rigidbody")) { setSimulation(EnabledSimulation::RIGIDBODY); };
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
@@ -64,8 +71,8 @@ void GUI() {
 
 void PhysicsInit() {
 	// The default simulation
-	currentSimulation = EnabledSimulation::CLOTH;
-	currentSimulator = new ClothSim();
+	currentSimulation = EnabledSimulation::RIGIDBODY;
+	currentSimulator = new RigidBodySim();
 }
 
 void PhysicsUpdate(float dt) {
