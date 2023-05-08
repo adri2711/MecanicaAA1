@@ -5,7 +5,7 @@
 #include "RigidBodySystem.h"
 #include "ColliderSystem.h"
 
-#define DT_DIVISOR 20.f
+#define DT_DIVISOR 1.f
 
 class RigidBodySim : public Simulator
 {
@@ -17,10 +17,12 @@ private:
     RigidBodySystem* _rigidBodySystem;
     ColliderSystem* _colliderSystem;
 
+    bool _reset;
+
 public:
 
     RigidBodySim();
-    ~RigidBodySim();
+    ~RigidBodySim() override;
 
     // Inherited via Simulator
     void Update(float dt) override;

@@ -15,5 +15,5 @@ public:
 		_colliders.push_back(collider);
 	}
 
-	virtual ~Simulator() {};
+	virtual ~Simulator() = default;
 };

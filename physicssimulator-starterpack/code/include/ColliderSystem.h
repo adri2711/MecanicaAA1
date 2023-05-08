@@ -17,14 +17,12 @@ protected:
     Sphere* _sphere;
     Capsule* _capsule;
 
-    void UpdatePrimitive();
-
 public:
 
     ColliderSystem();
     ~ColliderSystem();
 
-    void ResetColliderSystem();
+    void ResetColliderSystem() const;
 
     void SetSphere(Sphere* sphere);
     Sphere* GetSphere();

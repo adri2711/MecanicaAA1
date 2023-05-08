@@ -11,7 +11,7 @@ ColliderSystem::~ColliderSystem()
     ResetColliderSystem();
 }
 
-void ColliderSystem::ResetColliderSystem()
+void ColliderSystem::ResetColliderSystem() const
 {
     manager.DestroyPrimitive(_spherePrimitive);
     manager.DestroyPrimitive(_capsulePrimitive);

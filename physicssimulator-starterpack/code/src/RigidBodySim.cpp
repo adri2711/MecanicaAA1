@@ -5,6 +5,7 @@
 
 RigidBodySim::RigidBodySim()
 {
+	_reset = false;
 	_rigidBodySystem = new RigidBodySystem();
 	_colliderSystem = new ColliderSystem();
 }
@@ -17,7 +18,15 @@ RigidBodySim::~RigidBodySim()
 
 void RigidBodySim::Update(float dt)
 {
-	_rigidBodySystem->UpdateRigidBody(dt);
+	if (_reset)
+	{
+		delete _rigidBodySystem;
+		_rigidBodySystem = new RigidBodySystem();
+	}
+	for (int i = 0; i < DT_DIVISOR; ++i)
+	{
+		_rigidBodySystem->UpdateRigidBody(dt / DT_DIVISOR);	
+	}	
 }
 
 void RigidBodySim::RenderUpdate()
@@ -27,4 +36,5 @@ void RigidBodySim::RenderUpdate()
 
 void RigidBodySim::RenderGui()
 {
+	_reset = ImGui::Button("Reset");
 }
