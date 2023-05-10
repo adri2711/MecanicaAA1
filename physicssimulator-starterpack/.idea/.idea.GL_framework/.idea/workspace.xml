@@ -19,6 +19,7 @@
     <setting file="file://$PROJECT_DIR$/code/include/glm/detail/func_geometric.inl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/code/include/glm/detail/type_vec.hpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/code/include/glm/detail/type_vec3.inl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/code/include/glm/gtc/quaternion.inl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/code/include/imgui/imgui.h" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -113,6 +114,7 @@
       <workItem from="1681374998912" duration="6864000" />
       <workItem from="1682018722422" duration="10040000" />
       <workItem from="1682801651962" duration="1526000" />
+      <workItem from="1683707113618" duration="10283000" />
     </task>
     <servers />
   </component>

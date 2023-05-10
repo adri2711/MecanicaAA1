@@ -8,8 +8,6 @@ private:
 
 	RigidBody* _rigidBody;
 
-	glm::vec3 _initialForce;
-
 public:
 
 	RigidBodySystem();

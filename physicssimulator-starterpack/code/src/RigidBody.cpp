@@ -1,94 +1,48 @@
 #include "RigidBody.h"
 
-#include <iostream>
-
-RigidBody::RigidBody(glm::vec3 initialForce) : _force(initialForce)
+RigidBody::RigidBody(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, float mass,
+	glm::vec3 linearVelocity, glm::vec3 angularVelocity, glm::mat3 iBody, std::vector<glm::vec3> particlesLocalPosition) :
+	_mass(mass), _iBody(iBody), _particlesLocalPosition(particlesLocalPosition)
 {
-	srand(time(NULL));
-
-	_cube = manager.NewCube(glm::mat4(1.f));
-
-	_particlesLocalPosition.push_back(glm::vec3(-0.5f, -0.5f, -0.5f)); 
-	_particlesLocalPosition.push_back(glm::vec3(-0.5f, -0.5f, 0.5f)); 
-	_particlesLocalPosition.push_back(glm::vec3(0.5f, -0.5f, 0.5f)); 
-	_particlesLocalPosition.push_back(glm::vec3(0.5f, -0.5f, -0.5f)); 
-	_particlesLocalPosition.push_back(glm::vec3(-0.5f, 0.5f, -0.5f)); 
-	_particlesLocalPosition.push_back(glm::vec3(-0.5f, 0.5f, 0.5f)); 
-	_particlesLocalPosition.push_back(glm::vec3(0.5f, 0.5f, 0.5f)); 
-	_particlesLocalPosition.push_back(glm::vec3(0.5f, 0.5f, -0.5f));
-
-	_positionMatrix = CalculatePosition(glm::vec3(-4 + (rand() % 8), rand() % 10, -4 + (rand() % 8)));	
-
-	_rotationQuaternion = RotationMatrixWithQuaternions(rand() % 360, glm::vec3(rand() % 1000, rand() % 1000, rand() % 1000));
+	_state.rotationQuaternion = CalculateRotationQuaternion(initialRotation, initialDirection);
+	_state.positionMatrix = CalculatePositionMatrix(centerOfMass);
+	_state.lastPosition = centerOfMass;
+	_state.centerOfMass = centerOfMass;
+	_state.linearMomentum = mass * linearVelocity;
+	_state.angularMomentum = iBody * angularVelocity;
 
 	for (int i = 0; i < _particlesLocalPosition.size(); ++i)
 	{
-		_particlesWorldPosition.push_back(CalculateParticlesPosition(_particlesLocalPosition[i]));
-	}
-
-	for (int i = 0; i < _particlesWorldPosition.size(); ++i)
-	{
-		_spheres.push_back(Sphere(_particlesWorldPosition[i], 0.2f));
-		_spheresPrimitive.push_back(manager.NewSphere(_spheres[i]._coordinates, _spheres[i]._radius));
-	}
-
-	_cube->Update(_positionMatrix * glm::mat4(_rotationQuaternion));
+		_particlesWorldPosition.push_back(glm::vec3());
+	}	
 }
 
 RigidBody::~RigidBody()
 {
-	manager.DestroyPrimitive(_cube);
-
-	for (int i = 0; i < _spheresPrimitive.size(); ++i)
-	{
-		manager.DestroyPrimitive(_spheresPrimitive[i]);
-	}
+	
 }
 
-void RigidBody::Update(float dt)
+glm::mat4 RigidBody::CalculatePositionMatrix(glm::vec3 position)
 {
-	_positionMatrix = CalculatePosition(glm::vec3(sinf(ImGui::GetTime()) * 5.f, 5.f + cosf(ImGui::GetTime()) * 5.f, 0.f));
-
-	_rotationQuaternion *= RotationMatrixWithQuaternions(glm::radians(float((int)ImGui::GetTime() % 360)), glm::vec3(5, 2, -3.f));
-
-	_linearVelocity = CalculateLinearVelocity(dt);
-
-	_angularVelocity = CalculateAngularVelocity();
-
-	_inertialTensorMatrix = CalculateInertialTensor();
-
-	_torque = CalculateTorque();
+	_state.lastPosition = _state.centerOfMass;
+	_state.centerOfMass = position;
 
 	for (int i = 0; i < _particlesWorldPosition.size(); ++i)
 	{
 		_particlesWorldPosition[i] = CalculateParticlesPosition(_particlesLocalPosition[i]);
 	}
 	
-	for (int i = 0; i < _spheres.size(); ++i)
-	{		
-		_spheres[i]._coordinates = _particlesWorldPosition[i];
-		_spheresPrimitive[i]->Update(_spheres[i]._coordinates, _spheres[i]._radius);
-	}
-
-	_cube->Update(_positionMatrix * glm::mat4(_rotationQuaternion));
-}
-
-glm::mat4 RigidBody::CalculatePosition(glm::vec3 position)
-{
-	_lastPosition = _centerOfMass;
-	_centerOfMass = position;
 	return glm::translate(glm::mat4(), position);
 }
 
-glm::quat RigidBody::RotationMatrixWithQuaternions(float rotation, glm::vec3 direction)
+glm::quat RigidBody::CalculateRotationQuaternion(float rotation, glm::vec3 direction) const
 {
 	return glm::quat(cosf(rotation / 2), glm::normalize(direction) * sinf(rotation / 2));
 }
 
-glm::mat3 RigidBody::CalculateInertialTensor()
+glm::mat3 RigidBody::CalculateInertialTensorMatrix() const
 {
 	glm::mat3 auxInertialTensorMatrix = glm::mat3(0);
-
 	
 	for (int i = 0; i < _particlesLocalPosition.size(); ++i)
 	{
@@ -113,28 +67,38 @@ glm::mat3 RigidBody::CalculateInertialTensor()
 	return auxInertialTensorMatrix;	
 }
 
-glm::vec3 RigidBody::CalculateParticlesPosition(glm::vec3 position)
+glm::vec3 RigidBody::CalculateParticlesPosition(glm::vec3 position) const
 {
-	return _rotationQuaternion * position + _centerOfMass;
+	return _state.rotationQuaternion * position + _state.centerOfMass;
 }
 
-glm::vec3 RigidBody::CalculateLinearVelocity(float dt)
+glm::vec3 RigidBody::CalculateLinearVelocity(float dt) const
 {
-	return (_centerOfMass - _lastPosition) / dt;
+	return (_state.centerOfMass - _state.lastPosition) / dt;
 }
 
-glm::vec3 RigidBody::CalculateAngularVelocity()
+glm::vec3 RigidBody::CalculateLinearMomentum() const
 {
-	
+	return _mass * _state.linearVelocity;
 }
 
-glm::vec3 RigidBody::CalculateTorque()
+glm::vec3 RigidBody::CalculateAngularVelocity() const
+{
+	return glm::vec3();
+}
+
+glm::vec3 RigidBody::CalculateAngularMomentum(glm::mat3 iBody) const
+{
+	return iBody * _state.angularVelocity;
+}
+
+glm::vec3 RigidBody::CalculateTorque() const
 {
 	glm::vec3 auxVector = glm::vec3(0);
 
 	for (int i = 0; i < _particlesLocalPosition.size(); ++i)
 	{
-		auxVector += glm::cross(_particlesLocalPosition[i], _force);
+		auxVector += glm::cross(_particlesLocalPosition[i], _state.linearVelocity);
 	}
 
 	return auxVector;
