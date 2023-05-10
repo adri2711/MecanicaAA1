@@ -31,7 +31,7 @@ Cube::Cube(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOf
         _spheresPrimitive.push_back(manager.NewSphere(_spheres[i]._coordinates, _spheres[i]._radius));
     }
 
-    _cube->Update(_state.positionMatrix * glm::mat4(_state.rotationQuaternion));
+    _cube->Update(_state.positionMatrix * glm::mat4(QuaternionToMatrix(_state.rotationQuaternion)));
 }
 
 Cube::~Cube()
@@ -50,12 +50,6 @@ void Cube::Update(float dt)
     _state.rotationQuaternion *= CalculateRotationQuaternion(glm::radians(float((int)ImGui::GetTime() % 360)), glm::vec3(5, 2, -3.f));
     
     _state.positionMatrix = CalculatePositionMatrix(glm::vec3(sinf(ImGui::GetTime()) * 5.f, 5.f + cosf(ImGui::GetTime()) * 5.f, 0.f));
-
-    _state.linearVelocity = CalculateLinearVelocity(dt);
-
-    _state.angularVelocity = CalculateAngularVelocity();    
-
-    _state.torque = CalculateTorque();
 	
     for (int i = 0; i < _spheres.size(); ++i)
     {		
@@ -63,5 +57,5 @@ void Cube::Update(float dt)
         _spheresPrimitive[i]->Update(_spheres[i]._coordinates, _spheres[i]._radius);
     }
 
-    _cube->Update(_state.positionMatrix * glm::mat4(_state.rotationQuaternion));
+    _cube->Update(_state.positionMatrix * glm::mat4(QuaternionToMatrix(_state.rotationQuaternion)));
 }

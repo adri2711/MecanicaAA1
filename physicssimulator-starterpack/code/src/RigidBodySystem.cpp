@@ -14,6 +14,8 @@ RigidBodySystem::RigidBodySystem()
 	
 	glm::vec3 linearVelocity = glm::normalize(glm::vec3(3.f, 2.f, -3.f));
 
+	glm::vec3 angularVelocity = glm::vec3(3.f, 2.f, -3.f);
+
 	std::vector<glm::vec3> particlesLocalPosition;	
 
 	particlesLocalPosition.push_back(glm::vec3(-0.5f, -0.5f, -0.5f));
@@ -25,7 +27,7 @@ RigidBodySystem::RigidBodySystem()
 	particlesLocalPosition.push_back(glm::vec3(0.5f, 0.5f, 0.5f));
 	particlesLocalPosition.push_back(glm::vec3(0.5f, 0.5f, -0.5f));
 	
-	_rigidBody = new Cube(initialRotation, initialDirection, centerOfMass, mass, linearVelocity, particlesLocalPosition);
+	_rigidBody = new Cube(initialRotation, initialDirection, centerOfMass, mass, linearVelocity, angularVelocity, particlesLocalPosition);
 }
 
 RigidBodySystem::~RigidBodySystem()

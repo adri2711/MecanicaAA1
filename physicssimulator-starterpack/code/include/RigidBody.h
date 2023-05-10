@@ -16,13 +16,8 @@ struct RigidBodyState
     
     glm::mat4 positionMatrix;
 
-    glm::vec3 lastPosition;
-    glm::vec3 centerOfMass;
-    glm::vec3 linearVelocity;
     glm::vec3 linearMomentum;
-    glm::vec3 angularVelocity;
     glm::vec3 angularMomentum;
-    glm::vec3 torque;
 };
 
 class RigidBody
@@ -35,6 +30,8 @@ protected:
     std::vector<glm::vec3> _particlesWorldPosition;
 
     glm::mat3 _iBody;
+
+    glm::vec3 _centerOfMass;
 
     float _mass;
 
@@ -51,6 +48,9 @@ protected:
     glm::vec3 CalculateAngularVelocity() const;
     glm::vec3 CalculateAngularMomentum(glm::mat3 iBody) const;
     glm::vec3 CalculateTorque() const;
+    glm::mat3 QuaternionToMatrix(glm::quat quaternion) const;
+    RigidBodyState SemiImplicitEuler() const;
+
 
 public:
 

@@ -4,17 +4,15 @@ RigidBody::RigidBody(float initialRotation, glm::vec3 initialDirection, glm::vec
 	glm::vec3 linearVelocity, glm::vec3 angularVelocity, glm::mat3 iBody, std::vector<glm::vec3> particlesLocalPosition) :
 	_mass(mass), _iBody(iBody), _particlesLocalPosition(particlesLocalPosition)
 {
-	_state.rotationQuaternion = CalculateRotationQuaternion(initialRotation, initialDirection);
-	_state.positionMatrix = CalculatePositionMatrix(centerOfMass);
-	_state.lastPosition = centerOfMass;
-	_state.centerOfMass = centerOfMass;
-	_state.linearMomentum = mass * linearVelocity;
-	_state.angularMomentum = iBody * angularVelocity;
-
 	for (int i = 0; i < _particlesLocalPosition.size(); ++i)
 	{
 		_particlesWorldPosition.push_back(glm::vec3());
-	}	
+	}
+
+	_state.rotationQuaternion = CalculateRotationQuaternion(initialRotation, initialDirection);
+	_state.positionMatrix = CalculatePositionMatrix(centerOfMass);
+	_state.linearMomentum = glm::vec3(0);
+	_state.angularMomentum = glm::vec3(0);
 }
 
 RigidBody::~RigidBody()
@@ -23,9 +21,8 @@ RigidBody::~RigidBody()
 }
 
 glm::mat4 RigidBody::CalculatePositionMatrix(glm::vec3 position)
-{
-	_state.lastPosition = _state.centerOfMass;
-	_state.centerOfMass = position;
+{	
+	_centerOfMass = position;
 
 	for (int i = 0; i < _particlesWorldPosition.size(); ++i)
 	{
@@ -69,17 +66,18 @@ glm::mat3 RigidBody::CalculateInertialTensorMatrix() const
 
 glm::vec3 RigidBody::CalculateParticlesPosition(glm::vec3 position) const
 {
-	return _state.rotationQuaternion * position + _state.centerOfMass;
+	return _state.rotationQuaternion * position + _centerOfMass;
 }
 
 glm::vec3 RigidBody::CalculateLinearVelocity(float dt) const
 {
-	return (_state.centerOfMass - _state.lastPosition) / dt;
+	return glm::vec3();
 }
 
 glm::vec3 RigidBody::CalculateLinearMomentum() const
 {
-	return _mass * _state.linearVelocity;
+	//return _mass * _state.linearVelocity;
+	return glm::vec3();
 }
 
 glm::vec3 RigidBody::CalculateAngularVelocity() const
@@ -89,7 +87,8 @@ glm::vec3 RigidBody::CalculateAngularVelocity() const
 
 glm::vec3 RigidBody::CalculateAngularMomentum(glm::mat3 iBody) const
 {
-	return iBody * _state.angularVelocity;
+	//return iBody * _state.angularVelocity;
+	return glm::vec3();
 }
 
 glm::vec3 RigidBody::CalculateTorque() const
@@ -98,8 +97,23 @@ glm::vec3 RigidBody::CalculateTorque() const
 
 	for (int i = 0; i < _particlesLocalPosition.size(); ++i)
 	{
-		auxVector += glm::cross(_particlesLocalPosition[i], _state.linearVelocity);
+		//auxVector += glm::cross(_particlesLocalPosition[i], _state.linearVelocity);
 	}
 
 	return auxVector;
+}
+
+glm::mat3 RigidBody::QuaternionToMatrix(glm::quat quaternion) const
+{
+	return 2.f * glm::mat3(
+	
+		glm::vec3(0.5f - pow(quaternion.y, 2.f) - pow(quaternion.z, 2.f), quaternion.x * quaternion.y + quaternion.w * quaternion.z, quaternion.x * quaternion.z - quaternion.w * quaternion.y),
+		glm::vec3(quaternion.x * quaternion.y - quaternion.w * quaternion.z, 0.5f - pow(quaternion.x ,2.f) - pow(quaternion.z, 2.f), quaternion.y * quaternion.z + quaternion.w * quaternion.x),
+		glm::vec3(quaternion.x * quaternion.z + quaternion.w * quaternion.y, quaternion.y * quaternion.z - quaternion.w * quaternion.x, 0.5f - pow(quaternion.x, 2.f) - pow(quaternion.y, 2.f))
+	);
+}
+
+RigidBodyState RigidBody::SemiImplicitEuler() const
+{
+	return RigidBodyState();
 }
