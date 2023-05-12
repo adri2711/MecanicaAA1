@@ -1,16 +1,18 @@
 #include "RigidBodySystem.h"
 
 #include "Cube.h"
+#include <iostream>
 
 RigidBodySystem::RigidBodySystem()
 {
-	glm::vec3 centerOfMass = glm::vec3(-4 + (rand() % 8), rand() % 10, -4 + (rand() % 8));
+	//glm::vec3 centerOfMass = glm::vec3(-4 + (rand() % 8), rand() % 10, -4 + (rand() % 8));
+	glm::vec3 centerOfMass = glm::vec3(0.f, 10.f, 0.f);
 
 	glm::vec3 initialDirection = glm::vec3(rand() % 1000, rand() % 1000, rand() % 1000);
 
 	float initialRotation = rand() % 360;
 
-	float mass = 1;
+	float mass = 2.f;
 	
 	glm::vec3 linearVelocity = glm::normalize(glm::vec3(3.f, 2.f, -3.f));
 
@@ -37,5 +39,12 @@ RigidBodySystem::~RigidBodySystem()
 
 void RigidBodySystem::UpdateRigidBody(float dt)
 {
+	// Gravity
+	_rigidBody->AddForce(Force(GLOBAL, glm::vec3(0.f, -9.8f * _rigidBody->_mass, 0.f), glm::vec3()));
+
+	if (int(ImGui::GetTime() * 10.f) % 10 == 9) {
+		_rigidBody->AddForce(Force(POINT, glm::vec3(0.f, 220.f, 0.f), glm::vec3()));
+	}
+
 	_rigidBody->Update(dt);
 }

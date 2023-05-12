@@ -46,16 +46,18 @@ Cube::~Cube()
 
 void Cube::Update(float dt)
 {   
-    
-    _state.rotationQuaternion *= CalculateRotationQuaternion(glm::radians(float((int)ImGui::GetTime() % 360)), glm::vec3(5, 2, -3.f));
-    
-    _state.positionMatrix = CalculatePositionMatrix(glm::vec3(sinf(ImGui::GetTime()) * 5.f, 5.f + cosf(ImGui::GetTime()) * 5.f, 0.f));
-	
+    // Abel test movement
+    //_state.rotationQuaternion *= CalculateRotationQuaternion(glm::radians(float((int)ImGui::GetTime() % 360)), glm::vec3(5, 2, -3.f));
+    //_state.positionMatrix = CalculatePositionMatrix(glm::vec3(sinf(ImGui::GetTime()) * 5.f, 5.f + cosf(ImGui::GetTime()) * 5.f, 0.f));
+
+    RigidBody::Update(dt);
+
+    _cube->Update(_state.positionMatrix * glm::mat4(QuaternionToMatrix(_state.rotationQuaternion)));
+
+    //Abel debug spheres
     for (int i = 0; i < _spheres.size(); ++i)
-    {		
+    {
         _spheres[i]._coordinates = _particlesWorldPosition[i];
         _spheresPrimitive[i]->Update(_spheres[i]._coordinates, _spheres[i]._radius);
     }
-
-    _cube->Update(_state.positionMatrix * glm::mat4(QuaternionToMatrix(_state.rotationQuaternion)));
 }

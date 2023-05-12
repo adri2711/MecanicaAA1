@@ -1,4 +1,5 @@
 #include "RigidBody.h"
+#include <iostream>
 
 RigidBody::RigidBody(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, float mass,
 	glm::vec3 linearVelocity, glm::vec3 angularVelocity, glm::mat3 iBody, std::vector<glm::vec3> particlesLocalPosition) :
@@ -9,6 +10,7 @@ RigidBody::RigidBody(float initialRotation, glm::vec3 initialDirection, glm::vec
 		_particlesWorldPosition.push_back(glm::vec3());
 	}
 
+	_centerOfMass = centerOfMass;
 	_state.rotationQuaternion = CalculateRotationQuaternion(initialRotation, initialDirection);
 	_state.positionMatrix = CalculatePositionMatrix(centerOfMass);
 	_state.linearMomentum = glm::vec3(0);
@@ -20,10 +22,18 @@ RigidBody::~RigidBody()
 	
 }
 
+void RigidBody::Update(float dt)
+{
+	_state = SemiImplicitEuler(dt);
+}
+
+void RigidBody::AddForce(Force force)
+{
+	_forces.push_back(force);
+}
+
 glm::mat4 RigidBody::CalculatePositionMatrix(glm::vec3 position)
 {	
-	_centerOfMass = position;
-
 	for (int i = 0; i < _particlesWorldPosition.size(); ++i)
 	{
 		_particlesWorldPosition[i] = CalculateParticlesPosition(_particlesLocalPosition[i]);
@@ -37,7 +47,7 @@ glm::quat RigidBody::CalculateRotationQuaternion(float rotation, glm::vec3 direc
 	return glm::quat(cosf(rotation / 2), glm::normalize(direction) * sinf(rotation / 2));
 }
 
-glm::mat3 RigidBody::CalculateInertialTensorMatrix() const
+glm::mat3 RigidBody::CalculateSomethingWeird() const
 {
 	glm::mat3 auxInertialTensorMatrix = glm::mat3(0);
 	
@@ -64,43 +74,49 @@ glm::mat3 RigidBody::CalculateInertialTensorMatrix() const
 	return auxInertialTensorMatrix;	
 }
 
+glm::mat3 RigidBody::CalculateInverseInertiaTensor() const
+{
+	glm::mat3 rotMatrix = QuaternionToMatrix(_state.rotationQuaternion);
+	return rotMatrix * glm::inverse(_iBody) * glm::transpose(rotMatrix);
+}
+
 glm::vec3 RigidBody::CalculateParticlesPosition(glm::vec3 position) const
 {
 	return _state.rotationQuaternion * position + _centerOfMass;
 }
 
-glm::vec3 RigidBody::CalculateLinearVelocity(float dt) const
+glm::vec3 RigidBody::CalculateLinearVelocity(glm::vec3 linearMomentum) const
 {
-	return glm::vec3();
+	return linearMomentum / _mass;
 }
 
-glm::vec3 RigidBody::CalculateLinearMomentum() const
+glm::vec3 RigidBody::UpdateLinearMomentum(float dt) const
 {
-	//return _mass * _state.linearVelocity;
-	return glm::vec3();
+	glm::vec3 force;
+	for (int i = 0; i < _forces.size(); i++) {
+		force += _forces[i].forceVector;
+	}
+	return _state.linearMomentum + force * dt;
 }
 
-glm::vec3 RigidBody::CalculateAngularVelocity() const
+glm::vec3 RigidBody::CalculateAngularVelocity(glm::vec3 angularMomentum) const
 {
-	return glm::vec3();
+	return CalculateInverseInertiaTensor() * angularMomentum;
 }
 
-glm::vec3 RigidBody::CalculateAngularMomentum(glm::mat3 iBody) const
+glm::vec3 RigidBody::UpdateAngularMomentum(float dt) const
 {
-	//return iBody * _state.angularVelocity;
-	return glm::vec3();
+	return _state.angularMomentum * CalculateTorque() * dt;
 }
 
 glm::vec3 RigidBody::CalculateTorque() const
 {
-	glm::vec3 auxVector = glm::vec3(0);
-
-	for (int i = 0; i < _particlesLocalPosition.size(); ++i)
-	{
-		//auxVector += glm::cross(_particlesLocalPosition[i], _state.linearVelocity);
+	glm::vec3 torque;
+	for (int i = 0; i < _forces.size(); i++) {
+		glm::vec3 r = _forces[i].forcePosition - _centerOfMass;
+		torque += glm::cross(r, _forces[i].forceVector);
 	}
-
-	return auxVector;
+	return torque;
 }
 
 glm::mat3 RigidBody::QuaternionToMatrix(glm::quat quaternion) const
@@ -113,7 +129,26 @@ glm::mat3 RigidBody::QuaternionToMatrix(glm::quat quaternion) const
 	);
 }
 
-RigidBodyState RigidBody::SemiImplicitEuler() const
+glm::vec3 RigidBody::UpdatePosition(glm::vec3 x0, glm::vec3 v, float dt)
 {
-	return RigidBodyState();
+	return x0 + v * dt;
+}
+
+glm::vec3 RigidBody::UpdateRotation(glm::mat3 r0, glm::vec3 w, float dt)
+{
+	//return r0 + dt * (w * r0); ???????????????????????
+	return glm::vec3();
+}
+
+RigidBodyState RigidBody::SemiImplicitEuler(float dt)
+{
+	RigidBodyState newState;
+	newState.linearMomentum = UpdateLinearMomentum(dt);
+	newState.angularMomentum = UpdateAngularMomentum(dt);
+	_forces.clear();
+
+	_centerOfMass = UpdatePosition(_centerOfMass, CalculateLinearVelocity(newState.linearMomentum), dt);
+	newState.positionMatrix = CalculatePositionMatrix(_centerOfMass);
+	newState.rotationQuaternion = UpdateRotation(QuaternionToMatrix(_state.rotationQuaternion), CalculateAngularVelocity(newState.angularMomentum), dt);
+	return newState;
 }
