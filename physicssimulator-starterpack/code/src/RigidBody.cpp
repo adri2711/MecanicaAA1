@@ -134,9 +134,9 @@ glm::vec3 RigidBody::UpdatePosition(glm::vec3 x0, glm::vec3 v, float dt)
 	return x0 + v * dt;
 }
 
-glm::vec3 RigidBody::UpdateRotation(glm::mat3 r0, glm::vec3 w, float dt)
+glm::vec3 RigidBody::UpdateRotation(glm::quat r0, glm::vec3 w, float dt)
 {
-	//return r0 + dt * (w * r0); ???????????????????????
+	//return r0 + dt * (w * r0);
 	return glm::vec3();
 }
 
@@ -149,6 +149,6 @@ RigidBodyState RigidBody::SemiImplicitEuler(float dt)
 
 	_centerOfMass = UpdatePosition(_centerOfMass, CalculateLinearVelocity(newState.linearMomentum), dt);
 	newState.positionMatrix = CalculatePositionMatrix(_centerOfMass);
-	newState.rotationQuaternion = UpdateRotation(QuaternionToMatrix(_state.rotationQuaternion), CalculateAngularVelocity(newState.angularMomentum), dt);
+	newState.rotationQuaternion = UpdateRotation(_state.rotationQuaternion, CalculateAngularVelocity(newState.angularMomentum), dt);
 	return newState;
 }
