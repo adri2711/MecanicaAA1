@@ -66,7 +66,7 @@ protected:
     virtual glm::vec3 CalculateTorque() const;
     virtual glm::mat3 QuaternionToMatrix(glm::quat quaternion) const;
     virtual glm::vec3 UpdatePosition(glm::vec3 x0, glm::vec3 v, float dt);
-    virtual glm::vec3 UpdateRotation(glm::quat r0, glm::vec3 w, float dt);
+    virtual glm::quat UpdateRotation(glm::quat r0, glm::vec3 w, float dt);
     RigidBodyState SemiImplicitEuler(float dt);
 
 

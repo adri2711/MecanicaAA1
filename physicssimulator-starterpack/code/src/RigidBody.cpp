@@ -101,6 +101,7 @@ glm::vec3 RigidBody::UpdateLinearMomentum(float dt) const
 
 glm::vec3 RigidBody::CalculateAngularVelocity(glm::vec3 angularMomentum) const
 {
+	//std::cout << angularMomentum.x << ", " << angularMomentum.y << ", " << angularMomentum.z << std::endl;
 	return CalculateInverseInertiaTensor() * angularMomentum;
 }
 
@@ -113,8 +114,10 @@ glm::vec3 RigidBody::CalculateTorque() const
 {
 	glm::vec3 torque;
 	for (int i = 0; i < _forces.size(); i++) {
-		glm::vec3 r = _forces[i].forcePosition - _centerOfMass;
-		torque += glm::cross(r, _forces[i].forceVector);
+		if (_forces[i].forceType == POINT) {
+			glm::vec3 r = _forces[i].forcePosition - _centerOfMass;
+			torque += glm::cross(r, _forces[i].forceVector);
+		}
 	}
 	return torque;
 }
@@ -134,10 +137,10 @@ glm::vec3 RigidBody::UpdatePosition(glm::vec3 x0, glm::vec3 v, float dt)
 	return x0 + v * dt;
 }
 
-glm::vec3 RigidBody::UpdateRotation(glm::quat r0, glm::vec3 w, float dt)
+glm::quat RigidBody::UpdateRotation(glm::quat r0, glm::vec3 w, float dt)
 {
-	//return r0 + dt * (w * r0);
-	return glm::vec3();
+	//std::cout << w.x << ", " << w.y << ", " << w.z << std::endl;
+	return 0.5f * w * r0;
 }
 
 RigidBodyState RigidBody::SemiImplicitEuler(float dt)

@@ -6,7 +6,7 @@
 RigidBodySystem::RigidBodySystem()
 {
 	//glm::vec3 centerOfMass = glm::vec3(-4 + (rand() % 8), rand() % 10, -4 + (rand() % 8));
-	glm::vec3 centerOfMass = glm::vec3(0.f, 10.f, 0.f);
+	glm::vec3 centerOfMass = glm::vec3(0.f, 3.f, 0.f);
 
 	glm::vec3 initialDirection = glm::vec3(rand() % 1000, rand() % 1000, rand() % 1000);
 
@@ -30,6 +30,8 @@ RigidBodySystem::RigidBodySystem()
 	particlesLocalPosition.push_back(glm::vec3(0.5f, 0.5f, -0.5f));
 	
 	_rigidBody = new Cube(initialRotation, initialDirection, centerOfMass, mass, linearVelocity, angularVelocity, particlesLocalPosition);
+
+	//_rigidBody->AddForce(Force(POINT, glm::vec3(300.f, 300.f, 0.f), glm::vec3()));
 }
 
 RigidBodySystem::~RigidBodySystem()
@@ -40,11 +42,11 @@ RigidBodySystem::~RigidBodySystem()
 void RigidBodySystem::UpdateRigidBody(float dt)
 {
 	// Gravity
-	_rigidBody->AddForce(Force(GLOBAL, glm::vec3(0.f, -9.8f * _rigidBody->_mass, 0.f), glm::vec3()));
+	//_rigidBody->AddForce(Force(GLOBAL, glm::vec3(0.f, -9.8f * _rigidBody->_mass, 0.f), glm::vec3()));
 
-	if (int(ImGui::GetTime() * 10.f) % 10 == 9) {
-		_rigidBody->AddForce(Force(POINT, glm::vec3(0.f, 220.f, 0.f), glm::vec3()));
-	}
+	//if (int(ImGui::GetTime() * 10.f) % 10 == 9) {
+	//	_rigidBody->AddForce(Force(POINT, glm::vec3(0.f, 220.f, 0.f), glm::vec3()));
+	//}
 
 	_rigidBody->Update(dt);
 }
