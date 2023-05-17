@@ -1,12 +1,12 @@
 #pragma once
 
-#include "RigidBody.h"
+#include "Cube.h"
 
 class RigidBodySystem
 {
 private:
 
-	RigidBody* _rigidBody;
+	Cube* _rigidBody;
 
 public:
 

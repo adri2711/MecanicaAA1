@@ -2,7 +2,7 @@
 #include <iostream>
 
 RigidBody::RigidBody(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, float mass,
-	glm::vec3 linearVelocity, glm::vec3 angularVelocity, glm::mat3 iBody, std::vector<glm::vec3> particlesLocalPosition) :
+	glm::vec3 linearVelocity, glm::vec3 angularVelocity, glm::vec3 scale, glm::mat3 iBody, std::vector<glm::vec3> particlesLocalPosition) :
 	_mass(mass), _iBody(iBody), _particlesLocalPosition(particlesLocalPosition)
 {
 	for (int i = 0; i < _particlesLocalPosition.size(); ++i)
@@ -77,7 +77,9 @@ glm::mat3 RigidBody::CalculateSomethingWeird() const
 glm::mat3 RigidBody::CalculateInverseInertiaTensor() const
 {
 	glm::mat3 rotMatrix = QuaternionToMatrix(_state.rotationQuaternion);
-	return rotMatrix * glm::inverse(_iBody) * glm::transpose(rotMatrix);
+	glm::mat3 transRotMatrix = glm::transpose(rotMatrix);
+	glm::mat3 inverseIBody = glm::inverse(_iBody);
+	return rotMatrix * inverseIBody * transRotMatrix;
 }
 
 glm::vec3 RigidBody::CalculateParticlesPosition(glm::vec3 position) const
@@ -107,7 +109,7 @@ glm::vec3 RigidBody::CalculateAngularVelocity(glm::vec3 angularMomentum) const
 
 glm::vec3 RigidBody::UpdateAngularMomentum(float dt) const
 {
-	return _state.angularMomentum * CalculateTorque() * dt;
+	return _state.angularMomentum + CalculateTorque() * dt;
 }
 
 glm::vec3 RigidBody::CalculateTorque() const

@@ -21,7 +21,7 @@ namespace ImGui {
 namespace RenderVars {
 	const float FOV = glm::radians(65.f);
 	const float zNear = 1.f;
-	const float zFar = 50.f;
+	const float zFar = 200.f;
 
 	glm::mat4 _projection;
 	glm::mat4 _modelView;

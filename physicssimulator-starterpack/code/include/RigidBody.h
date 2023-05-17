@@ -37,6 +37,8 @@ public:
 
     RigidBodyState _state;
 
+    glm::vec3 _scale;
+
     std::vector<glm::vec3> _particlesLocalPosition;
     std::vector<glm::vec3> _particlesWorldPosition;
 
@@ -73,7 +75,7 @@ protected:
 public:
 
 	RigidBody(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, float mass,
-	    glm::vec3 linearVelocity, glm::vec3 angularVelocity, glm::mat3 iBody,
+	    glm::vec3 linearVelocity, glm::vec3 angularVelocity, glm::vec3 scale, glm::mat3 iBody,
 	    std::vector<glm::vec3> particlesLocalPosition);
 	virtual ~RigidBody();
 

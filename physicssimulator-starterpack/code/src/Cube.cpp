@@ -4,25 +4,33 @@
 
 glm::mat3 Cube::CalculateIBody()
 {
-    _iBody = {
+    glm::mat3 temp= {
 
-        glm::vec3((_mass / 12) * (pow(_scale.z, 2.f) + pow(_scale.y, 2.f)), 0, 0),
-        glm::vec3(0, (_mass / 12) * (pow(_scale.x, 2.f) + pow(_scale.y, 2.f)), 0),
-        glm::vec3( 0, 0, (_mass / 12) * (pow(_scale.x, 2.f) + pow(_scale.z, 2.f))),
+        glm::vec3((_mass / 12.f) * (pow(_scale.z, 2.f) + pow(_scale.y, 2.f)), 0.f, 0.f),
+        glm::vec3(0.f, (_mass / 12.f) * (pow(_scale.x, 2.f) + pow(_scale.y, 2.f)), 0.f),
+        glm::vec3( 0.f, 0.f, (_mass / 12.f) * (pow(_scale.x, 2.f) + pow(_scale.z, 2.f))),
         
     };
 
-    return _iBody;
+    return temp;
 }
 
-Cube::Cube(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, float mass,
+Cube::Cube(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, glm::vec3 scale, float mass,
     glm::vec3 linearVelocity, glm::vec3 angularVelocity, std::vector<glm::vec3> particlesLocalPosition):
     RigidBody(initialRotation, initialDirection, centerOfMass, mass,
-        linearVelocity, angularVelocity, CalculateIBody(), particlesLocalPosition)
+        linearVelocity, angularVelocity, scale, glm::mat3(), particlesLocalPosition)
 {
     
     srand(time(NULL));
 
+    _scale = scale;
+    _iBody = {
+
+        glm::vec3((_mass / 12.f) * (pow(_scale.z, 2.f) + pow(_scale.y, 2.f)), 0.f, 0.f),
+        glm::vec3(0.f, (_mass / 12.f) * (pow(_scale.x, 2.f) + pow(_scale.y, 2.f)), 0.f),
+        glm::vec3(0.f, 0.f, (_mass / 12.f) * (pow(_scale.x, 2.f) + pow(_scale.z, 2.f))),
+
+    };
     _cube = manager.NewCube(glm::mat4(1.f));
 
     for (int i = 0; i < _particlesWorldPosition.size(); ++i)

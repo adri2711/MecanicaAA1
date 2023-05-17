@@ -5,9 +5,6 @@ class Cube : public RigidBody
 {
 
 private:
-    
-    glm::vec3 _scale;
-
     graphics::CubePrimitive* _cube;
 
     std::vector<graphics::SpherePrimitive*> _spheresPrimitive;
@@ -18,7 +15,7 @@ private:
     
 public:
 
-    Cube(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, float mass,
+    Cube(float initialRotation, glm::vec3 initialDirection, glm::vec3 centerOfMass, glm::vec3 scale, float mass,
         glm::vec3 linearVelocity, glm::vec3 angularVelocity, std::vector<glm::vec3> particlesLocalPosition);
     ~Cube() override;
     void Update(float dt) override;
