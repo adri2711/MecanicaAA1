@@ -31,7 +31,7 @@ RigidBodySystem::RigidBodySystem()
 	
 	_rigidBody = new Cube(initialRotation, initialDirection, centerOfMass, glm::vec3(1.f, 1.f, 1.f), mass, linearVelocity, angularVelocity, particlesLocalPosition);
 
-	_rigidBody->AddForce(Force(POINT, glm::vec3(30.f, 30.f, 0.f), glm::vec3(centerOfMass + glm::vec3(0.f, -0.5f, 0.f))));
+	_rigidBody->AddForce(Force(POINT, glm::vec3(60.f, 60.f, 0.f), glm::vec3(centerOfMass + glm::vec3(.5f, -.5f, 0.f))));
 }
 
 RigidBodySystem::~RigidBodySystem()

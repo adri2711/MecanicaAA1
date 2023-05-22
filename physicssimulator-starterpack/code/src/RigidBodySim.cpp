@@ -23,10 +23,7 @@ void RigidBodySim::Update(float dt)
 		delete _rigidBodySystem;
 		_rigidBodySystem = new RigidBodySystem();
 	}
-	for (int i = 0; i < DT_DIVISOR; ++i)
-	{
-		_rigidBodySystem->UpdateRigidBody(dt / DT_DIVISOR);	
-	}	
+	_rigidBodySystem->UpdateRigidBody(dt);	
 }
 
 void RigidBodySim::RenderUpdate()

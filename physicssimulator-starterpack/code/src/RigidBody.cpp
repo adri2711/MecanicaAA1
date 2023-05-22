@@ -142,7 +142,7 @@ glm::vec3 RigidBody::UpdatePosition(glm::vec3 x0, glm::vec3 v, float dt)
 glm::quat RigidBody::UpdateRotation(glm::quat r0, glm::vec3 w, float dt)
 {
 	//std::cout << w.x << ", " << w.y << ", " << w.z << std::endl;
-	return 0.5f * w * r0;
+	return dt * 0.5f * w * r0;
 }
 
 RigidBodyState RigidBody::SemiImplicitEuler(float dt)
