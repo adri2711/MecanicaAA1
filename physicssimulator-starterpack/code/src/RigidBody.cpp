@@ -141,8 +141,9 @@ glm::vec3 RigidBody::UpdatePosition(glm::vec3 x0, glm::vec3 v, float dt)
 
 glm::quat RigidBody::UpdateRotation(glm::quat r0, glm::vec3 w, float dt)
 {
-	//std::cout << w.x << ", " << w.y << ", " << w.z << std::endl;
-	return dt * 0.5f * w * r0;
+	std::cout << r0.x << ", " << r0.y << ", " << r0.z << std::endl;
+	glm::quat temp = 0.5f * w * r0;
+	return r0 + temp * dt;
 }
 
 RigidBodyState RigidBody::SemiImplicitEuler(float dt)
@@ -150,6 +151,9 @@ RigidBodyState RigidBody::SemiImplicitEuler(float dt)
 	RigidBodyState newState;
 	newState.linearMomentum = UpdateLinearMomentum(dt);
 	newState.angularMomentum = UpdateAngularMomentum(dt);
+	//if (newState.angularMomentum.x != 0 || newState.angularMomentum.y != 0 || newState.angularMomentum.z != 0) {
+	//	std::cout << newState.angularMomentum.x << ", " << newState.angularMomentum.y << ", " << newState.angularMomentum.z << std::endl;
+	//}
 	_forces.clear();
 
 	_centerOfMass = UpdatePosition(_centerOfMass, CalculateLinearVelocity(newState.linearMomentum), dt);
