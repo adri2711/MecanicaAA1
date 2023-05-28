@@ -4,6 +4,7 @@
 
 #include "ColliderSystem.h"
 #include "../FluidNode.h"
+#include "../Wave.h"
 
 #define WIDTH 10
 #define HEIGHT 10
@@ -16,6 +17,7 @@ class Fluid
 private:
 
 	std::vector<FluidNode> _fluidNodes;
+	std::vector<Wave> _waves;
 	std::vector<glm::vec3> _positions;
 	glm::vec3 _startPosition;
 
