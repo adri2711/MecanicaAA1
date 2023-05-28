@@ -138,6 +138,10 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_sdl_gl3.cpp" />
+    <ClCompile Include="src\Fluid.cpp" />
+    <ClCompile Include="src\FluidNode.cpp" />
+    <ClCompile Include="src\FluidSim.cpp" />
+    <ClCompile Include="src\FluidSystem.cpp" />
     <ClCompile Include="src\RigidBody.cpp" />
     <ClCompile Include="src\RigidBodySim.cpp" />
     <ClCompile Include="src\ClothSim.cpp" />
@@ -534,6 +538,10 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="src\VerletFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Fluid.h" />
+    <ClInclude Include="include\FluidNode.h" />
+    <ClInclude Include="include\FluidSim.h" />
+    <ClInclude Include="include\FluidSystem.h" />
     <ClInclude Include="include\RigidBody.h" />
     <ClInclude Include="include\RigidBodySim.h" />
     <ClInclude Include="include\ClothSim.h" />

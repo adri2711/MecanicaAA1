@@ -5,10 +5,11 @@
 #include "RigidbodySim.h"
 #include "ParticleSim.h"
 #include "ClothSim.h"
+#include "FluidSim.h"
 
 #pragma region simulationSelection
 enum class EnabledSimulation {
-	PARABOLA, CLOTH, RIGIDBODY
+	PARABOLA, CLOTH, RIGIDBODY, FLUID
 };
 
 Simulator* currentSimulator;
@@ -35,6 +36,10 @@ void setSimulation(EnabledSimulation simulation) {
 		case EnabledSimulation::RIGIDBODY:
 			printf("Start the clothes simulation\n");
 			currentSimulator = new RigidBodySim();
+			break;
+		case EnabledSimulation::FLUID:
+			printf("Start the fluid simulation\n");
+			currentSimulator = new FluidSim();
 			break;
 	}
 }
@@ -71,8 +76,8 @@ void GUI() {
 
 void PhysicsInit() {
 	// The default simulation
-	currentSimulation = EnabledSimulation::RIGIDBODY;
-	currentSimulator = new RigidBodySim();
+	currentSimulation = EnabledSimulation::FLUID;
+	currentSimulator = new FluidSim();
 }
 
 void PhysicsUpdate(float dt) {
