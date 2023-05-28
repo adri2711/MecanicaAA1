@@ -7,15 +7,15 @@
 
 #define WIDTH 10
 #define HEIGHT 10
-#define MIN_DISTANCE_BETWEEN_PARTICLES 0.4f
-#define MAX_DISTANCE_BETWEEN_PARTICLES 0.5f
+#define MIN_DISTANCE_BETWEEN_PARTICLES 1.f
+#define MAX_DISTANCE_BETWEEN_PARTICLES 2.f
 
 class Fluid
 {
 
 private:
 
-	std::vector<FluidNode> _FluidNodes;
+	std::vector<FluidNode> _fluidNodes;
 	std::vector<glm::vec3> _positions;
 	glm::vec3 _startPosition;
 

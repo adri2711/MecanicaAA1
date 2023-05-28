@@ -22,7 +22,7 @@ public:
 
     void CalculateTotalForce();
 
-    void UpdatePosition(std::vector<Collider*> colliders, float dt);
+    glm::vec3 UpdatePosition(std::vector<Collider*> colliders, float dt);
 
     Plane* CheckColliders(glm::vec3 nextPosition, std::vector<Collider*> colliders) const;
     Plane* CalculateSpherePlane(glm::vec3 nextPosition, Collider* collider) const;

@@ -4,7 +4,7 @@
 
 FluidNode::FluidNode(glm::vec3 position)
 {
-	position = position;
+	this->position = position;
 }
 
 FluidNode::~FluidNode()
@@ -20,9 +20,9 @@ void FluidNode::CalculateTotalForce()
 {
 }
 
-void FluidNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
+glm::vec3 FluidNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
 {
-
+	return position;
 }
 
 Plane* FluidNode::CheckColliders(glm::vec3 nextPosition, std::vector<Collider*> colliders) const
