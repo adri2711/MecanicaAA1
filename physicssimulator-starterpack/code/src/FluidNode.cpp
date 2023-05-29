@@ -1,27 +1,26 @@
 #include "FluidNode.h"
-
 #include <iostream>
 
 FluidNode::FluidNode(glm::vec3 position)
 {
-	this->position = position;
+	this->position = initPosition = position;
+	t = 0;
 }
 
 FluidNode::~FluidNode()
 {
 }
 
-void FluidNode::ResetForce()
+glm::vec3 FluidNode::UpdatePosition(std::vector<Collider*> colliders, std::vector<Wave> &waves, float dt)
 {
-	force = glm::vec3(0.f, 0.f, 0.f);
-}
-
-void FluidNode::CalculateTotalForce()
-{
-}
-
-glm::vec3 FluidNode::UpdatePosition(std::vector<Collider*> colliders, float dt)
-{
+	t += dt;
+	glm::vec3 positionSum;
+	for (int i = 0; i < waves.size(); i++) {
+		positionSum += waves[i].GetPositionAtTime(position, t);
+	}
+	position = initPosition - positionSum;
+	position.y = initPosition.y + positionSum.y;
+	//std::cout << position.x << ", " << position.y << ", " << position.z << std::endl;
 	return position;
 }
 

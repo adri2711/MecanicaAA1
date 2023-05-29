@@ -32,13 +32,13 @@ void Fluid::UpdateNodesPositions(std::vector<Collider*> colliders, float dt)
 {	
 	for (int i = 0; i < _fluidNodes.size(); i++)
 	{
-		_positions[i] = _fluidNodes[i].UpdatePosition(colliders, dt);		
+		_positions[i] = _fluidNodes[i].UpdatePosition(colliders, _waves, dt);		
 	}
+}
 
-	for (int i = 0; i < _fluidNodes.size(); i++)
-	{
-		_fluidNodes[i].ResetForce();
-	}
+void Fluid::AddWave(Wave newWave)
+{
+	_waves.push_back(newWave);
 }
 
 std::vector<glm::vec3> Fluid::GetPositions()

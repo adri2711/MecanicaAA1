@@ -536,6 +536,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
     <ClCompile Include="src\VerletFrame.cpp" />
+    <ClCompile Include="src\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Fluid.h" />
@@ -569,6 +570,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClInclude Include="include\Sphere.h" />
     <ClInclude Include="include\Spring.h" />
     <ClInclude Include="include\VerletFrame.h" />
+    <ClInclude Include="include\Wave.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Axis.fs" />

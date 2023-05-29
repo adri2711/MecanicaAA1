@@ -4,7 +4,10 @@ extern graphics::PrimitiveManager manager;
 
 FluidSystem::FluidSystem(float distanceBetweenParticles)
 {
-	_fluid = new Fluid(glm::vec3(-4.f, 4.f, 4.0f), distanceBetweenParticles);
+	_fluid = new Fluid(glm::vec3(-5.f, 4.f, 5.0f), distanceBetweenParticles);
+	_fluid->AddWave(Wave(glm::vec3(glm::sin(glm::radians(0.f)), 0.f, glm::cos(glm::radians(0.f))), .3f, 0.2f, 0.f));
+	_fluid->AddWave(Wave(glm::vec3(glm::sin(glm::radians(-60.f)), 0.f, glm::cos(glm::radians(-60.f))), .5f, 0.6f, 1.f));
+	_fluid->AddWave(Wave(glm::vec3(glm::sin(glm::radians(135.f)), 0.f, glm::cos(glm::radians(135.f))), .4f, 0.3f, 2.f));
 
 	_meshPrimitive = manager.NewMesh(HEIGHT, WIDTH);
 
