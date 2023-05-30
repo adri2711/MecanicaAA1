@@ -1,8 +1,9 @@
 #include "Wave.h"
 
-Wave::Wave(glm::vec3 direction, float amplitude, float wavelength, float phi)
+Wave::Wave(float angle, float amplitude, float wavelength, float phi)
 {
-	this->direction = direction;
+	this->angle = angle;
+	direction = glm::vec3(glm::cos(glm::radians(angle)), 0.f, glm::sin(glm::radians(angle)));
 	this->amplitude = amplitude;
 	this->wavelength = wavelength;
 	this->phi = phi;
@@ -10,6 +11,7 @@ Wave::Wave(glm::vec3 direction, float amplitude, float wavelength, float phi)
 
 glm::vec3 Wave::GetPositionAtTime(glm::vec3 initialPos, float t)
 {
+	direction = glm::vec3(glm::cos(glm::radians(angle)), 0.f, glm::sin(glm::radians(angle)));
 	glm::vec3 res;
 	float k = 6.28318530718 / wavelength;
 	float w = 1.f / wavelength;

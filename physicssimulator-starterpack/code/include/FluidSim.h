@@ -22,6 +22,14 @@ private:
 	FluidSystem* _fluidSystem;
 	ColliderSystem* _colliderSystem;
 
+	std::vector<std::string> labels{
+	"Wave        x:",
+	"Angle       x",
+	"Amplitude   x",
+	"Wavelength  x",
+	"Phase       x"
+	};
+
 public:
 
 	FluidSim();

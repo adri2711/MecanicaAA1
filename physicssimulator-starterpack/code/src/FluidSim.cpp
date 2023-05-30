@@ -71,4 +71,17 @@ void FluidSim::RenderUpdate()
 
 void FluidSim::RenderGui()
 {	
+	if (_fluidSystem->GetFluid()->_waves.size() < 10 && ImGui::Button("Add Wave")) {
+		_fluidSystem->GetFluid()->AddWave(DEFAULT_WAVE);
+	}
+	for (int i = 0; i < _fluidSystem->GetFluid()->_waves.size(); i++) {
+		for (int t = 0; t < labels.size(); t++) {
+			labels[t][12] = i + '0';
+		}
+		ImGui::Text(labels[0].c_str());
+		ImGui::SliderFloat(labels[1].c_str(), &_fluidSystem->GetFluid()->_waves[i].angle, MIN_ANGLE, MAX_ANGLE);
+		ImGui::SliderFloat(labels[2].c_str(), &_fluidSystem->GetFluid()->_waves[i].amplitude, MIN_AMPLITUDE, MAX_AMPLITUDE);
+		ImGui::SliderFloat(labels[3].c_str(), &_fluidSystem->GetFluid()->_waves[i].wavelength, MIN_WAVELENGTH, MAX_WAVELENGTH);
+		ImGui::SliderFloat(labels[4].c_str(), &_fluidSystem->GetFluid()->_waves[i].phi, MIN_PHASE, MAX_PHASE);
+	}
 }

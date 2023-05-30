@@ -17,12 +17,13 @@ class Fluid
 private:
 
 	std::vector<FluidNode> _fluidNodes;
-	std::vector<Wave> _waves;
 	std::vector<glm::vec3> _positions;
-	std::vector<glm::vec3> _previousPositions;
 	glm::vec3 _startPosition;
 
 public:
+
+
+	std::vector<Wave> _waves;
 
 	float distanceBetweenParticles;
 
