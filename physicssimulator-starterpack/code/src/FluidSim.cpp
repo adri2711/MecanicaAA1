@@ -68,6 +68,8 @@ void FluidSim::RenderUpdate()
 
 void FluidSim::RenderGui()
 {	
+	ImGui::Text("Sphere:");
+	ImGui::SliderFloat("Mass", &_sphere->mass, MIN_MASS, MAX_MASS);
 	if (_fluidSystem->GetFluid()->_waves.size() < 10 && ImGui::Button("Add Wave")) {
 		_fluidSystem->GetFluid()->AddWave(DEFAULT_WAVE);
 	}

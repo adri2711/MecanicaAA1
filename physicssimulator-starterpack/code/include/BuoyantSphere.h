@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 
 #define SAMPLE_SEGMENTS 5
+#define MAX_MASS 10
+#define MIN_MASS 1
 
 class BuoyantSphere : public Sphere
 {

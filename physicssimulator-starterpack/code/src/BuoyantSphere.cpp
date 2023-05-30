@@ -29,11 +29,7 @@ void BuoyantSphere::AddForce(glm::vec3 force)
 
 void BuoyantSphere::ApplyBuoyancyForce(float density, float volume)
 {
-	//std::cout << "density:" << density << std::endl;
-	//std::cout << "gravity:" << -gravity.y << std::endl;
-	//std::cout << "volume" << volume << std::endl;
 	glm::vec3 force = glm::vec3(0.f, density * -gravity.y * volume, 0.f);
-	//std::cout << "force:" << force.y << std::endl;
 	AddForce(force);
 }
 
