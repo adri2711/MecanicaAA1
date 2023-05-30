@@ -22,6 +22,7 @@ private:
 	
 	FluidSystem* _fluidSystem;
 	ColliderSystem* _colliderSystem;
+	BuoyantSphere* _sphere;
 
 	std::vector<std::string> labels{
 	"Wave        x:",

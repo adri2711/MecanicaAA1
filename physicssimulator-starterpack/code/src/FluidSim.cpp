@@ -13,25 +13,30 @@ FluidSim::FluidSim()
 	float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
 	float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 	
-	BuoyantSphere* sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
-	AddCollider(sphere);	
-	_colliderSystem->SetSphere(sphere);
+	_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
+	AddCollider(_sphere);	
+	_colliderSystem->SetSphere(_sphere);
 }
 
 FluidSim::~FluidSim()
 {	
 	delete _fluidSystem;
 	delete _colliderSystem;
+	delete _sphere;
 }
 
 void FluidSim::Update(float dt)
 {
 	for (int i = 0; i < DT_DIVISOR; i++)
 	{
+		//Update systems
 		_fluidSystem->Update(_colliders, dt / DT_DIVISOR);
+
+		_sphere->Update(dt);
 
 		_currentTime -= dt / DT_DIVISOR;
 
+		//Reset Sim
 		if (_currentTime <= 0.0f)
 		{
 			_currentTime = _initialTime;
@@ -45,14 +50,14 @@ void FluidSim::Update(float dt)
 			float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
 			float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 
-			BuoyantSphere* sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
-			AddCollider(sphere);
-			_colliderSystem->SetSphere(sphere);
+			_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
+			AddCollider(_sphere);
+			_colliderSystem->SetSphere(_sphere);
 			
 			delete _fluidSystem;
 			_fluidSystem = new FluidSystem(distanceBetweenParticles);
 		}
-	}	
+	}
 }
 
 void FluidSim::RenderUpdate()

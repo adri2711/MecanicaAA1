@@ -13,8 +13,8 @@ void BuoyantSphere::AddForce(glm::vec3 force)
 
 void BuoyantSphere::Update(float dt)
 {
-	if (gravity) _forces.push_back(glm::vec3(0.f, -9.8f, 0.f));
 	glm::vec3 acc = glm::vec3();
+	if (gravity) acc += glm::vec3(0.f, -.098f, 0.f);
 	for (int i = 0; i < _forces.size(); i++) {
 		acc += _forces[i] / mass;
 	}
