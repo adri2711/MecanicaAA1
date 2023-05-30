@@ -32,7 +32,8 @@ void FluidSim::Update(float dt)
 		//Update systems
 		_fluidSystem->Update(_colliders, dt / DT_DIVISOR);
 
-		_sphere->Update(dt);
+		_sphere->ApplyBuoyancyForce(_fluidSystem->GetFluid()->density, _fluidSystem->GetFluid()->FindSubmergedVolume(*_sphere));
+		_sphere->Update(dt / DT_DIVISOR);
 
 		_currentTime -= dt / DT_DIVISOR;
 

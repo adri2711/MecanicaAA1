@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-Fluid::Fluid(glm::vec3 startPosition, float distanceBetweenParticles)
-	: _startPosition(startPosition), distanceBetweenParticles(distanceBetweenParticles)
+Fluid::Fluid(glm::vec3 startPosition, float distanceBetweenParticles, float density)
+	: _startPosition(startPosition), distanceBetweenParticles(distanceBetweenParticles), density(density)
 {
 	for (int i = 0; i < HEIGHT; i++)
 	{
@@ -39,6 +39,11 @@ void Fluid::UpdateNodesPositions(std::vector<Collider*> colliders, float dt)
 void Fluid::AddWave(Wave newWave)
 {
 	_waves.push_back(newWave);
+}
+
+float Fluid::FindSubmergedVolume(const BuoyantSphere& sphere)
+{
+	return 0.0f;
 }
 
 std::vector<glm::vec3> Fluid::GetPositions()

@@ -1,9 +1,10 @@
 #include "BuoyantSphere.h"
 
-BuoyantSphere::BuoyantSphere(glm::vec3 coordinates, float radius, float mass, bool gravity) : Sphere(coordinates, radius)
+BuoyantSphere::BuoyantSphere(glm::vec3 coordinates, float radius, float mass, bool hasGravity) : Sphere(coordinates, radius)
 {
 	this->mass = mass;
-	this->gravity = gravity;
+	this->hasGravity = hasGravity;
+	gravity = glm::vec3(0.f, mass * -9.8f, 0.f);
 }
 
 void BuoyantSphere::AddForce(glm::vec3 force)
@@ -11,10 +12,15 @@ void BuoyantSphere::AddForce(glm::vec3 force)
 	_forces.push_back(force);
 }
 
+void BuoyantSphere::CalculateBuoyancyForce(float density, float volume)
+{
+	AddForce(glm::vec3(0.f, density * gravity * volume, 0.f));
+}
+
 void BuoyantSphere::Update(float dt)
 {
 	glm::vec3 acc = glm::vec3();
-	if (gravity) acc += glm::vec3(0.f, -.098f, 0.f);
+	if (hasGravity) AddForce(gravity);
 	for (int i = 0; i < _forces.size(); i++) {
 		acc += _forces[i] / mass;
 	}
