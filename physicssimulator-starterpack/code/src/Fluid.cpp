@@ -43,6 +43,9 @@ void Fluid::AddWave(Wave newWave)
 
 float Fluid::FindSubmergedVolume(const BuoyantSphere& sphere)
 {
+	for (int i = 0; i < _fluidNodes.size(); i++) {
+
+	}
 	return 0.0f;
 }
 

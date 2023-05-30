@@ -12,9 +12,9 @@ void BuoyantSphere::AddForce(glm::vec3 force)
 	_forces.push_back(force);
 }
 
-void BuoyantSphere::CalculateBuoyancyForce(float density, float volume)
+void BuoyantSphere::ApplyBuoyancyForce(float density, float volume)
 {
-	AddForce(glm::vec3(0.f, density * gravity * volume, 0.f));
+	AddForce(glm::vec3(0.f, density * gravity.y * volume, 0.f));
 }
 
 void BuoyantSphere::Update(float dt)
