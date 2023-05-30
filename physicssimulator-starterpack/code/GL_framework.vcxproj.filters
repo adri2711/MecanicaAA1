@@ -144,6 +144,9 @@
     <ClCompile Include="src\Wave.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\BuoyantSphere.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\RenderPrims.h">
@@ -240,6 +243,9 @@
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="include\Wave.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BuoyantSphere.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,16 +13,8 @@ FluidSim::FluidSim()
 	float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
 	float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 	
-	Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
+	BuoyantSphere* sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
 	AddCollider(sphere);	
-	
-	AddCollider(new Plane(glm::vec3(-5.f, 0.f, 5.f), glm::vec3(10.f, 0.f, 10.f))); 
-	AddCollider(new Plane(glm::vec3(5.f, 0.f, -5.f), glm::vec3(0.f, 10.f, 10.f))); 
-	AddCollider(new Plane(glm::vec3(5.f, 10.f, -5.f), glm::vec3(10.f, 0.f, 10.f))); 
-	AddCollider(new Plane(glm::vec3(-5.f, 0.f, -5.f), glm::vec3(0.f, 10.f, 10.f)));
-	AddCollider(new Plane(glm::vec3(-5.f, 10.f, -5.f), glm::vec3(10.f, 10.f, 0.f)));
-	AddCollider(new Plane(glm::vec3(5.f, 10.f, 5.f), glm::vec3(10.f, 10.f, 0.f)));
-	
 	_colliderSystem->SetSphere(sphere);
 }
 
@@ -53,7 +45,7 @@ void FluidSim::Update(float dt)
 			float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
 			float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 
-			Sphere* sphere = new Sphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f);
+			BuoyantSphere* sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
 			AddCollider(sphere);
 			_colliderSystem->SetSphere(sphere);
 			

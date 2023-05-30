@@ -138,6 +138,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="include\imgui\imgui_demo.cpp" />
     <ClCompile Include="include\imgui\imgui_draw.cpp" />
     <ClCompile Include="include\imgui\imgui_impl_sdl_gl3.cpp" />
+    <ClCompile Include="src\BuoyantSphere.cpp" />
     <ClCompile Include="src\Fluid.cpp" />
     <ClCompile Include="src\FluidNode.cpp" />
     <ClCompile Include="src\FluidSim.cpp" />
@@ -539,6 +540,7 @@ xcopy $(ProjectDir)libs\SDL2.dll $(OutDir) /y /d</Command>
     <ClCompile Include="src\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\BuoyantSphere.h" />
     <ClInclude Include="include\Fluid.h" />
     <ClInclude Include="include\FluidNode.h" />
     <ClInclude Include="include\FluidSim.h" />
