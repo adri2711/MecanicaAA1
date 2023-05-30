@@ -2,6 +2,27 @@
 
 #include <iostream>
 
+void FluidSim::Reset()
+{
+	_currentTime = _initialTime;
+	float distanceBetweenParticles = _fluidSystem->GetFluid()->distanceBetweenParticles;
+
+	delete _colliderSystem;
+
+	_colliderSystem = new ColliderSystem();
+
+	float sphereXPosition = 4 * ((float)rand() / (float)RAND_MAX) + -2;
+	float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
+	float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
+
+	_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 5.f);
+	AddCollider(_sphere);
+	_colliderSystem->SetSphere(_sphere);
+
+	delete _fluidSystem;
+	_fluidSystem = new FluidSystem(distanceBetweenParticles);
+}
+
 FluidSim::FluidSim()
 {
 	_fluidSystem = new FluidSystem(MIN_DISTANCE_BETWEEN_PARTICLES);
@@ -34,28 +55,14 @@ void FluidSim::Update(float dt)
 		_sphere->ApplyBuoyancyForce(_fluidSystem->GetFluid()->density, _fluidSystem->GetFluid()->FindSubmergedVolume(*_sphere));
 		_sphere->Update(dt / DT_DIVISOR);
 
-		_currentTime -= dt / DT_DIVISOR;
+		if (!stopReset) {
+			_currentTime -= dt / DT_DIVISOR;
+		}
 
 		//Reset Sim
 		if (_currentTime <= 0.0f)
 		{
-			_currentTime = _initialTime;
-			float distanceBetweenParticles = _fluidSystem->GetFluid()->distanceBetweenParticles;	
-
-			delete _colliderSystem;
-
-			_colliderSystem = new ColliderSystem();			
-
-			float sphereXPosition = 4 * ((float)rand() / (float)RAND_MAX) + -2;
-			float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
-			float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
-
-			_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 5.f);
-			AddCollider(_sphere);
-			_colliderSystem->SetSphere(_sphere);
-			
-			delete _fluidSystem;
-			_fluidSystem = new FluidSystem(distanceBetweenParticles);
+			Reset();
 		}
 	}
 }
@@ -68,6 +75,12 @@ void FluidSim::RenderUpdate()
 
 void FluidSim::RenderGui()
 {	
+	if (ImGui::Button("Reset")) {
+		Reset();
+	}
+	if (ImGui::Button("Toggle Auto-Reset")) {
+		stopReset = !stopReset;
+	}
 	ImGui::Text("Sphere:");
 	ImGui::SliderFloat("Mass", &_sphere->mass, MIN_MASS, MAX_MASS);
 	if (_fluidSystem->GetFluid()->_waves.size() < 10 && ImGui::Button("Add Wave")) {

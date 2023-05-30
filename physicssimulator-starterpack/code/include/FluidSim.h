@@ -16,8 +16,8 @@ extern graphics::PrimitiveManager manager;
 class FluidSim : public Simulator{
 
 private:
-
-	float _initialTime = 20.0f;
+	bool stopReset = false;
+	float _initialTime = 15.0f;
 	float _currentTime = _initialTime;
 	
 	FluidSystem* _fluidSystem;
@@ -31,6 +31,8 @@ private:
 	"Wavelength  x",
 	"Phase       x"
 	};
+
+	void Reset();
 
 public:
 
