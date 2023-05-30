@@ -4,16 +4,14 @@
 FluidNode::FluidNode(glm::vec3 position)
 {
 	this->position = initPosition = position;
-	t = 0;
 }
 
 FluidNode::~FluidNode()
 {
 }
 
-glm::vec3 FluidNode::UpdatePosition(std::vector<Collider*> colliders, std::vector<Wave> &waves, float dt)
+glm::vec3 FluidNode::UpdatePosition(std::vector<Collider*> colliders, std::vector<Wave> &waves, float t)
 {
-	t += dt;
 	glm::vec3 positionSum;
 	for (int i = 0; i < waves.size(); i++) {
 		positionSum += waves[i].GetPositionAtTime(position, t);

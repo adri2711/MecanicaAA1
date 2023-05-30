@@ -17,9 +17,10 @@ class Fluid
 
 private:
 
-	std::vector<FluidNode> _fluidNodes;
+	std::vector<FluidNode*> _fluidNodes;
 	std::vector<glm::vec3> _positions;
 	glm::vec3 _startPosition;
+	float t;
 
 public:
 

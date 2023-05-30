@@ -13,7 +13,7 @@ FluidSim::FluidSim()
 	float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
 	float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 	
-	_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
+	_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 5.f);
 	AddCollider(_sphere);	
 	_colliderSystem->SetSphere(_sphere);
 }
@@ -22,7 +22,6 @@ FluidSim::~FluidSim()
 {	
 	delete _fluidSystem;
 	delete _colliderSystem;
-	delete _sphere;
 }
 
 void FluidSim::Update(float dt)
@@ -51,7 +50,7 @@ void FluidSim::Update(float dt)
 			float sphereYPosition = 6 * ((float)rand() / (float)RAND_MAX) + 2;
 			float sphereZPosition = 3 * ((float)rand() / (float)RAND_MAX) + 0;
 
-			_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 1.f);
+			_sphere = new BuoyantSphere(glm::vec3(sphereXPosition, sphereYPosition, sphereZPosition), 1.f, 5.f);
 			AddCollider(_sphere);
 			_colliderSystem->SetSphere(_sphere);
 			
